@@ -1,0 +1,17 @@
+{
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.wrappingIndent": "indent",
+  "editor.fontFamily": "'Cascadia Code', 'monospace', monospace",
+  "editor.fontLigatures": true,
+  "editor.formatOnSave": true,
+  "workbench.editor.labelFormat": "short",
+  "workbench.editor.untitled.labelFormat": "content",
+  "html.format.contentUnformatted": "",
+  "editor.formatOnType": false,
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  }
+}
