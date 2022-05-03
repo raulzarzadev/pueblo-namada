@@ -14,6 +14,13 @@ export default function Home() {
             </a>
           </Link>
         </div>
+        <div className="text-center">
+          <Link href='/login'>
+            <a className="link link-hover">
+              Ingresar
+            </a>
+          </Link>
+        </div>
       </div>
     </div>
   )

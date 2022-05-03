@@ -1,15 +1,18 @@
+import Image from "next/image";
 import Link from "next/link";
 
-export default function PlaceCard({ place }) {
-  const name = 'peace-center'
+function PlaceCard({ place }) {
+  const { name, resume, address, id } = place
   return (
-    <div class="card card-side bg-base-100 shadow-xl bg-no-repeat bg-contain " >
-      <figure  ><img className="" src="https://api.lorem.space/image/movie?w=200&h=280" alt="Movie" /></figure>
-      <div class="card-body p-1 max-w-[50%] sm:max-w-[75%] ">
-        <h2 class=" card-title">Peace Center</h2>
-        <p className=" ">Lugar cerca del centro, junto a la cilcovia a 2min del la playa</p>
-        <div class="card-actions justify-center">
-          <Link href={`/places/${name}`}>
+    <div className="card card-side bg-base-100 shadow-xl bg-no-repeat bg-contain w-full" >
+      <figure className="relative w-[30%]" >
+        <Image src='https://api.lorem.space/image/movie?w=200&h=280' layout="fill" objectFit="cover" />
+      </figure>
+      <div className="card-body p-1 max-w-[75%]  ">
+        <h2 className=" card-title">{name} <span className="font-normal text-sm ">{address}</span></h2>
+        <p className=" ">{resume}</p>
+        <div className="card-actions justify-center">
+          <Link href={`/places/${id}`}>
             <a className="btn btn-primary">
               Visitar
             </a>
@@ -19,3 +22,6 @@ export default function PlaceCard({ place }) {
     </div>
   )
 }
+
+
+export default PlaceCard;

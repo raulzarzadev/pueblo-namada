@@ -8,3 +8,15 @@ module.exports = withPWA({
     runtimeCaching,
   },
 })
+module.exports = {
+  images: {
+    domains: [
+      'api.lorem.space'
+    ],
+    formats: [
+      'image/avif',
+      'image/webp'
+    ],
+  },
+}
+
