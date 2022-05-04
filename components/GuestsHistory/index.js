@@ -32,8 +32,9 @@ const GuestCard = ({ guest, owner }) => {
           {guest.name}
         </h3>
         <p className="text-white">{guest.publicContact}</p>
-        {owner && (<div className="flex justify-end absolute bottom-0 left-0 right-0 p-2">
-          <a className="btn btn-info" href={`tel:${guest.contact}`} >Contactar</a>
+
+        {owner && guest?.phone && (<div className="flex justify-end absolute bottom-0 left-0 right-0 p-2">
+          <a target='_blank' className="btn btn-info btn-sm" href={`https://wa.me/${guest.phone}`}>whatsapp</a>
         </div>)}
       </div>
     </div >

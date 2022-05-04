@@ -1,12 +1,13 @@
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { newPlaceGuest } from "../../firebase/guests";
+import DragAndDrop from "../inputs/dragAndDrop";
 import File from "../inputs/file";
 import Phone from "../inputs/phone";
 import Text from "../inputs/text";
 
 export default function FormGuest() {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
 
   const { query: { id: placeId } } = useRouter()
   const onSubmit = data => {
@@ -15,6 +16,8 @@ export default function FormGuest() {
     })
   }
 
+  console.log(watch())
+
   return (
     <div className="max-w-sm mx-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -22,9 +25,15 @@ export default function FormGuest() {
           <Text {...register('name')} label='Nombre' placeholder='Nombre del conductor' />
           <Text {...register('plates')} label='Placas' placeholder='Placas del auto' />
           <Text {...register('publicContact')} label='Public Contact' placeholder='instagram - facebook - pagina web' />
-          <Phone {...register('contact')} label='Teléfono (whatsapp)' />
-          <File {...register('imageID')} label='Imagen ID' disabled />
-          <File {...register('imageID')} label='Imagen ' disabled />
+          <Phone
+            label='Teléfono (whatsapp)'
+            onChange={(value) => {
+              setValue('phone', value)
+            }}
+            value={watch('phone')}
+          />
+          {/* <File {...register('imageID')} label='Imagen ID' />
+          <File {...register('imageID')} label='Imagen ' /> */}
           <button className="btn btn-primary">
             Guardar
           </button>
