@@ -14,7 +14,7 @@ export async function getPlaces(cb) {
 export async function listenPlaces(...props) {
   const cb = props.pop()
 
-  const q = query(collection(db, 'places'), where('active', '==', true))
+  const q = query(collection(db, 'places'))
   onSnapshot(q, querySnapshot => {
     let places = []
     querySnapshot.docs.forEach(doc => {
@@ -80,7 +80,7 @@ export async function newPlace(place) {
   try {
     const docRef = await addDoc(collection(db, 'places'), {
       ...place,
-      userId: user.uid
+      userId: user.uid,
     })
     return { message: `Document written with ID: ${docRef.id}`, document: place }
   } catch (error) {

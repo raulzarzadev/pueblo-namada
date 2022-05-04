@@ -4,31 +4,31 @@ import Link from "next/link";
 
 export default function TopNavBar({ user }) {
 
-  return <div class="navbar bg-base-100">
-    <div class="flex-1">
-      <a class="btn btn-ghost normal-case text-xl">Peace-Parking</a>
+  return <div className="navbar bg-base-100">
+    <div className="flex-1">
+      <a className="btn btn-ghost normal-case text-xl">Peace-Parking</a>
     </div>
-    <div class="flex-none">
-      {!user && <div class="flex items-center">
+    <div className="flex-none">
+      {!user && <div className="flex items-center">
         <Link href="/login">
-          <a class="btn btn-primary">
+          <a className="btn btn-primary">
             Iniciar sesión
           </a>
         </Link>
       </div>
       }
       {user &&
-        <div class="dropdown dropdown-end">
-          <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-            <div class="w-10 rounded-full relative bg-green-700">
+        <div className="dropdown dropdown-end">
+          <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
+            <div className="w-10 rounded-full relative bg-green-700">
 
               {/*  <Image src={'https://api.lorem.space/image/face?hash=33791'} layout='fill' objectFit="cover" /> */}
             </div>
           </label>
-          <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+          <ul tabIndex="0" className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
             <li>
               <Link href='/'>
-                <a class="justify-between">
+                <a className="justify-between">
                   Home
                 </a>
               </Link>
@@ -39,9 +39,9 @@ export default function TopNavBar({ user }) {
               </button>
             </li>
             {/* <li>
-            <a class="justify-between">
+            <a className="justify-between">
               Profile
-              <span class="badge">New</span>
+              <span className="badge">New</span>
             </a>
           </li>
           <li><a>Settings</a></li>

@@ -50,7 +50,6 @@ export default function FormPlace({ place, editing = false }) {
             placeholder='Esta información es la primera que veran los primeros huespedes'
           />
           <Textarea
-            fullwidth
             {...register('description')}
             label='Descripción (opcional)'
             placeholder='Describe tu lugar un poco mas extenso. '

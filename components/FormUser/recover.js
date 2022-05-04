@@ -1,14 +1,11 @@
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { sendRecoverPasswordEmail, signIn } from "../../firebase/user";
 import Text from "../inputs/text";
 
-export default function RecoverPassawordForm() {
+export default function RecoverPassawordForm({ submitForm }) {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const onSubmit = ({ password, email }) => {
-    sendRecoverPasswordEmail({ email }).then(res => {
-      console.log(res)
-    })
+    submitForm({ email, password })
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

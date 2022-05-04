@@ -2,21 +2,15 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthState
 import { auth } from ".";
 import { mapUserFromFirebase } from "./firebase-helpers";
 
-export function createUser({ email, password }) {
-
-  return createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      // ...
+export async function signUp({ email, password }) {
+  return await createUserWithEmailAndPassword(auth, email, password)
+    .then(({ user }) => {
+      return { email, password }
     })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-    });
+    .catch(error => {
+      console.error(error)
+    })
 }
-
 
 export async function signIn({ email, password }) {
   return await signInWithEmailAndPassword(auth, email, password)

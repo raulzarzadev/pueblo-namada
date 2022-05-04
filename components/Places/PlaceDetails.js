@@ -4,18 +4,18 @@ import { deletePlace } from "../../firebase/places";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import GuestsHistory from "../GuestsHistory";
+import MainModal from "../Modal/MainModal";
 
 export default function PlaceDetails({ place }) {
   const { user } = useUser()
   const router = useRouter()
   const owner = place?.userId === user?.uid
-  const handleDeletePlace = (id) => {
-    deletePlace(id).then(res => {
+  const handleDeletePlace = () => {
+    deletePlace(place.id).then(res => {
       if (res) router.push('/places')
     })
   }
   const placeString = JSON.stringify(place)
-  console.log(placeString);
   const handleEdit = () => {
     localStorage.setItem('edit-place', placeString)
     router.push(`/places/${place.id}/edit`)
@@ -35,9 +35,20 @@ export default function PlaceDetails({ place }) {
               Nuevo huesped
             </button>
           </Link>
-          <button className="btn btn-error btn-sm" disabled>
-            Eliminar
-          </button>
+          <MainModal buttonLabel="Eliminar" title="Eliminar lugar" OpenComponentProps={{ className: 'btn btn-error btn-sm' }}>
+            <div className="flex justify-center flex-col items-center">
+
+              <h2 >
+                ¿Eliminar lugar de forma permanente?
+              </h2>
+              <div className="my-4">
+                <button className="btn btn-error btn-sm" onClick={handleDeletePlace}>
+                  Eliminar
+                </button>
+              </div>
+            </div>
+
+          </MainModal>
           <button className="btn btn-info btn-sm" onClick={() => handleEdit()}>
             Editar
           </button>
