@@ -2,7 +2,7 @@ import React from "react";
 
 const Textarea = React.forwardRef(({ label, helperText, ...rest }, ref) => {
   return (
-    <div className="form-control">
+    <div className="form-control max-w-md w-full mx-auto">
       <label className="label">
         {label &&
           <span className="label-text">{label}</span>

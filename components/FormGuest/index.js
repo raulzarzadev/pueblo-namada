@@ -5,12 +5,13 @@ import Text from "../inputs/text";
 
 export default function FormGuest() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
   const { query: { id: placeId } } = useRouter()
   const onSubmit = data => {
     newPlaceGuest({ ...data, placeId }).then(res => {
       console.log(res);
     })
-  };
+  }
 
   return (
     <div className="max-w-sm mx-auto">

@@ -1,7 +1,8 @@
 import { db } from './index'
-import { collection, query, where, onSnapshot, addDoc, doc, deleteDoc } from "firebase/firestore";
+import { collection, query, where, onSnapshot, addDoc, doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { auth } from './index'
 import { mapUserFromFirebase } from './firebase-helpers';
+import { async } from '@firebase/util';
 
 export async function getPlaces(cb) {
   const places = collection(db, 'places');
@@ -25,6 +26,15 @@ export async function listenPlaces(...props) {
 
 }
 
+export async function updatePlace(id, place) {
+  const placeRef = doc(db, 'places', id)
+  return await updateDoc(placeRef, place)
+    .then(res => {
+      return { message: 'updated', place, res }
+    })
+    .catch(err => console.error('error', err))
+}
+
 export async function listenPlace(...props) {
   const cb = props.pop()
   const id = props[0]
@@ -46,8 +56,12 @@ export async function deletePlace(...props) {
 
 export async function listenUserPlaces(...props) {
   const cb = props.pop()
-
-  const q = query(collection(db, 'places'), where('userId', '==', auth.currentUser.uid))
+  let q
+  if (auth.currentUser) {
+    q = query(collection(db, 'places'), where('userId', '==', auth.currentUser.uid))
+  } else {
+    q = query(collection(db, 'places'))
+  }
   onSnapshot(q, querySnapshot => {
     let places = []
     querySnapshot.docs.forEach(doc => {

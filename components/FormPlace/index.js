@@ -1,22 +1,43 @@
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { newPlace } from "../../firebase/places";
+import { newPlace, updatePlace } from "../../firebase/places";
 import Text from "../inputs/text";
 import Textarea from "../inputs/textarea";
 
-export default function FormPlace() {
+export default function FormPlace({ place, editing = false }) {
+  const router = useRouter()
+  const { register, handleSubmit, watch, formState: { errors } } = useForm(
+    { defaultValues: { ...place } }
+  );
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const defaultLabel = editing ? "Editar " : "Guardar"
+
+  const [labelSave, setLabelSave] = useState(defaultLabel);
 
   const onSubmit = data => {
-    newPlace(data).then(res => {
-      console.log(res);
+    editing ? updatePlace(place.id, data).then(res => {
+      console.log('place updated', res)
+      setLabelSave('Editado')
+      setTimeout(() => {
+        setLabelSave(defaultLabel)
+        router.back()
+      }, 1000)
+    }) : newPlace(data).then(res => {
+      console.log('place created', res)
+      setLabelSave('Guardado')
+      setTimeout(() => {
+        setLabelSave(defaultLabel)
+        router.back()
+      }, 1000)
+    });
 
-    })
   };
+
   return (
     <div className="p-1">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid gap-1 place-content-center">
+        <div className="grid gap-1 place-content-stretch ">
           <Text {...register('name')} label={'Nombre'} />
           <Text {...register('address')} label={'Dirección'} />
           <Text {...register('email')} label={'Email'} />
@@ -29,6 +50,7 @@ export default function FormPlace() {
             placeholder='Esta información es la primera que veran los primeros huespedes'
           />
           <Textarea
+            fullwidth
             {...register('description')}
             label='Descripción (opcional)'
             placeholder='Describe tu lugar un poco mas extenso. '
@@ -45,8 +67,8 @@ export default function FormPlace() {
             label='Recomendaciones'
             rows={10}
           />
-          <button className="btn btn-primary">
-            Guardar
+          <button className="btn btn-primary" disabled={['Guardado', 'Editado'].includes(labelSave)}>
+            {labelSave}
           </button>
         </div>
       </form >

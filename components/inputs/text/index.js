@@ -2,7 +2,7 @@ import React from "react"
 
 const Text = React.forwardRef(({ label, helperText, ...rest }, ref) => {
   return (
-    <div className="form-control w-full max-w-xs">
+    <div className="form-control mx-auto">
       <label className="label">
         {label &&
           <span className="label-text">{label}</span>

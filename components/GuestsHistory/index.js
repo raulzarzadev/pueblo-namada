@@ -7,19 +7,21 @@ export default function GuestsHistory({ place, owner }) {
   useEffect(() => {
     listenPlaceGuests(place.id, setGuests)
   }, [])
-  console.log(guests);
   return (
-    <div>
-      <h1 className="text-center font-bold">Guests History</h1>
-      {guests?.map(guest => (
-        <GuestCard key={guest.id} guest={guest} owner={owner} />
-      ))}
+    <div className="">
+      <h1 className="text-center font-bold border">Guests History</h1>
+
+      <div className="grid sm:grid-cols-2  md:grid-cols-3 max-w-4xl mx-auto">
+        {guests?.map(guest => (
+          <GuestCard key={guest.id} guest={guest} owner={owner} />
+        ))}
+      </div>
+
     </div>
   )
 }
 
 const GuestCard = ({ guest, owner }) => {
-  const myloader = '/images/overlander.jpg'
   return (
     <div className="relative">
       <div className="relative h-32 w-full">
@@ -29,11 +31,10 @@ const GuestCard = ({ guest, owner }) => {
         <h3 className="font-bold text-white">
           {guest.name}
         </h3>
-        <p>{guest.publicContact}</p>
+        <p className="text-white">{guest.publicContact}</p>
         {owner && (<div className="flex justify-end absolute bottom-0 left-0 right-0 p-2">
-          <a className="btn btn-info" href={`tel:${guest.contact}`} disabled>Contactar</a>
-        </div>)
-        }
+          <a className="btn btn-info" href={`tel:${guest.contact}`} >Contactar</a>
+        </div>)}
       </div>
     </div >
   )
