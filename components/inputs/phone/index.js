@@ -6,7 +6,7 @@ import 'react-phone-input-2/lib/style.css'
 
 const Phone = React.forwardRef(({ onChange, value, label, helperText, error, ...rest }, ref) =>
   <div className="form-control ">
-    <span className="label-text capitalize-first">{label}</span>
+    <span className="label-text capitalize-first text-left">{label}</span>
     <PhoneInput
       forwardRef={ref}
       localization={es}
