@@ -1,13 +1,12 @@
 import Modal from "."
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 
-const MainModal = React.forwardRef(({
+export default function MainModal({
   children,
   title = "Opening modal",
   buttonLabel = 'open modal',
   OpenComponent,
-  OpenComponentProps
-}, ref) => {
+  OpenComponentProps }) {
 
   const [openModal, setOpenModal] = useState(false)
   const modalRef = useRef(null)
@@ -15,20 +14,17 @@ const MainModal = React.forwardRef(({
     setOpenModal(!openModal)
   }
 
-  return (
-    <div className="">
-      {OpenComponent ? <OpenComponent onClick={handleOpenModal}  {...OpenComponentProps} /> :
-        <button
-          onClick={() => handleOpenModal()}
-          {...OpenComponentProps}
-        >
-          {buttonLabel}
-        </button>
-      }
-      <Modal ref={modalRef} title={title} open={openModal} handleOpen={handleOpenModal} >
-        {children}
-      </Modal>
-    </div>)
-})
-
-export default MainModal
+  return <div className="">
+    {OpenComponent ? <OpenComponent onClick={handleOpenModal}  {...OpenComponentProps} /> :
+      <button
+        onClick={() => handleOpenModal()}
+        {...OpenComponentProps}
+      >
+        {buttonLabel}
+      </button>
+    }
+    <Modal ref={modalRef} title={title} open={openModal} handleOpen={handleOpenModal} >
+      {children}
+    </Modal>
+  </div>
+}
