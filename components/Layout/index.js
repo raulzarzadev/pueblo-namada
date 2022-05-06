@@ -30,32 +30,22 @@ export default function Layout({ children }) {
   } else if (avoidWhenLogged && user) {
     push('/')
   }
-  const [lastScroll, setLastScroll] = useState(0);
   const [showMobileNav, setShowMobileNav] = useState(false);
+
   useEffect(() => {
-    const handleScroll = () => {
-      const scroll = window.scrollY;
-      if (scroll > lastScroll) {
-        // scroll is going down
-        setShowMobileNav(false);
-      } else {
-        // scroll is going up
+    var scrollPos = 0;
+    window.addEventListener('scroll', function () {
+      if ((document.body.getBoundingClientRect()).top > scrollPos) {
+        // GOING UP
         setShowMobileNav(true);
       }
-      setLastScroll(scroll)
-    };
+      else {
+        scrollPos = (document.body.getBoundingClientRect()).top;
+        setShowMobileNav(false);
+        // GOING DOWN
 
-    // just trigger this so that the initial state 
-    // is updated as soon as the component is mounted
-    // related: https://stackoverflow.com/a/63408216
-    handleScroll();
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      }
+    });
   }, []);
 
   console.log(showMobileNav)
