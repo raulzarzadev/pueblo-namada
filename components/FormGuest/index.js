@@ -6,7 +6,6 @@ import File from "../inputs/file";
 import Phone from "../inputs/phone";
 import Text from "../inputs/text";
 
-import { v4 as uidGenerator } from 'uuid';
 
 
 export default function FormGuest() {
@@ -23,9 +22,7 @@ export default function FormGuest() {
 
 
   const handleUploadFile = async ({ fieldName, file }) => {
-    const uuid = uidGenerator()
-    uploadFile(file, `gests/${fieldName}s/${uuid}`, (progress, downloadURL) => {
-
+    uploadFile(file, `gests/${fieldName}s/`, (progress, downloadURL) => {
       if (downloadURL) {
         setValue(fieldName, downloadURL)
       }

@@ -2,12 +2,14 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { newPlace, updatePlace } from "../../firebase/places";
+import { uploadFile } from "../../firebase/uploadImage";
+import File from "../inputs/file";
 import Text from "../inputs/text";
 import Textarea from "../inputs/textarea";
 
 export default function FormPlace({ place, editing = false }) {
   const router = useRouter()
-  const { register, handleSubmit, watch, formState: { errors } } = useForm(
+  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm(
     { defaultValues: { ...place } }
   );
 
@@ -34,6 +36,15 @@ export default function FormPlace({ place, editing = false }) {
 
   };
 
+
+  const handleUploadFile = async ({ fieldName, file }) => {
+    uploadFile(file, `places/${fieldName}s/`, (progress, downloadURL) => {
+      if (downloadURL) {
+        setValue(fieldName, downloadURL)
+      }
+    });
+  }
+
   return (
     <div className="p-1">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -43,6 +54,7 @@ export default function FormPlace({ place, editing = false }) {
           <Text {...register('email')} label={'Email'} />
           <Text {...register('phone')} label={'Telefono'} />
           <Text {...register('price')} label={'Costo por día'} />
+          <File onChange={({ target: { files } }) => handleUploadFile({ fieldName: 'image', file: files[0] })} label={'Imagen'} />
           <Textarea
             {...register('resume')}
             label='Resumen (recomendado)'

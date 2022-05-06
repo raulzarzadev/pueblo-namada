@@ -6,7 +6,9 @@ export default function TopNavBar({ user }) {
 
   return <div className="navbar bg-base-100">
     <div className="flex-1">
-      <a className="btn btn-ghost normal-case text-xl">Peace-Parking</a>
+      <Link href="/">
+        <a className="btn btn-ghost normal-case text-xl">Peace-Parking</a>
+      </Link>
     </div>
     <div className="flex-none">
       {!user && <div className="flex items-center">

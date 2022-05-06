@@ -1,12 +1,13 @@
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { storage } from '.'
+import { v4 as uidGenerator } from 'uuid';
+
 
 export const storageRef = (path = '') => ref(storage, path)
 
-export const uploadFile = (file, storagePath = '', cb = (progress = 0, downloadURL = null) => { }) => {
-  const imageRef = storageRef(storagePath)
-  console.log(file)
-  console.log(imageRef)
+export const uploadFile = (file, fieldName = '', cb = (progress = 0, downloadURL = null) => { }) => {
+  const uuid = uidGenerator()
+  const imageRef = storageRef(`${fieldName}/${uuid}`)
   const uploadTask = uploadBytesResumable(imageRef, file)
 
   uploadTask.on('state_changed',

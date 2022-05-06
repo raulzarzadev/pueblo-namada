@@ -20,11 +20,15 @@ export default function PlaceDetails({ place }) {
     localStorage.setItem('edit-place', placeString)
     router.push(`/places/${place.id}/edit`)
   }
+
+  const { image } = place
   return (
     <div className=" mx-auto ">
-      <figure className="relative w-full h-52" >
-        <Image src='https://api.lorem.space/image/movie?w=200&h=280' layout="fill" objectFit="contain" />
-      </figure>
+      {image &&
+        <figure className="relative w-full h-52" >
+          <Image src={image} layout="fill" objectFit="contain" />
+        </figure>
+      }
 
       <h1 className="text-2xl font-bold text-center">{place.name}</h1>
 
