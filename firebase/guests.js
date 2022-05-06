@@ -16,7 +16,7 @@ export async function newPlaceGuest(guest) {
       ...guest,
       userId: user.uid
     })
-    return { message: `Document written with ID: ${docRef.id}`, document: guest }
+    return { message: `Document written with ID: ${docRef.id}`, document: { ...guest, id: docRef.id } }
   } catch (error) {
     console.error(error)
   }

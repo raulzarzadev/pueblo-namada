@@ -5,8 +5,8 @@ export default function NewPlace() {
     <div>
       <h1 className="text-2xl text-center font-bold">
         Nuevo lugar
-        <FormPlace />
       </h1>
+      <FormPlace />
     </div>
   )
 }

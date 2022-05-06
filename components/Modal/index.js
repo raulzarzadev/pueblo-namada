@@ -1,11 +1,12 @@
 import React from 'react'
 
-export default function Modal({
+
+const Modal = React.forwardRef(({
   title = 'Modal title',
   open,
   handleOpen = () => { },
   children
-}) {
+}, ref) => {
   const modalId = `modal-${new Date().getTime()}-${Math.random()}`
 
   return (
@@ -35,4 +36,6 @@ export default function Modal({
       </div>
     </div>
   )
-}
+})
+
+export default Modal

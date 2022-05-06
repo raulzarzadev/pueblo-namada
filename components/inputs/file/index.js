@@ -1,9 +1,15 @@
+import Image from "next/image";
 import React from "react"
 
-const File = React.forwardRef(({ label, ...rest }, ref) => {
+const File = React.forwardRef(({ label, preview = null, ...rest }, ref) => {
+  console.log(preview);
   return (
     <div className="form-control w-full max-w-sm">
-      <label for="formFileMultiple" className="form-label inline-block  text-left">{label} </label>
+      {preview &&
+        <figure className="relative h-36">
+          <Image src={preview} objectFit='contain' layout="fill" />
+        </figure>}
+      <label htmlFor="formFileMultiple" className="form-label inline-block  text-left">{label}</label>
       <input
         ref={ref}
         className="
@@ -17,7 +23,7 @@ const File = React.forwardRef(({ label, ...rest }, ref) => {
         id="formFileMultiple"
         {...rest}
       />
-    </div>
+    </div >
   )
 })
 

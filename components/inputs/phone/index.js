@@ -19,7 +19,7 @@ const Phone = React.forwardRef(({ onChange, value, label, helperText, error, ...
       value={value}
       inputProps={{
         name: 'phone',
-        className: 'input input-bordered w-full'
+        className: 'input input-bordered w-full pl-11'
       }}
       dropdownClass='bg-base-300'
 

@@ -11,7 +11,8 @@ module.exports = withPWA({
 module.exports = {
   images: {
     domains: [
-      'api.lorem.space'
+      'api.lorem.space',
+      'firebasestorage.googleapis.com'
     ],
     formats: [
       'image/avif',
