@@ -21,7 +21,7 @@ export default function PlaceDetails({ place }) {
     router.push(`/places/${place.id}/edit`)
   }
   return (
-    <div className=" mx-auto">
+    <div className=" mx-auto ">
       <figure className="relative w-full h-52" >
         <Image src='https://api.lorem.space/image/movie?w=200&h=280' layout="fill" objectFit="contain" />
       </figure>
@@ -56,7 +56,7 @@ export default function PlaceDetails({ place }) {
       }
 
 
-      <div className="max-w-md mx-auto">
+      <div className="max-w-md mx-auto pb-12">
         <p className="text-center">{place.contact}</p>
         <p className="my-2 p-1">{place.resume}</p>
         <h2 className="text-xl font-bold">Reglamento</h2>

@@ -40,9 +40,7 @@ export default function Layout({ children }) {
       if (scroll > lastScroll) {
         // scroll is going down
         setShowMobileNav(false);
-        console.log('down')
       } else {
-        console.log('up')
         // scroll is going up
         setShowMobileNav(true);
       }
@@ -61,7 +59,6 @@ export default function Layout({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(showMobileNav)
 
   return (
     <div className='relative bg-base-300' >
@@ -73,7 +70,7 @@ export default function Layout({ children }) {
         {children}
       </main>
       {showMobileNav &&
-        <footer className={`relative   `}>
+        <footer className={`relative p-10  `}>
 
           <MobileNav />
         </footer>
