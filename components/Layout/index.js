@@ -69,8 +69,11 @@ export default function Layout({ children }) {
       <main>
         {children}
       </main>
-      <footer className={`relative   ${showMobileNav ? `-translate-x-0` : ``} `}>
-        <MobileNav />
-      </footer>
+      {showMobileNav &&
+        <footer className={`relative   `}>
+
+          <MobileNav />
+        </footer>
+      }
     </div>)
 }
