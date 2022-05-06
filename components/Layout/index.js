@@ -32,20 +32,33 @@ export default function Layout({ children }) {
   }
   const [showMobileNav, setShowMobileNav] = useState(false);
 
+  let lastScroll = 0
   useEffect(() => {
-    var scrollPos = 0;
-    window.addEventListener('scroll', function () {
-      if ((document.body.getBoundingClientRect()).top > scrollPos) {
-        // GOING UP
+
+    const handleScroll = () => {
+      const scroll = window.scrollY;
+      if (scroll > lastScroll) {
+        // scroll is going down
+        setShowMobileNav(false);
+        console.log('down')
+      } else {
+        console.log('up')
+        // scroll is going up
         setShowMobileNav(true);
       }
-      else {
-        scrollPos = (document.body.getBoundingClientRect()).top;
-        setShowMobileNav(false);
-        // GOING DOWN
+      lastScroll = scroll;
 
-      }
-    });
+
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   console.log(showMobileNav)
