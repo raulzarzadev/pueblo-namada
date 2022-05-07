@@ -5,6 +5,8 @@ import { listenPlaceGuests } from "../../firebase/guests"
 import FormAccommodation from "../FormAccommodation"
 import MainModal from "../Modal/MainModal"
 import { format } from "date-fns"
+import Section from "../Section"
+import { formatDate } from "../../utils/dates"
 export default function GuestsHistory({ place, owner }) {
   const [guests, setGuests] = useState(undefined)
   useEffect(() => {
@@ -57,12 +59,7 @@ const GuestCard = ({ guest, owner, place }) => {
                   <a target='_blank' className="btn-xs btn-circle btn mx-2 btn-warning" href={`https://wa.me/${phone}`}>ws</a>
                 </div>
               }
-              <div>
-                <FormAccommodation place={place} guest={guest} />
-              </div>
-              <div>
 
-              </div>
               <div className="sm:flex sm:justify-evenly">
                 {publicImage &&
                   <figure className="relative mx-auto h-40 sm:w-1/2">
@@ -76,6 +73,9 @@ const GuestCard = ({ guest, owner, place }) => {
                   </figure>
                 }
               </div>
+              <Section title={'Nuevo hospedaje'}>
+                <FormAccommodation place={place} guest={guest} />
+              </Section>
               <div>
                 <GuestPayments guestId={guest.id} placeId={place.id} />
               </div>
@@ -92,10 +92,14 @@ const GuestPayments = ({ guestId, placeId }) => {
   useEffect(() => {
     listenAccommodationPayments({ placeId, guestId }, setPayments)
   }, [])
+
+
   return (
     <div>
       <h1 className="text-center font-bold mt-10">Historial de pagos</h1>
       {payments?.map(payment => {
+        const { discountedNights, mxnTotal, usdTotal, nights, createdAt, dates, prices } = payment
+        console.log(payment);
         return (
           <div className="flex justify-evenly flex-col my-2 " key={payment.id}>
             <div className="text-right">
@@ -104,12 +108,64 @@ const GuestPayments = ({ guestId, placeId }) => {
             <div className="sm:flex justify-between">
               <div>
                 Desde:
-                {payment?.dates?.starts ? format(new Date(payment?.dates?.starts), "dd/MM/yyyy") : 'n/d'}
+                {dates?.starts ? formatDate(dates?.starts, "dd/MM/yy") : 'n/d'}
               </div>
               <div>
-                Hasta: {payment?.dates?.ends ? format(new Date(payment?.dates?.ends), "dd/MM/yyyy") : 'n/d'}
+                Hasta: {dates?.ends ? formatDate(dates?.ends, "dd/MM/yy") : 'n/d'}
               </div>
             </div>
+            <Section title={'Detalles'}>
+              <div>
+                <div className="flex justify-between">
+
+                  <div >
+                    <div>
+                      <span >Noches:</span> <span className="font-bold">{nights}</span>
+                    </div>
+                    <div>
+                      <span>Precios: </span>
+                      <div>
+                        Noche: <span className="font-bold">${prices?.night}</span>
+                      </div>
+                      <div>
+                        USD: <span className="font-bold">${prices?.usd}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div>
+                      <span >Descuento(noches):</span> <span className="font-bold">{discountedNights || 0}</span>
+                    </div>
+                    <div>
+                      <span >Total (mxn):</span> <span className="font-bold">${parseFloat(mxnTotal).toFixed(2)}</span>
+                    </div>
+                    <div>
+                      <span >Total (usd):</span> <span className="font-bold">${parseFloat(usdTotal).toFixed(2)}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div>
+                    Desde:
+                    <span className="font-bold">
+                      {dates?.starts ? formatDate(dates.starts) : 'n/d'}
+                    </span>
+                  </div>
+                  <div>
+                    Hasta:
+                    <span className="font-bold">
+                      {dates?.ends ? formatDate(new Date(dates?.ends), "dd/MM/yy") : 'n/d'}
+                    </span>
+                  </div>
+                  <div>
+                    Creado :
+                    <span className="font-bold">
+                      {format(new Date(createdAt), "dd/MM/yy HH:mm")}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </Section>
             <div className="divider" />
           </div>
         )

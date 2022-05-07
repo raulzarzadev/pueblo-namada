@@ -2,11 +2,12 @@ import { format, addDays } from "date-fns";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { newAccommodation } from "../../firebase/accomodations";
+import { formatDate } from "../../utils/dates";
 import InputNumber from "../inputs/InputNumber";
 import Text from "../inputs/text";
 
 export default function FormAccommodation({ guest, place, editing = false }) {
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm(
+  const { register, handleSubmit, watch, setValue, reset, formState: { errors } } = useForm(
     {
       defaultValues: {
         accommodationStarts: format(new Date(), "yyyy-MM-dd"),
@@ -31,6 +32,11 @@ export default function FormAccommodation({ guest, place, editing = false }) {
       guest: guest.id, ...data,
       mxnTotal: getTotal().mxn,
       usdTotal: getTotal().usd,
+      prices: {
+        night: place?.price || null,
+        usd: place?.usdPrice || null,
+
+      },
       discountedNights: data.discountedNights,
       dates: {
         starts: watch('accommodationStarts'),
@@ -44,6 +50,7 @@ export default function FormAccommodation({ guest, place, editing = false }) {
         setTimeout(() => {
           setLabelSave(FORM_STATUS[0])
           //router.back()
+          reset()
         }, 1000)
       })
   };
@@ -63,9 +70,8 @@ export default function FormAccommodation({ guest, place, editing = false }) {
     const date = watch('accommodationStarts')
     const nights = watch('nights') || 0
     const startDate = new Date(date)
-    const fixTimseZone = startDate.setMinutes(startDate.getMinutes() + startDate.getTimezoneOffset())
-    const endDate = addDays(fixTimseZone, nights)
-    return format(endDate, "yyyy-MM-dd")
+    const endDate = addDays(startDate, nights)
+    return formatDate(endDate, "yyyy-MM-dd")
   }
 
 
