@@ -45,6 +45,7 @@ export async function listenPlaceGuests(...props) {
 
 }
 
+
 export async function listenGuest(...props) {
   const cb = props.pop()
   const id = props[0]

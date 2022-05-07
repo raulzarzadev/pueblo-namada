@@ -54,6 +54,7 @@ export default function FormPlace({ place, editing = false }) {
           <Text {...register('email')} label={'Email'} />
           <Text {...register('phone')} label={'Telefono'} />
           <Text {...register('price')} label={'Costo por día'} />
+          <Text {...register('usdPrice')} label={'precio por USD'} />
           <File onChange={({ target: { files } }) => handleUploadFile({ fieldName: 'image', file: files[0] })} label={'Imagen'} preview={watch('image')} />
           <Textarea
             {...register('resume')}
