@@ -6,19 +6,25 @@ export default function MainModal({
   title = "Opening modal",
   buttonLabel = 'open modal',
   OpenComponent,
-  OpenComponentProps }) {
+  OpenComponentProps,
+  OpenComponentType
+}) {
 
+  const OPEN_COMPONENT_STYLE = {
+    delete: `btn btn-error btn-sm`
+  }
   const [openModal, setOpenModal] = useState(false)
   const modalRef = useRef(null)
   const handleOpenModal = () => {
     setOpenModal(!openModal)
   }
 
-  return <div className="">
+  return <>
     {OpenComponent ? <OpenComponent onClick={handleOpenModal}  {...OpenComponentProps} /> :
       <button
         onClick={() => handleOpenModal()}
         {...OpenComponentProps}
+        className={`${OpenComponentProps?.className || ''} ${OPEN_COMPONENT_STYLE[OpenComponentType]}`}
       >
         {buttonLabel}
       </button>
@@ -26,5 +32,5 @@ export default function MainModal({
     <Modal ref={modalRef} title={title} open={openModal} handleOpen={handleOpenModal} >
       {children}
     </Modal>
-  </div>
+  </>
 }

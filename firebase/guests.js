@@ -59,7 +59,6 @@ export async function listenGuest(...props) {
 
 export async function deleteGuest(...props) {
   const id = props[0]
-  console.log(props);
   return await deleteDoc(doc(db, 'guests', id)).then(
     res => true
   ).catch(err => console.error(err))

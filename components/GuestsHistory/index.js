@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import { listenAccommodationPayments } from "../../firebase/accomodations"
-import { listenPlaceGuests } from "../../firebase/guests"
+import { deleteGuest, listenPlaceGuests } from "../../firebase/guests"
 import FormAccommodation from "../FormAccommodation"
 import MainModal from "../Modal/MainModal"
 import { format } from "date-fns"
@@ -14,7 +14,7 @@ export default function GuestsHistory({ place, owner }) {
   }, [])
   return (
     <div className="">
-      <h1 className="text-center font-bold border">Guests History</h1>
+      <h1 className="text-center font-bold border">Huespedes</h1>
 
       <div className="grid sm:grid-cols-2  md:grid-cols-3 max-w-4xl mx-auto">
         {guests?.map(guest => (
@@ -26,8 +26,16 @@ export default function GuestsHistory({ place, owner }) {
   )
 }
 
+
+
+
 const GuestCard = ({ guest, owner, place }) => {
   const { publicImage, publicContact, imageID, plates, phone } = guest
+  const handleDeleteGuest = (id) => {
+    deleteGuest(id).then(res => {
+      console.log('res', res);
+    })
+  }
   return (
     <div className="relative">
       <div className="relative h-32 w-full">
@@ -41,8 +49,8 @@ const GuestCard = ({ guest, owner, place }) => {
         </h3>
         <p className="text-white">{publicContact}</p>
 
-        {owner && guest?.phone && (<div className="flex justify-end absolute bottom-0 left-0 right-0 p-2">
-          <MainModal buttonLabel="Detalles" title="Detalles de huesped" >
+        {owner && guest?.phone && (
+          <MainModal buttonLabel="" title="Detalles de huesped" OpenComponentProps={{ className: 'absolute right-0 left-0 top-0 bottom-0' }} >
             <div className="max-w-sm mx-auto">
 
               <p>
@@ -50,7 +58,7 @@ const GuestCard = ({ guest, owner, place }) => {
               </p>
               {plates &&
                 <p>
-                  <span className="font-bold">Placas:</span> {plates}
+                  <span className="font-bold ">Placas:</span> {plates}
                 </p>
               }
               {phone &&
@@ -76,12 +84,22 @@ const GuestCard = ({ guest, owner, place }) => {
               <Section title={'Nuevo hospedaje'}>
                 <FormAccommodation place={place} guest={guest} />
               </Section>
+              <Section title='Opciones'>
+                <div className="flex justify-around p-1">
+                  <MainModal title='Eliminar huesped' buttonLabel="Eliminar" OpenComponentProps={{ className: 'btn btn-error btn-sm' }}>
+                    <div className="flex flex-col items-center">
+                      <p>¿Estás seguro de que deseas eliminar este huesped?</p>
+                      <button className="btn btn-error btn-sm my-4" onClick={() => handleDeleteGuest(guest.id)}>Eliminar</button>
+                    </div>
+                  </MainModal>
+                </div>
+              </Section>
               <div>
                 <GuestPayments guestId={guest.id} placeId={place.id} />
               </div>
             </div>
           </MainModal>
-        </div>)}
+        )}
       </div>
     </div >
   )
@@ -117,7 +135,6 @@ const GuestPayments = ({ guestId, placeId }) => {
             <Section title={'Detalles'}>
               <div>
                 <div className="flex justify-between">
-
                   <div >
                     <div>
                       <span >Noches:</span> <span className="font-bold">{nights}</span>
@@ -164,6 +181,12 @@ const GuestPayments = ({ guestId, placeId }) => {
                     </span>
                   </div>
                 </div>
+                <MainModal buttonLabel="Eliminar" OpenComponentType='delete'>
+                  <div className="flex flex-col items-center flex-center">
+                    <p>¿Seguro de que deseas eliminar este hospedaje?</p>
+                    <button className="btn btn-error btn-sm m-4">Eliminar</button>
+                  </div>
+                </MainModal>
               </div>
             </Section>
             <div className="divider" />

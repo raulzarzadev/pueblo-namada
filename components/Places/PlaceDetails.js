@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import GuestsHistory from "../GuestsHistory";
 import MainModal from "../Modal/MainModal";
+import Section from "../Section";
 
 export default function PlaceDetails({ place }) {
   const { user } = useUser()
@@ -63,12 +64,13 @@ export default function PlaceDetails({ place }) {
       <div className="max-w-md mx-auto pb-12">
         <p className="text-center">{place.contact}</p>
         <p className="my-2 p-1">{place.resume}</p>
-        <h2 className="text-xl font-bold">Reglamento</h2>
-        <p className="p-1 whitespace-pre-line">{place.rules}</p>
-        <h2 className="text-xl font-bold">Recomendaciones de la casa</h2>
-        <p className="p-1 whitespace-pre-line">{place.recomendations}</p>
+        <Section title='Reglamento'>
+          <p className="p-1 whitespace-pre-line">{place.rules}</p>
+        </Section>
+        <Section title='Recomendaciones'>
+          <p className="p-1 whitespace-pre-line">{place.recomendations}</p>
+        </Section>
       </div>
-
       {!!user &&
         <GuestsHistory place={place} owner={owner} />
       }
