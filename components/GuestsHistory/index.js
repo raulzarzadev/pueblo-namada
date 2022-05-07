@@ -4,7 +4,7 @@ import { listenAccommodationPayments } from "../../firebase/accomodations"
 import { listenPlaceGuests } from "../../firebase/guests"
 import FormAccommodation from "../FormAccommodation"
 import MainModal from "../Modal/MainModal"
-
+import { format } from "date-fns"
 export default function GuestsHistory({ place, owner }) {
   const [guests, setGuests] = useState(undefined)
   useEffect(() => {
@@ -92,22 +92,29 @@ const GuestPayments = ({ guestId, placeId }) => {
   useEffect(() => {
     listenAccommodationPayments({ placeId, guestId }, setPayments)
   }, [])
+  console.log(payments);
   return (
     <div>
-      <h1>Historial de pagos</h1>
+      <h1 className="text-center font-bold mt-10">Historial de pagos</h1>
       {payments?.map(payment => {
         return (
-          <div className="flex justify-evenly">
-            <div>
-              {payment?.mxnTotal}
+          <div className="flex justify-evenly flex-col my-2 " key={payment.id}>
+            <div className="text-right">
+              ${parseFloat(payment?.mxnTotal).toFixed(2)}
             </div>
-            <div>
-              {payment?.createdAt}
+            <div className="sm:flex justify-between">
+              <div>
+                Desde:
+                {payment?.dates?.starts ? format(new Date(payment?.dates?.starts), "dd/MM/yyyy") : 'n/d'}
+              </div>
+              <div>
+                Hasta: {payment?.dates?.ends ? format(new Date(payment?.dates?.ends), "dd/MM/yyyy") : 'n/d'}
+              </div>
             </div>
+            <div className="divider" />
           </div>
         )
       })}
-
     </div>
   )
 }

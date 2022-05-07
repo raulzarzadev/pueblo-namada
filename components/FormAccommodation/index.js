@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { format, addDays } from "date-fns";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { newAccommodation } from "../../firebase/accomodations";
@@ -7,7 +8,13 @@ import Text from "../inputs/text";
 
 export default function FormAccommodation({ guest, place, editing = false }) {
   const router = useRouter()
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
+  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm(
+    {
+      defaultValues: {
+        accommodationStarts: format(new Date(), "yyyy-MM-dd"),
+      }
+    }
+  );
 
   const FORM_STATUS = {
     0: 'Pagar',
@@ -15,20 +22,24 @@ export default function FormAccommodation({ guest, place, editing = false }) {
     2: 'Cancelado'
   }
 
+
+
   const defaultLabel = FORM_STATUS[0]
-  console.log(defaultLabel)
+  console.log(watch())
   const [labelSave, setLabelSave] = useState(defaultLabel);
 
   const onSubmit = data => {
-    console.log(data);
     const accomodation = {
       place: place.id,
       guest: guest.id, ...data,
       mxnTotal: getTotal().mxn,
       usdTotal: getTotal().usd,
-      discountedNights: data.discountedNights
+      discountedNights: data.discountedNights,
+      dates: {
+        starts: watch('accommodationStarts'),
+        ends: accommodationEnds()
+      }
     }
-    console.log(accomodation)
     newAccommodation(accomodation)
       .then(res => {
         console.log('place created', res)
@@ -67,6 +78,16 @@ export default function FormAccommodation({ guest, place, editing = false }) {
   }
 
 
+  const accommodationEnds = () => {
+    const date = watch('accommodationStarts')
+    const nights = watch('nights') || 0
+    const startDate = new Date(date)
+    const fixTimseZone = startDate.setMinutes(startDate.getMinutes() + startDate.getTimezoneOffset())
+    const endDate = addDays(fixTimseZone, nights)
+    return format(endDate, "yyyy-MM-dd")
+  }
+
+
   return (
     <div className="p-1">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -91,6 +112,10 @@ export default function FormAccommodation({ guest, place, editing = false }) {
                 {` $${parseFloat(place.usdPrice).toFixed(2)}mxn`}
               </span>
             </p>
+          </div>
+          <div className="sm:flex justify-center text-center">
+            <Text {...register('accommodationStarts')} type='date' label='Desde' />
+            <Text value={accommodationEnds()} type='date' disabled label='Hasta' />
           </div>
           <div className="flex justify-end flex-col items-end">
             <InputNumber type='number' {...register('nights')} label={'Noches'} smallSize sideLabel />
