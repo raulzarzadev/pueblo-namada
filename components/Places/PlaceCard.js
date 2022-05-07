@@ -7,7 +7,9 @@ function PlaceCard({ place }) {
     <div className="card card-side bg-base-100 shadow-xl bg-no-repeat bg-contain w-full" >
 
       <div className="card-body p-1   ">
-        <h2 className=" card-title">{name} <span className="font-normal text-sm ">{address}</span></h2>
+        <div className=" flex flex-col sm:">
+          <h2 className="text-lg font-bold " >{name}</h2> <p className="font-normal text-sm ">{address}</p>
+        </div>
         <p className=" ">{resume}</p>
         <div className="card-actions justify-center">
           <Link href={`/places/${id}`}>

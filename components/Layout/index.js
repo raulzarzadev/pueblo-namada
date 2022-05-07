@@ -61,7 +61,7 @@ export default function Layout({ children }) {
 
 
   return (
-    <div className='relative bg-base-300 pb-10' >
+    <div className='relative bg-base-300 pb-11' >
       <Head />
       < header className='text-4xl bg-blue-100  '>
         <TopNavBar user={user} />
@@ -71,7 +71,6 @@ export default function Layout({ children }) {
       </main>
       {showMobileNav &&
         <footer className={`relative  `}>
-
           <MobileNav />
         </footer>
       }
