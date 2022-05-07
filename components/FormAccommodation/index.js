@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { format, addDays } from "date-fns";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -7,7 +6,6 @@ import InputNumber from "../inputs/InputNumber";
 import Text from "../inputs/text";
 
 export default function FormAccommodation({ guest, place, editing = false }) {
-  const router = useRouter()
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm(
     {
       defaultValues: {
@@ -25,7 +23,6 @@ export default function FormAccommodation({ guest, place, editing = false }) {
 
 
   const defaultLabel = FORM_STATUS[0]
-  console.log(watch())
   const [labelSave, setLabelSave] = useState(defaultLabel);
 
   const onSubmit = data => {
@@ -49,22 +46,6 @@ export default function FormAccommodation({ guest, place, editing = false }) {
           //router.back()
         }, 1000)
       })
-    /*   editing ? updatePlace(place.id, data).then(res => {
-        console.log('stay updated', res)
-        setLabelSave('Editado')
-        setTimeout(() => {
-          setLabelSave(defaultLabel)
-          router.back()
-        }, 1000)
-      }) : newPlace(data).then(res => {
-        console.log('place created', res)
-        setLabelSave('Guardado')
-        setTimeout(() => {
-          setLabelSave(defaultLabel)
-          router.back()
-        }, 1000)
-      }); */
-
   };
 
   const getTotal = () => {

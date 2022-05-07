@@ -56,12 +56,13 @@ export default function Layout({ children }) {
       window.removeEventListener("scroll", handleScroll);
     };
 
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
   return (
-    <div className='relative bg-base-300 pb-11' >
+    <div className='relative bg-base-300 pb-11 min-h-screen' >
       <Head />
       < header className='text-4xl bg-blue-100  '>
         <TopNavBar user={user} />

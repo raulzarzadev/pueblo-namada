@@ -92,7 +92,6 @@ const GuestPayments = ({ guestId, placeId }) => {
   useEffect(() => {
     listenAccommodationPayments({ placeId, guestId }, setPayments)
   }, [])
-  console.log(payments);
   return (
     <div>
       <h1 className="text-center font-bold mt-10">Historial de pagos</h1>
