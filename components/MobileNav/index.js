@@ -9,7 +9,7 @@ export default function MobilNav() {
     router.back()
   }
   return (
-    <div className=" h-20  ">
+    <div className="">
       <div className="fixed  bg-base-100 bottom-0 right-0 left-0  flex justify-around p-1 shadow-md">
         <button onClick={() => handleBack()} className="btn btn-circle btn-sm">
           {`<`}
