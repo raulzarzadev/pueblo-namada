@@ -1,12 +1,13 @@
 import Image from "next/image"
 import { useEffect, useState } from "react"
-import { listenAccommodationPayments } from "../../firebase/accomodations"
+import { deleteAccommodation, listenAccommodationPayments } from "../../firebase/accomodations"
 import { deleteGuest, listenPlaceGuests } from "../../firebase/guests"
 import FormAccommodation from "../FormAccommodation"
 import MainModal from "../Modal/MainModal"
 import { format } from "date-fns"
 import Section from "../Section"
 import { formatDate } from "../../utils/dates"
+import { useRouter } from "next/router"
 export default function GuestsHistory({ place, owner }) {
   const [guests, setGuests] = useState(undefined)
   useEffect(() => {
@@ -30,12 +31,18 @@ export default function GuestsHistory({ place, owner }) {
 
 
 const GuestCard = ({ guest, owner, place }) => {
+  const router = useRouter()
   const { publicImage, publicContact, imageID, plates, phone } = guest
   const handleDeleteGuest = (id) => {
     deleteGuest(id).then(res => {
       console.log('res', res);
     })
   }
+  const handleEditGuest = (id) => {
+    router.push(`/guests/${id}`)
+    localStorage.setItem('guest-edit', JSON.stringify(guest))
+  }
+
   return (
     <div className="relative">
       <div className="relative h-32 w-full">
@@ -68,6 +75,18 @@ const GuestCard = ({ guest, owner, place }) => {
                 </div>
               }
 
+              <div className="flex justify-around py-3 ">
+                <MainModal title='Eliminar huesped' buttonLabel="Eliminar" OpenComponentType={'delete'}>
+                  <div className="flex flex-col items-center">
+                    <p>¿Estás seguro de que deseas eliminar este huesped?</p>
+                    <button className="btn btn-error btn-sm my-4" onClick={() => handleDeleteGuest(guest.id)}>Eliminar</button>
+                  </div>
+                </MainModal>
+                <button className="btn btn-info btn-sm" onClick={() => handleEditGuest(guest.id)}>
+                  Editar
+                </button>
+              </div>
+
               <div className="sm:flex sm:justify-evenly">
                 {publicImage &&
                   <figure className="relative mx-auto h-40 sm:w-1/2">
@@ -81,21 +100,9 @@ const GuestCard = ({ guest, owner, place }) => {
                   </figure>
                 }
               </div>
-              <Section title={'Nuevo hospedaje'}>
-                <FormAccommodation place={place} guest={guest} />
-              </Section>
-              <Section title='Opciones'>
-                <div className="flex justify-around p-1">
-                  <MainModal title='Eliminar huesped' buttonLabel="Eliminar" OpenComponentProps={{ className: 'btn btn-error btn-sm' }}>
-                    <div className="flex flex-col items-center">
-                      <p>¿Estás seguro de que deseas eliminar este huesped?</p>
-                      <button className="btn btn-error btn-sm my-4" onClick={() => handleDeleteGuest(guest.id)}>Eliminar</button>
-                    </div>
-                  </MainModal>
-                </div>
-              </Section>
+
               <div>
-                <GuestPayments guestId={guest.id} placeId={place.id} />
+                <GuestPayments place={place} guest={guest} />
               </div>
             </div>
           </MainModal>
@@ -105,19 +112,33 @@ const GuestCard = ({ guest, owner, place }) => {
   )
 }
 
-const GuestPayments = ({ guestId, placeId }) => {
+const GuestPayments = ({ place, guest }) => {
+  const guestId = guest.id
+  const placeId = place.id
   const [payments, setPayments] = useState(undefined)
   useEffect(() => {
     listenAccommodationPayments({ placeId, guestId }, setPayments)
   }, [])
 
+  const handleDeleteAccommodation = (id) => {
+    console.log('id', id);
+    deleteAccommodation(id).then(res => {
+      console.log('res', res);
+    })
+  }
+
 
   return (
     <div>
       <h1 className="text-center font-bold mt-10">Historial de pagos</h1>
+      <div className="flex justify-center">
+        <MainModal title="Nuevo huesped" OpenComponentType='primary' buttonLabel="Nuevo pago">
+          <FormAccommodation place={place} guest={guest} />
+        </MainModal>
+      </div>
+      {!payments?.length && <p className="text-center" >Sin pagos aún</p >}
       {payments?.map(payment => {
         const { discountedNights, mxnTotal, usdTotal, nights, createdAt, dates, prices } = payment
-        console.log(payment);
         return (
           <div className="flex justify-evenly flex-col my-2 " key={payment.id}>
             <div className="text-right">
@@ -181,12 +202,14 @@ const GuestPayments = ({ guestId, placeId }) => {
                     </span>
                   </div>
                 </div>
-                <MainModal buttonLabel="Eliminar" OpenComponentType='delete'>
-                  <div className="flex flex-col items-center flex-center">
-                    <p>¿Seguro de que deseas eliminar este hospedaje?</p>
-                    <button className="btn btn-error btn-sm m-4">Eliminar</button>
-                  </div>
-                </MainModal>
+                <div className="flex justify-center my-4">
+                  <MainModal buttonLabel="Eliminar" OpenComponentType='delete'>
+                    <div className="flex flex-col items-center flex-center">
+                      <p className="text-center">¿Seguro de que deseas eliminar este hospedaje?</p>
+                      <button className="btn btn-error btn-sm m-4" onClick={() => handleDeleteAccommodation(payment.id)}>Eliminar</button>
+                    </div>
+                  </MainModal>
+                </div>
               </div>
             </Section>
             <div className="divider" />

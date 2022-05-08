@@ -2,7 +2,6 @@ import Image from "next/image";
 import React from "react"
 
 const File = React.forwardRef(({ label, preview = null, ...rest }, ref) => {
-  console.log(preview);
   return (
     <div className="form-control w-full max-w-sm">
       {preview &&

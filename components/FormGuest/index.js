@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { newPlaceGuest } from "../../firebase/guests";
+import { newPlaceGuest, updateGuest } from "../../firebase/guests";
 import { uploadFile } from "../../firebase/uploadImage";
 import File from "../inputs/file";
 import Phone from "../inputs/phone";
@@ -8,28 +9,61 @@ import Text from "../inputs/text";
 
 
 
-export default function FormGuest() {
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
+export default function FormGuest({ guest }) {
 
-  const { query: { id: placeId } } = useRouter()
-  const onSubmit = data => {
-    newPlaceGuest({ ...data, placeId }).then(({ document }) => {
-      if (document?.id) {
-        console.log('saved');
-      }
-    })
+  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({ defaultValues: { ...guest } });
+
+  const { query: { id: placeId }, back } = useRouter()
+
+  const FORM_STATUS = {
+    0: 'Guardar',
+    1: 'Guardado',
+    2: 'Guardando',
+    3: 'Cancelado'
   }
 
 
+
+  const defaultLabel = FORM_STATUS[0]
+  const [labelSave, setLabelSave] = useState(defaultLabel);
+
+  const onSubmit = data => {
+    console.log(data)
+    setLabelSave(FORM_STATUS[2])
+    if (guest?.id) {
+      // update guest
+      updateGuest(guest.id, data)
+        .then(res => {
+          console.log('res', res)
+          if (res) {
+            setLabelSave(FORM_STATUS[1])
+            localStorage.removeItem('guest-edit')
+            back()
+          }
+        })
+    } else {
+      newPlaceGuest({ ...data, placeId }).then(({ document }) => {
+        if (document?.id) {
+          setLabelSave(FORM_STATUS[1])
+          console.log('saved');
+          back()
+        }
+      })
+    }
+  }
+
   const handleUploadFile = async ({ fieldName, file }) => {
+    setLabelSave(FORM_STATUS[2])
     uploadFile(file, `gests/${fieldName}s/`, (progress, downloadURL) => {
       if (downloadURL) {
         setValue(fieldName, downloadURL)
+        setLabelSave(FORM_STATUS[0])
       }
     });
   }
 
-  console.log(watch())
+
+
 
   return (
     <div className="max-w-sm mx-auto">
@@ -50,6 +84,11 @@ export default function FormGuest() {
             label='Public Contact'
             placeholder='instagram - facebook - pagina web'
           />
+          <Text
+            {...register('email')}
+            label='Email'
+            placeholder='Email '
+          />
           <Phone
             label='Teléfono (whatsapp)'
             onChange={(value) => {
@@ -67,8 +106,8 @@ export default function FormGuest() {
             onChange={({ target: { files } }) => handleUploadFile({ fieldName: 'publicImage', file: files[0] })}
             label='Imagen pública '
           />
-          <button className="btn btn-primary my-5">
-            Guardar
+          <button className="btn btn-primary my-5" disabled={['Guardado', 'Guardando', 'Cancelado'].includes(labelSave)}>
+            {labelSave}
           </button>
         </div>
       </form>

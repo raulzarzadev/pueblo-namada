@@ -1,5 +1,5 @@
 import { db } from './index'
-import { collection, query, where, onSnapshot, addDoc, doc, deleteDoc } from "firebase/firestore";
+import { collection, query, where, onSnapshot, addDoc, doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { auth } from './index'
 import { mapUserFromFirebase } from './firebase-helpers';
 
@@ -29,6 +29,20 @@ export async function getGuests(cb) {
   const guestsList = docsSnapshot.docs.map(doc => doc.data());
   console.log(docsSnapshot)
 }
+
+
+export async function updateGuest(...props) {
+  const id = props[0]
+  const guest = props[1]
+  const guestRef = doc(db, 'guests', id)
+  return await updateDoc(guestRef, { ...guest, updatedAt: new Date().toUTCString() })
+    .then(res => {
+      return true
+    })
+    .catch(err => console.error(err))
+
+}
+
 
 export async function listenPlaceGuests(...props) {
   const cb = props.pop()

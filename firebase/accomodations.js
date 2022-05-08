@@ -45,7 +45,7 @@ export async function listenAccommodation(...props) {
   )
 }
 
-export async function deleteAccommodations(...props) {
+export async function deleteAccommodation(...props) {
   const id = props[0]
   console.log(props);
   return await deleteDoc(doc(db, 'accommodations', id)).then(

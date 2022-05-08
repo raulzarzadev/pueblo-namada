@@ -11,7 +11,8 @@ export default function MainModal({
 }) {
 
   const OPEN_COMPONENT_STYLE = {
-    delete: `btn btn-error btn-sm`
+    delete: `btn btn-error btn-sm`,
+    primary: `btn btn-primary btn-sm`,
   }
   const [openModal, setOpenModal] = useState(false)
   const modalRef = useRef(null)

@@ -4,57 +4,75 @@ import { useForm } from "react-hook-form";
 import { newPlace, updatePlace } from "../../firebase/places";
 import { uploadFile } from "../../firebase/uploadImage";
 import File from "../inputs/file";
+import Phone from "../inputs/phone";
 import Text from "../inputs/text";
 import Textarea from "../inputs/textarea";
 
 export default function FormPlace({ place, editing = false }) {
   const router = useRouter()
+
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm(
     { defaultValues: { ...place } }
   );
 
-  const defaultLabel = editing ? "Editar " : "Guardar"
+  const FORM_STATUS = {
+    0: 'Guardar',
+    1: 'Guardado',
+    2: 'Guardando',
+    3: 'Cancelado'
+  }
 
+
+
+  const defaultLabel = FORM_STATUS[0]
   const [labelSave, setLabelSave] = useState(defaultLabel);
 
+
+
   const onSubmit = data => {
+    setLabelSave(FORM_STATUS[2])
     editing ? updatePlace(place.id, data).then(res => {
-      console.log('place updated', res)
-      setLabelSave('Editado')
+      setLabelSave(FORM_STATUS[1])
       setTimeout(() => {
         setLabelSave(defaultLabel)
         router.back()
       }, 1000)
     }) : newPlace(data).then(res => {
-      console.log('place created', res)
-      setLabelSave('Guardado')
+      setLabelSave(FORM_STATUS[1])
       setTimeout(() => {
         setLabelSave(defaultLabel)
         router.back()
       }, 1000)
     });
-
   };
 
 
   const handleUploadFile = async ({ fieldName, file }) => {
+    setLabelSave(FORM_STATUS[2])
     uploadFile(file, `places/${fieldName}s/`, (progress, downloadURL) => {
       if (downloadURL) {
         setValue(fieldName, downloadURL)
+        setLabelSave(FORM_STATUS[0])
       }
     });
   }
 
   return (
-    <div className="p-1">
+    <div className="p-1 max-w-sm mx-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="sticky top-0 left-0 right-0 flex w-full justify-end bg-base-300 z-10 p-1">
+          <button className="btn btn-primary" disabled={['Guardado', 'Editado', 'Guardando'].includes(labelSave)}>
+            {labelSave}
+          </button>
+        </div>
         <div className="grid gap-1 place-content-stretch ">
           <Text {...register('name')} label={'Nombre'} />
           <Text {...register('address')} label={'Dirección'} />
           <Text {...register('email')} label={'Email'} />
-          <Text {...register('phone')} label={'Telefono'} />
-          <Text {...register('price')} label={'Costo por día'} />
-          <Text {...register('usdPrice')} label={'precio por USD'} />
+          {/*  <Text {...register('phone')} label={'Telefono'} /> */}
+          <Phone {...register('phone')} label={'Telefono'} />
+          <Text type='number' {...register('price')} label={'Costo por día'} />
+          <Text type='number' {...register('usdPrice')} label={'precio por USD'} />
           <File onChange={({ target: { files } }) => handleUploadFile({ fieldName: 'image', file: files[0] })} label={'Imagen'} preview={watch('image')} />
           <Textarea
             {...register('resume')}
@@ -79,9 +97,7 @@ export default function FormPlace({ place, editing = false }) {
             label='Recomendaciones'
             rows={10}
           />
-          <button className="btn btn-primary" disabled={['Guardado', 'Editado'].includes(labelSave)}>
-            {labelSave}
-          </button>
+
         </div>
       </form >
     </div >
