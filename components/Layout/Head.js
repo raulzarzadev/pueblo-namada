@@ -1,6 +1,7 @@
+import { INFO } from '@/CONSTANTS/PROJECT'
 import NextHead from 'next/head'
 
-export default function Head({ title = 'Peace Parking' }) {
+export default function Head({ title = INFO.short_name }) {
   return (<NextHead>
     <meta charSet="utf-8" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -14,17 +15,12 @@ export default function Head({ title = 'Peace Parking' }) {
 
     <link rel="manifest" href="/manifest.json" />
     <link
-      href="/icons/favicon-16x16.png"
+      href="/icons/icon-48x48.png"
       rel="icon"
       type="image/png"
-      sizes="16x16"
+      sizes="48x48"
     />
-    <link
-      href="/icons/favicon-32x32.png"
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-    />
+
     <link rel="apple-touch-icon" href="/apple-icon.png"></link>
     <meta name="theme-color" content="#317EFB" />
   </NextHead>)
