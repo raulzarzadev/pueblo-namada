@@ -1,15 +1,22 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { newPlaceGuest, updateGuest } from "../../firebase/guests";
 import { uploadFile } from "../../firebase/uploadImage";
 import File from "../inputs/file";
 import Phone from "../inputs/phone";
 import Text from "../inputs/text";
-
+import Checkbox from '../inputs/checkbox';
 
 
 export default function FormGuest({ guest }) {
+
+  useEffect(() => {
+    const gestStorage = localStorage.getItem('new-guest-form')
+    if (gestStorage) {
+
+    }
+  }, [])
 
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({ defaultValues: { ...guest } });
 
@@ -28,7 +35,6 @@ export default function FormGuest({ guest }) {
   const [labelSave, setLabelSave] = useState(defaultLabel);
 
   const onSubmit = data => {
-    console.log(data)
     setLabelSave(FORM_STATUS[2])
     if (guest?.id) {
       // update guest
@@ -68,7 +74,23 @@ export default function FormGuest({ guest }) {
   return (
     <div className="max-w-sm mx-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex justify-end sticky top-0 bg-base-300">
+          <button className="btn btn-primary my-1" disabled={['Guardado', 'Guardando', 'Cancelado'].includes(labelSave)}>
+            {labelSave}
+          </button>
+        </div>
         <div className="grid gap-2 place-content-center p-1  ">
+          <div className="my-5">
+            <span className="mx-2 flex justify-center ">
+              ¿Huesped público?
+              <span className="mx-2">
+                <Checkbox size='xl' {...register('publicGuest')} />
+              </span>
+            </span>
+            <span className="text-xs">
+              Otros huespedes podran ver tu "contacto publico" y podras ver el de otros huespedes
+            </span>
+          </div>
           <Text
             {...register('name')}
             label='Nombre'
@@ -106,9 +128,9 @@ export default function FormGuest({ guest }) {
             onChange={({ target: { files } }) => handleUploadFile({ fieldName: 'publicImage', file: files[0] })}
             label='Imagen pública '
           />
-          <button className="btn btn-primary my-5" disabled={['Guardado', 'Guardando', 'Cancelado'].includes(labelSave)}>
-            {labelSave}
-          </button>
+
+
+
         </div>
       </form>
     </div>

@@ -9,6 +9,7 @@ import { format } from "date-fns"
 import Section from "../Section"
 import { formatDate } from "../../utils/dates"
 import { useRouter } from "next/router"
+import SendIcon from "../icons/SendIcon"
 export default function GuestsHistory({ place }) {
   const { user } = useUser()
   const isOwner = place?.userId === user?.uid
@@ -55,7 +56,7 @@ export default function GuestsHistory({ place }) {
 const GuestCard = ({ guest, place, isOwner }) => {
   const router = useRouter()
 
-  const { publicImage, publicContact, imageID, plates, phone } = guest
+  const { publicImage, publicContact, imageID, plates, phone, email } = guest
   const handleDeleteGuest = (id) => {
     deleteGuest(id).then(res => {
       console.log('res', res);
@@ -65,6 +66,12 @@ const GuestCard = ({ guest, place, isOwner }) => {
     router.push(`/guests/${id}`)
     localStorage.setItem('guest-edit', JSON.stringify(guest))
   }
+
+  const DOMAIN = 'https://peace-parking.vercel.app'
+  const PLACE_URL = `${DOMAIN}/places/${place.id}`
+
+  const CONTENT_INFO = `Te damos la bienvenida a ${place.name}. Puedes ver mas detalles del lugar en ${PLACE_URL}`
+  const SUBJECT_INFO = `Bienvenido a ${place.name}`
 
   return (
     <div className="relative">
@@ -82,7 +89,6 @@ const GuestCard = ({ guest, place, isOwner }) => {
         {isOwner && guest?.phone && (
           <MainModal buttonLabel="" title="Detalles de huesped" OpenComponentProps={{ className: 'absolute right-0 left-0 top-0 bottom-0' }} >
             <div className="max-w-sm mx-auto">
-
               <p>
                 <span className="font-bold">Nombre:</span> {guest.name}
               </p>
@@ -92,9 +98,23 @@ const GuestCard = ({ guest, place, isOwner }) => {
                 </p>
               }
               {phone &&
-                <div className="">
+                <div className="flex">
                   <span className="font-bold">Teléfono:</span> {phone}
-                  <a target='_blank' className="btn-xs btn-circle btn mx-2 btn-warning" href={`https://wa.me/${phone}`}>ws</a>
+                  <a className="flex mx-2" target='_blank' href={`https://wa.me/${phone}?text=${CONTENT_INFO}`}>
+                    ws <SendIcon />
+                  </a>
+                </div>
+              }
+              {email &&
+                <div className="flex">
+                  <span className="font-bold">Email:</span> {email}
+                  <a
+                    target='_blank'
+                    className=" "
+                    href={`mailto:${email}?subject=${SUBJECT_INFO}&body=${CONTENT_INFO}`}
+                  >
+                    <SendIcon />
+                  </a>
                 </div>
               }
 
