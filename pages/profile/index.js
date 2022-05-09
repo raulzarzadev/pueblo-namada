@@ -10,7 +10,6 @@ export default function Profile() {
     listenUserPlaces(setPlaces)
   }, [])
 
-  console.log(places)
 
 
 

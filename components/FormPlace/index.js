@@ -55,7 +55,6 @@ export default function FormPlace({ place, editing = false }) {
     });
   }
 
-  console.log(watch());
 
   return (
     <div className="p-1 max-w-sm mx-auto">
