@@ -55,6 +55,8 @@ export default function FormPlace({ place, editing = false }) {
     });
   }
 
+  console.log(watch());
+
   return (
     <div className="p-1 max-w-sm mx-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -68,7 +70,11 @@ export default function FormPlace({ place, editing = false }) {
           <Text {...register('address')} label={'Dirección'} />
           <Text {...register('email')} label={'Email'} />
           {/*  <Text {...register('phone')} label={'Telefono'} /> */}
-          <Phone {...register('phone')} label={'Telefono'} />
+          <Phone onChange={(value) => {
+            setValue('phone', value)
+          }}
+            value={watch('phone')}
+            label={'Telefono'} />
           <Text type='number' {...register('price')} label={'Costo por día'} />
           <Text type='number' {...register('usdPrice')} label={'precio por USD'} />
           <File onChange={({ target: { files } }) => handleUploadFile({ fieldName: 'image', file: files[0] })} label={'Imagen'} preview={watch('image')} />
