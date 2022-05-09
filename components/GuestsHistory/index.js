@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { useUser } from '@comps/context/userContext'
 import { useEffect, useState } from "react"
 import { deleteAccommodation, listenAccommodationPayments } from "../../firebase/accomodations"
 import { deleteGuest, listenPlaceGuests } from "../../firebase/guests"
@@ -8,18 +9,39 @@ import { format } from "date-fns"
 import Section from "../Section"
 import { formatDate } from "../../utils/dates"
 import { useRouter } from "next/router"
-export default function GuestsHistory({ place, owner }) {
+export default function GuestsHistory({ place }) {
+  const { user } = useUser()
+  const isOwner = place?.userId === user?.uid
+
   const [guests, setGuests] = useState(undefined)
   useEffect(() => {
     listenPlaceGuests(place.id, setGuests)
   }, [])
+
+  const showGuest = () => {
+
+    let res = false
+    console.log(place)
+    // visible si es propietario
+    if (!!isOwner && place.config.guestsVisiblesFor.admin) res = true
+
+    // visible si esta registrado
+    if (!!user && place.config.guestsVisiblesFor.all) res = true
+
+    // TODO visible si es huesped
+
+    // if (place.config.guestsVisiblesFor.guest) res = true
+
+    return res
+  }
+
   return (
     <div className="">
       <h1 className="text-center font-bold border">Huespedes</h1>
-
       <div className="grid sm:grid-cols-2  md:grid-cols-3 max-w-4xl mx-auto">
-        {guests?.map(guest => (
-          <GuestCard key={guest.id} guest={guest} owner={owner} place={place} />
+
+        {showGuest() && guests?.map(guest => (
+          <GuestCard key={guest.id} guest={guest} place={place} isOwner={isOwner} />
         ))}
       </div>
 
@@ -30,8 +52,9 @@ export default function GuestsHistory({ place, owner }) {
 
 
 
-const GuestCard = ({ guest, owner, place }) => {
+const GuestCard = ({ guest, place, isOwner }) => {
   const router = useRouter()
+
   const { publicImage, publicContact, imageID, plates, phone } = guest
   const handleDeleteGuest = (id) => {
     deleteGuest(id).then(res => {
@@ -56,7 +79,7 @@ const GuestCard = ({ guest, owner, place }) => {
         </h3>
         <p className="text-white">{publicContact}</p>
 
-        {owner && guest?.phone && (
+        {isOwner && guest?.phone && (
           <MainModal buttonLabel="" title="Detalles de huesped" OpenComponentProps={{ className: 'absolute right-0 left-0 top-0 bottom-0' }} >
             <div className="max-w-sm mx-auto">
 

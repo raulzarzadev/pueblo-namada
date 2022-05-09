@@ -88,6 +88,8 @@ export async function listenAccommodationPayments(...props) {
 }
 
 
+
+
 export async function newAccommodation(accommodation) {
   const user = mapUserFromFirebase(auth.currentUser)
   if (!user) return console.error('No user logged in')

@@ -22,8 +22,6 @@ export default function FormPlace({ place, editing = false }) {
     3: 'Cancelado'
   }
 
-
-
   const defaultLabel = FORM_STATUS[0]
   const [labelSave, setLabelSave] = useState(defaultLabel);
 
@@ -87,15 +85,21 @@ export default function FormPlace({ place, editing = false }) {
             rows={4}
           />
           <Textarea
+            {...register('amenities')}
+            label='Amenidades '
+            rows={4}
+            placeholder='WiFi, TV, Bicicletas gratis y mucho mas'
+          />
+          <Textarea
             {...register('rules')}
             label='Reglamento'
             placeholder=' Un reglamento les ayudara a tus huespedes  a familiarizarse con el lugar'
-            rows={10}
+            rows={8}
           />
           <Textarea
             {...register('recomendations')}
             label='Recomendaciones'
-            rows={10}
+            rows={4}
           />
 
         </div>

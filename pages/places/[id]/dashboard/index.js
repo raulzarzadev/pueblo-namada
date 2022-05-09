@@ -1,5 +1,6 @@
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
+import FormPlaceConfig from "../../../../components/FormPlaceConfig"
 import PlaceDetails from "../../../../components/Places/PlaceDetails"
 import { listenPlace } from "../../../../firebase/places"
 
@@ -16,8 +17,13 @@ export default function dashboard() {
   return (
     <div>
       <h1 className="text-center font-bold border">Dashboard</h1>
+
       {place &&
-        <PlaceDetails place={place} />
+        <>
+          <FormPlaceConfig place={place} />
+          <PlaceDetails place={place} />
+        </>
+
       }
     </div>)
 }

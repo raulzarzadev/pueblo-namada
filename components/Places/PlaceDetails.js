@@ -67,15 +67,27 @@ export default function PlaceDetails({ place = {} }) {
       <div className="max-w-md mx-auto pb-12">
         <p className="text-center">{place.contact}</p>
         <p className="my-2 p-1">{place.resume}</p>
-        <Section title='Reglamento'>
-          <p className="p-1 whitespace-pre-line">{place.rules}</p>
-        </Section>
-        <Section title='Recomendaciones'>
-          <p className="p-1 whitespace-pre-line">{place.recomendations}</p>
-        </Section>
+        {place?.amenities &&
+          <div>
+            <h2 className="font-bold">
+              Amenidades
+            </h2>
+            <p className="mb-2  whitespace-pre-line">{place?.amenities}</p>
+          </div>
+        }
+        {place.rules &&
+          <Section title='Reglamento'>
+            <p className="p-1 whitespace-pre-line">{place.rules}</p>
+          </Section>
+        }
+        {place?.recomendations &&
+          <Section title='Recomendaciones'>
+            <p className="p-1 whitespace-pre-line">{place.recomendations}</p>
+          </Section>
+        }
       </div>
       {!!user &&
-        <GuestsHistory place={place} isOwner={isOwner} />
+        <GuestsHistory place={place} />
       }
     </div>
   )
