@@ -26,8 +26,10 @@ export default function Profile() {
             </a>
           </Link>
         </div>
-        {places?.map(place =>
-          <PlaceCard place={place} linkToDashboard />)}
+        <div className="grid gap-4 max-w-lg mx-auto">
+          {places?.map(place =>
+            <PlaceCard place={place} linkToDashboard />)}
+        </div>
       </div>
     </div>
   )
