@@ -7,6 +7,7 @@ export default function EditPlace() {
   useEffect(() => {
     const key = localStorage.getItem('edit-place')
     setPlace(JSON.parse(key));
+
   }, [])
 
   if (place === undefined) return <div>Cargando ...</div>

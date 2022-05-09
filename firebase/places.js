@@ -11,6 +11,20 @@ export async function getPlaces(cb) {
   console.log(docsSnapshot)
 }
 
+export function listeUserPlaces(...props) {
+  const cb = props.pop()
+  const user = auth.currentUser
+  if (!user) return console.error('No user logged in')
+  const q = query(collection(db, 'places'), where('userId', '==', user.uid))
+  onSnapshot(q, querysnapshot => {
+    let places = []
+    querysnapshot.docs.forEach(doc => {
+      places.push({ ...doc.data(), id: doc.id })
+    })
+  })
+
+}
+
 export async function listenPlaces(...props) {
   const cb = props.pop()
 
@@ -48,7 +62,6 @@ export async function listenPlace(...props) {
 
 export async function deletePlace(...props) {
   const id = props[0]
-  console.log(props);
   return await deleteDoc(doc(db, 'places', id)).then(
     res => true
   ).catch(err => console.error(err))
@@ -57,6 +70,8 @@ export async function deletePlace(...props) {
 export async function listenUserPlaces(...props) {
   const cb = props.pop()
   let q
+  if (!auth.currentUser) return console.error('No user logged in')
+
   if (auth.currentUser) {
     q = query(collection(db, 'places'), where('userId', '==', auth.currentUser.uid))
   } else {

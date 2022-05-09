@@ -7,22 +7,25 @@ import GuestsHistory from "../GuestsHistory";
 import MainModal from "../Modal/MainModal";
 import Section from "../Section";
 
-export default function PlaceDetails({ place }) {
+export default function PlaceDetails({ place = {} }) {
   const { user } = useUser()
   const router = useRouter()
-  const owner = place?.userId === user?.uid
+  const isOwner = place?.userId === user?.uid
+
   const handleDeletePlace = () => {
     deletePlace(place.id).then(res => {
       if (res) router.push('/places')
     })
   }
-  const placeString = JSON.stringify(place)
+
   const handleEdit = () => {
+    const placeString = JSON.stringify(place)
     localStorage.setItem('edit-place', placeString)
     router.push(`/places/${place.id}/edit`)
   }
 
   const { image } = place
+
   return (
     <div className=" mx-auto ">
       {image &&
@@ -33,7 +36,7 @@ export default function PlaceDetails({ place }) {
 
       <h1 className="text-2xl font-bold text-center">{place.name}</h1>
 
-      {owner &&
+      {isOwner &&
         <div className="grid gap-4 grid-flow-col my-2 max-w-sm mx-auto">
           <Link href={`/places/${place.id}/new-guest`}>
             <button className="btn btn-primary btn-sm" >
@@ -72,7 +75,7 @@ export default function PlaceDetails({ place }) {
         </Section>
       </div>
       {!!user &&
-        <GuestsHistory place={place} owner={owner} />
+        <GuestsHistory place={place} isOwner={isOwner} />
       }
     </div>
   )

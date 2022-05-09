@@ -10,6 +10,9 @@ export default function Guest({ }) {
       setGuest(JSON.parse(storageGuest))
 
     }
+    return () => {
+      localStorage.removeItem('guest-edit')
+    }
   }, [])
 
   if (!guest) return <div>Cargando...</div>

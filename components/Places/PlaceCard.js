@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-function PlaceCard({ place }) {
+function PlaceCard({ place, linkToDashboard }) {
   const { name, resume, address, id, image } = place
   return (
     <div className="card card-side bg-base-100 shadow-xl bg-no-repeat bg-contain w-full" >
@@ -11,12 +11,19 @@ function PlaceCard({ place }) {
           <h2 className="text-lg font-bold " >{name}</h2> <p className="font-normal text-sm ">{address}</p>
         </div>
         <p className=" ">{resume}</p>
-        <div className="card-actions justify-center">
+        <div className="card-actions justify-evenly">
           <Link href={`/places/${id}`}>
             <a className="btn btn-outline btn-sm ">
               Visitar
             </a>
           </Link>
+          {linkToDashboard &&
+            <Link href={`/places/${id}/dashboard`}>
+              <a className="btn btn-outline btn-sm ">
+                Dashboard
+              </a>
+            </Link>
+          }
         </div>
       </div>
       {image &&

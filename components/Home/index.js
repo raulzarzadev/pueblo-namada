@@ -1,11 +1,10 @@
-import Link from "next/link";
 import Hero from '../../components/Hero/index.js';
 export default function Home() {
 
   return (
     <div>
       <Hero />
-      <div className=" my-10">
+      {/*  <div className=" my-10">
         <h3 className="text-center">¿Quieres ser anfirión?</h3>
         <div className="text-center">
           <Link href='/new-place'>
@@ -21,7 +20,7 @@ export default function Home() {
             </a>
           </Link>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

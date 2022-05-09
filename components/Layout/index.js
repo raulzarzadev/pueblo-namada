@@ -1,5 +1,5 @@
 import Head from './Head'
-import MobileNav from '../MobileNav'
+import MobileNav from './MobileNav'
 import { useUser } from '@comps/context/userContext'
 import { useRouter } from 'next/router'
 import TopNavBar from './TopNavBar'
