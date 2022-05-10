@@ -24,10 +24,10 @@ export default function GuestsHistory({ place }) {
     let res = false
     console.log(place)
     // visible si es propietario
-    if (!!isOwner && place.config.guestsVisiblesFor.admin) res = true
+    if (!!isOwner && place?.config?.guestsVisiblesFor?.admin) res = true
 
     // visible si esta registrado
-    if (!!user && place.config.guestsVisiblesFor.all) res = true
+    if (!!user && place?.config?.guestsVisiblesFor?.all) res = true
 
     // TODO visible si es huesped
 
