@@ -1,7 +1,17 @@
+//@ts-check
 import { format } from "date-fns"
 
 export const formatDate = (date, stringFormat = 'dd/MM/yy') => {
   const objectDate = new Date(date)
-  if (!objectDate) return console.error('date is undefined')
-  return format(new Date(objectDate.setMinutes(objectDate.getMinutes() + objectDate.getTimezoneOffset())), stringFormat)
+  function isValidDate(d) {
+    return d instanceof Date && !isNaN(d)
+  }
+
+  if (isValidDate(objectDate)) {
+    return format(new Date(objectDate.setMinutes(objectDate.getMinutes() + objectDate.getTimezoneOffset())), stringFormat)
+  } else {
+    return console.error('date is not valid date')
+  }
+
 }
+
