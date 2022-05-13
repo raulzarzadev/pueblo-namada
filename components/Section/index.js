@@ -2,9 +2,9 @@ import { useState } from 'react'
 
 export default function Section({
   title,
-  subtitle,
+  subtitle = null,
   children,
-  open,
+  open = false,
   indent = false,
   sticky = false
 }) {

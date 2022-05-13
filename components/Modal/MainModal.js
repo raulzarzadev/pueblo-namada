@@ -3,11 +3,11 @@ import { useState, useRef } from 'react'
 
 export default function MainModal({
   children,
-  title = "Opening modal",
+  title,
   buttonLabel = 'open modal',
-  OpenComponent,
-  OpenComponentProps,
-  OpenComponentType
+  OpenComponent = null,
+  OpenComponentProps = null,
+  OpenComponentType = null
 }) {
 
   const OPEN_COMPONENT_STYLE = {

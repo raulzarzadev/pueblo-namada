@@ -98,7 +98,7 @@ const GuestPayments = ({ place, guest }) => {
                   </div>
                 </div>
                 <div className="flex justify-center my-4">
-                  <MainModal buttonLabel="Eliminar" OpenComponentType='delete'>
+                  <MainModal title='Eliminar pago' buttonLabel="Eliminar" OpenComponentType='delete'>
                     <div className="flex flex-col items-center flex-center">
                       <p className="text-center">¿Seguro de que deseas eliminar este hospedaje?</p>
                       <button className="btn btn-error btn-sm m-4" onClick={() => handleDeleteAccommodation(payment.id)}>Eliminar</button>
