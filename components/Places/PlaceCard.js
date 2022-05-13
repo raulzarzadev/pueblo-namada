@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-function PlaceCard({ place, linkToDashboard }) {
+function PlaceCard({ place, linkToDashboard, isOwner }) {
   const { name, resume, address, id, image } = place
   return (
     <div className="card card-side bg-base-100 shadow-xl bg-no-repeat bg-contain w-full" >
@@ -17,7 +17,7 @@ function PlaceCard({ place, linkToDashboard }) {
               Visitar
             </a>
           </Link>
-          {linkToDashboard &&
+          {linkToDashboard && isOwner &&
             <Link href={`/places/${id}/dashboard`}>
               <a className="btn btn-outline btn-sm ">
                 Dashboard

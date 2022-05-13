@@ -86,9 +86,9 @@ export default function PlaceDetails({ place = {} }) {
           </Section>
         }
       </div>
-      {!!user &&
+      {/*  {!!user &&
         <GuestsHistory place={place} />
-      }
+      } */}
     </div>
   )
 }
