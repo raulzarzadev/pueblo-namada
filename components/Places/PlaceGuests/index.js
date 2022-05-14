@@ -46,7 +46,7 @@ export default function PlaceGuests({ place, showTable = false, showCards = fals
     <div className="">
       <h1 className="text-center font-bold border">Huespedes</h1>
 
-      <div>
+      <div className="text-sm">
         {showCards &&
           guests?.map((guest, i) => <GuestCard key={`${guest.id}-${i}`} guest={guest} isOwner={isOwner} place={place} />)
         }
@@ -139,12 +139,13 @@ const GuestsTable = ({ guests, payments, place }) => {
           <th>Nombre</th>
           <th>Placas</th>
           <th>Pagos</th>
+          <th>Ultimo</th>
         </tr>
       </thead>
 
       <tbody>
         {guests?.map((guest, i) =>
-          <GuestRow guest={guest} place={place} key={guest + i} />
+          <GuestRow guest={guest} place={place} key={guest + i} payments={payments.filter(pay => pay.guest === guest.id)} />
         )}
       </tbody>
     </table>
@@ -152,10 +153,22 @@ const GuestsTable = ({ guests, payments, place }) => {
 }
 
 
-const GuestRow = ({ place, guest }) => {
+const GuestRow = ({ place, guest, payments }) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
-
+  const sortedPayments = payments.sort((a, b) => {
+    const toNumber = date => {
+      const newDate = new Date(date)
+      if (newDate instanceof Date) {
+        return newDate?.getTime()
+      } else {
+        console.error('invalid date');
+      }
+    }
+    if (toNumber(a?.createdAt) > toNumber(b?.createdAt)) return 1
+    if (toNumber(a?.createdAt) < toNumber(b?.createdAt)) return -1
+    return 0
+  })
   return (
     <>
       <tr className="cursor-pointer hover:bg-base-200" onClick={() => handleOpen()} >
@@ -169,7 +182,21 @@ const GuestRow = ({ place, guest }) => {
           {guest?.plates}
         </Cell>
         <Cell >
-
+          {payments?.length}
+        </Cell>
+        <Cell>
+          <div className="text-sm">
+            {formatDate(sortedPayments[0].createdAt, 'dd MMM yy')}
+          </div>
+          <div className="text-sm">
+            {`$${parseFloat(sortedPayments[0].mxnTotal).toFixed(2)}`}
+          </div>
+          {/*   {payments.sort((a, b) => {
+            const toNumber = date => date.getTime()
+            if (toNumber(a.createdAt) > toNumber(b.createdAt)) return 1
+            if (toNumber(a.createdAt) < toNumber(b.createdAt)) return -1
+            return 0
+          })} */}
         </Cell>
       </tr>
     </>

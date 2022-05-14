@@ -13,6 +13,7 @@ export default function Profile() {
 
 
 
+
   return (
     <div>
       <h1 className="text-center">Perfil de usuario</h1>
@@ -27,7 +28,7 @@ export default function Profile() {
         </div>
         <div className="grid gap-4 max-w-lg mx-auto">
           {places?.map(place =>
-            <PlaceCard place={place} linkToDashboard />)}
+            <PlaceCard place={place} linkToDashboard isOwner />)}
         </div>
       </div>
     </div>
