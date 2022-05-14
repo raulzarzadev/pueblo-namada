@@ -7,7 +7,7 @@ import InputNumber from "../inputs/InputNumber";
 import Text from "../inputs/text";
 
 export default function FormAccommodation({ guest, place, editing = false }) {
-  const { register, handleSubmit, watch, setValue, reset, formState: { errors } } = useForm(
+  const { register, handleSubmit, watch, setValue, reset, formState: { errors, isDirty } } = useForm(
     {
       defaultValues: {
         accommodationStarts: format(new Date(), "yyyy-MM-dd"),
@@ -18,7 +18,8 @@ export default function FormAccommodation({ guest, place, editing = false }) {
   const FORM_STATUS = {
     0: 'Pagar',
     1: 'Pagado',
-    2: 'Cancelado'
+    2: 'Cancelado',
+    3: 'Guardando'
   }
 
 
@@ -27,6 +28,7 @@ export default function FormAccommodation({ guest, place, editing = false }) {
   const [labelSave, setLabelSave] = useState(defaultLabel);
 
   const onSubmit = data => {
+    setLabelSave(FORM_STATUS[3])
     const accomodation = {
       place: place.id,
       guest: guest.id, ...data,
@@ -105,8 +107,8 @@ export default function FormAccommodation({ guest, place, editing = false }) {
             <Text value={accommodationEnds()} type='date' disabled label='Hasta' />
           </div>
           <div className="flex justify-end flex-col items-end">
-            <InputNumber type='number' {...register('nights')} label={'Noches'} smallSize sideLabel />
-            <InputNumber type='number' {...register('discountedNights')} label={'Descuento (noches)'} smallSize sideLabel />
+            <InputNumber type='number' {...register('nights')} label={'Noches'} smallSize sideLabel min={0} max={99} />
+            <InputNumber type='number' {...register('discountedNights')} label={'Descuento (noches)'} smallSize sideLabel min={0} max={99} />
           </div>
           <div className="text-center">
             <p className="">Total (mxn):
@@ -125,7 +127,7 @@ export default function FormAccommodation({ guest, place, editing = false }) {
           </div>
 
 
-          <button className="btn btn-primary" disabled={[FORM_STATUS[1], FORM_STATUS[2]].includes(labelSave)}>
+          <button className="btn btn-primary" disabled={[FORM_STATUS[1], FORM_STATUS[2], FORM_STATUS[3]].includes(labelSave) || !isDirty}>
             {labelSave}
           </button>
         </div>

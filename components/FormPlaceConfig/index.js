@@ -1,4 +1,3 @@
-import { config } from "process"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { updatePlace } from "../../firebase/places"
@@ -6,7 +5,11 @@ import Checkbox from "../inputs/checkbox"
 
 const FormPlaceConfig = ({ place }) => {
 
-  const { register, watch, handleSubmit, formState: { isDirty, } } = useForm({ defaultValues: place.config })
+  const { register, watch, handleSubmit, formState: { isDirty, } } = useForm({
+    defaultValues: {
+      ...place.config
+    }
+  })
   const FORM_STATUS = {
     0: 'Guardar',
     1: 'Guardado',
@@ -35,13 +38,12 @@ const FormPlaceConfig = ({ place }) => {
       <div className="grid max-w-sm  mx-auto my-6">
         <div className="divider" />
         <form onSubmit={handleSubmit(onSubmit)}>
-
           <div className="flex items-center justify-evenly ">
             <span className="label-text whitespace-nowrap">Huespedes visibles para : </span>
             <div className="flex items-center justify-evenly w-full">
               <Checkbox {...register('guestsVisiblesFor.admin')} label='Admin' />
-              <Checkbox {...register('guestsVisiblesFor.guests')} label='Huespedes' disabled />
-              <Checkbox {...register('guestsVisiblesFor.all')} label='Todos' />
+              {/*   <Checkbox {...register('guestsVisiblesFor.guests')} label='Huespedes' /> */}
+              <Checkbox {...register('guestsVisiblesFor.all',)} label='Todos' />
             </div>
           </div>
 

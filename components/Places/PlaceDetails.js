@@ -37,7 +37,12 @@ export default function PlaceDetails({ place = {} }) {
       <h1 className="text-2xl font-bold text-center">{place.name}</h1>
 
       {isOwner &&
-        <div className="grid gap-4 grid-flow-col my-2 max-w-sm mx-auto">
+        <div className="grid gap-4 sm:grid-flow-col px-2 my-2 max-w-lg mx-auto">
+          <Link href={`/places/${place.id}/dashboard`}>
+            <button className="btn btn-outline btn-sm" >
+              Dashboard
+            </button>
+          </Link>
           <Link href={`/places/${place.id}/new-guest`}>
             <button className="btn btn-primary btn-sm" >
               Nuevo huesped
@@ -45,7 +50,6 @@ export default function PlaceDetails({ place = {} }) {
           </Link>
           <MainModal buttonLabel="Eliminar" title="Eliminar lugar" OpenComponentProps={{ className: 'btn btn-error btn-sm' }}>
             <div className="flex justify-center flex-col items-center">
-
               <h2 >
                 ¿Eliminar lugar de forma permanente?
               </h2>
@@ -55,7 +59,6 @@ export default function PlaceDetails({ place = {} }) {
                 </button>
               </div>
             </div>
-
           </MainModal>
           <button className="btn btn-info btn-sm" onClick={() => handleEdit()}>
             Editar

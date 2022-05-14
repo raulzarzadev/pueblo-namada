@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import FormPlaceConfig from "../../../../components/FormPlaceConfig"
 import PlaceDetails from "../../../../components/Places/PlaceDetails"
 import { listenPlace } from "../../../../firebase/places"
+import PlaceGuests from "../../../../components/Places/PlaceGuests"
 
 export default function dashboard() {
   const [place, setPlace] = useState(undefined)
@@ -33,8 +34,9 @@ export default function dashboard() {
 
       {place &&
         <>
-          <FormPlaceConfig place={place} />
           <PlaceDetails place={place} />
+          <FormPlaceConfig place={place} />
+          <PlaceGuests place={place} showTable showPaymentsTable />
         </>
 
       }

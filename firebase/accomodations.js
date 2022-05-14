@@ -90,6 +90,8 @@ export async function listenAccommodationPayments(...props) {
 
 
 
+
+
 export async function newAccommodation(accommodation) {
   const user = mapUserFromFirebase(auth.currentUser)
   if (!user) return console.error('No user logged in')
@@ -105,3 +107,19 @@ export async function newAccommodation(accommodation) {
   }
 
 }
+
+
+export async function listenPlacePayments(...props) {
+  const cb = props.pop()
+  const placeId = props[0]
+  const q = query(collection(db, 'accommodations'), where('place', '==', placeId))
+  onSnapshot(q, querySnapshot => {
+    let accommodations = []
+    querySnapshot.docs.forEach(doc => {
+      accommodations.push({ ...doc.data(), id: doc.id })
+    }
+    )
+    cb(accommodations)
+  })
+}
+
