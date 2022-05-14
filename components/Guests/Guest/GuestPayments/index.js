@@ -36,13 +36,13 @@ const GuestPayments = ({ place, guest }) => {
 export const PaymentDetails = ({ payment }) => {
 
   const handleDeleteAccommodation = (id) => {
-    console.log('id', id);
     deleteAccommodation(id).then(res => {
       console.log('res', res);
     })
   }
 
   const { discountedNights, mxnTotal, usdTotal, nights, createdAt, dates, prices } = payment
+
   return (
     <>
       <div className="flex justify-evenly flex-col my-2 " >
@@ -52,10 +52,10 @@ export const PaymentDetails = ({ payment }) => {
         <div className="sm:flex justify-between">
           <div>
             Desde:
-            {dates?.starts ? formatDate(dates?.starts, "dd/MM/yy") : 'n/d'}
+            {/*  {dates?.starts ? formatDate(dates?.starts, "dd/MM/yy") : 'n/d'} */}
           </div>
           <div>
-            Hasta: {dates?.ends ? formatDate(dates?.ends, "dd/MM/yy") : 'n/d'}
+            {/*  Hasta: {dates?.ends ? formatDate(dates?.ends, "dd/MM/yy") : 'n/d'} */}
           </div>
         </div>
         <Section title={'Detalles'} >
@@ -91,19 +91,19 @@ export const PaymentDetails = ({ payment }) => {
               <div>
                 Desde:
                 <span className="font-bold">
-                  {formatDate(dates.starts) || 'n/d'}
+                  {dates && formatDate(dates?.starts) || 'n/d'}
                 </span>
               </div>
               <div>
                 Hasta:
                 <span className="font-bold">
-                  {formatDate(new Date(dates?.ends), "dd/MM/yy") || 'n/d'}
+                  {dates && formatDate(new Date(dates?.ends), "dd/MM/yy") || 'n/d'}
                 </span>
               </div>
               <div>
                 Creado :
                 <span className="font-bold">
-                  {formatDate(new Date(createdAt), "dd/MM/yy HH:mm") || 'n/d'}
+                  {createdAt && formatDate(new Date(createdAt), "dd/MM/yy HH:mm") || 'n/d'}
                 </span>
               </div>
             </div>
