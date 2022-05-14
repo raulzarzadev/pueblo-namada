@@ -68,7 +68,6 @@ const PaymentsTable = ({ place, guests }) => {
     listenPlacePayments(place?.id, setPayments)
 
   }, [])
-  console.log(payments);
   return (
     <div>
       <h2 className="font-bold text-center">Pagos</h2>
