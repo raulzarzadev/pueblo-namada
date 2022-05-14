@@ -5,12 +5,10 @@ import SettingsIcon from "../../icons/SettingsIcon"
 import MainModal from "../../Modal/MainModal"
 
 export default function PlacePyments({ place }) {
-  console.log(place)
   const [payments, setPayments] = useState(undefined)
   useEffect(() => {
     listenPlaceAccomomodations(place.id, setPayments)
   }, [])
-  console.log(payments)
 
   return (
     <div>

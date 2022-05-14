@@ -28,7 +28,11 @@ const GuestPayments = ({ place, guest }) => {
         </MainModal>
       </div>
       {!payments?.length && <p className="text-center" >Sin pagos aún</p >}
-      {payments?.map(payment => <PaymentDetails payment={payment} key={payment.id} />)}
+      {payments?.map(payment =>
+        <Section title={`$${parseFloat(payment.mxnTotal).toFixed(2)}`} subtitle={`${formatDate(payment?.dates?.starts)} - ${formatDate(payment?.dates?.ends)}`}>
+          <PaymentDetails payment={payment} key={payment.id} />
+        </Section>
+      )}
     </div>
   )
 }
@@ -45,49 +49,23 @@ export const PaymentDetails = ({ payment }) => {
 
   return (
     <>
-      <div className="flex justify-evenly flex-col my-2 " >
-        <div className="text-right">
-          ${parseFloat(payment?.mxnTotal).toFixed(2)}
-        </div>
-        <div className="sm:flex justify-between">
-          <div>
-            Desde:
-            {/*  {dates?.starts ? formatDate(dates?.starts, "dd/MM/yy") : 'n/d'} */}
-          </div>
-          <div>
-            {/*  Hasta: {dates?.ends ? formatDate(dates?.ends, "dd/MM/yy") : 'n/d'} */}
-          </div>
-        </div>
-        <Section title={'Detalles'} >
-          <div>
-            <div className="flex justify-between">
-              <div >
+      <div>
+        <div >
+          <div className="flex justify-between text-right mb-4">
+            <div >
+
+              <div>
+                <span>Precios </span>
                 <div>
-                  <span >Noches:</span> <span className="font-bold">{nights}</span>
+                  Noche: <span className="font-bold">${prices?.night}</span>
                 </div>
                 <div>
-                  <span>Precios: </span>
-                  <div>
-                    Noche: <span className="font-bold">${prices?.night}</span>
-                  </div>
-                  <div>
-                    USD: <span className="font-bold">${prices?.usd}</span>
-                  </div>
-                </div>
-              </div>
-              <div className="text-right">
-                <div>
-                  <span >Descuento(noches):</span> <span className="font-bold">{discountedNights || 0}</span>
-                </div>
-                <div>
-                  <span >Total (mxn):</span> <span className="font-bold">${parseFloat(mxnTotal).toFixed(2)}</span>
-                </div>
-                <div>
-                  <span >Total (usd):</span> <span className="font-bold">${parseFloat(usdTotal).toFixed(2)}</span>
+                  USD: <span className="font-bold">${prices?.usd}</span>
                 </div>
               </div>
             </div>
-            <div className="text-right">
+            <div>
+              <span >Fechas </span>
               <div>
                 Desde:
                 <span className="font-bold">
@@ -107,17 +85,33 @@ export const PaymentDetails = ({ payment }) => {
                 </span>
               </div>
             </div>
-            <div className="flex justify-center my-4">
-              <MainModal title='Eliminar pago' buttonLabel="Eliminar" OpenComponentType='delete'>
-                <div className="flex flex-col items-center flex-center">
-                  <p className="text-center">¿Seguro de que deseas eliminar este hospedaje?</p>
-                  <button className="btn btn-error btn-sm m-4" onClick={() => handleDeleteAccommodation(payment.id)}>Eliminar</button>
-                </div>
-              </MainModal>
+
+          </div>
+
+          <div className="text-right">
+            <div>
+              <span >Noches:</span> <span className="font-bold">{nights}</span>
+            </div>
+            <div>
+              <span >Descuento(noches):</span> <span className="font-bold">{discountedNights || 0}</span>
+            </div>
+            <div>
+              <span >Total (mxn):</span> <span className="font-bold">${parseFloat(mxnTotal).toFixed(2)}</span>
+            </div>
+            <div>
+              <span >Total (usd):</span> <span className="font-bold">${parseFloat(usdTotal).toFixed(2)}</span>
             </div>
           </div>
-        </Section>
-        <div className="divider" />
+        </div>
+
+        <div className="flex justify-center my-4">
+          <MainModal title='Eliminar pago' buttonLabel="Eliminar" OpenComponentType='delete'>
+            <div className="flex flex-col items-center flex-center">
+              <p className="text-center">¿Seguro de que deseas eliminar este hospedaje?</p>
+              <button className="btn btn-error btn-sm m-4" onClick={() => handleDeleteAccommodation(payment.id)}>Eliminar</button>
+            </div>
+          </MainModal>
+        </div>
       </div>
     </>
   )

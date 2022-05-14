@@ -1,3 +1,4 @@
+import { isEqual } from "date-fns"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { updatePlace } from "../../firebase/places"
@@ -17,12 +18,36 @@ const FormPlaceConfig = ({ place }) => {
     3: 'Cancelado'
   }
 
-  useEffect(() => {
-    isDirty && setLabelSave(0)
-  }, [watch()])
+
+  function deepEqual(x, y) {
+    const isObject = x => typeof x == "object" && x != null;
+    if (x === y) {
+      return true;
+    } else if (!isObject(x) || !isObject(y)) {
+      return false;
+    }
+    if (Object.keys(x).length != Object.keys(y).length) {
+      return false;
+    }
+
+    for (var prop in x) {
+      if (!y.hasOwnProperty(prop)) {
+        return false;
+      }
+      if (!deepEqual(x[prop], y[prop])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
 
   const defaultLabel = 1
   const [labelSave, setLabelSave] = useState(defaultLabel);
+  useEffect(() => {
+    deepEqual(watch(), { ...place.config }) ? setLabelSave(1) : setLabelSave(0)
+  }, [watch()])
+
   const onSubmit = data => {
     setLabelSave(2)
     updatePlace(place.id, {
@@ -34,8 +59,8 @@ const FormPlaceConfig = ({ place }) => {
 
   return (
     <div>
-      <h2 className="text-center">Configuración</h2>
-      <div className="grid max-w-sm  mx-auto my-6">
+      <h2 className="text-center font-bold text-xl">Configuración</h2>
+      <div className="grid max-w-sm  mx-auto mb-6">
         <div className="divider" />
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex items-center justify-evenly ">
@@ -43,7 +68,7 @@ const FormPlaceConfig = ({ place }) => {
             <div className="flex items-center justify-evenly w-full">
               <Checkbox {...register('guestsVisiblesFor.admin')} label='Admin' />
               {/*   <Checkbox {...register('guestsVisiblesFor.guests')} label='Huespedes' /> */}
-              <Checkbox {...register('guestsVisiblesFor.all',)} label='Todos' />
+              <Checkbox {...register('guestsVisiblesFor.all')} label='Todos' />
             </div>
           </div>
 

@@ -110,7 +110,9 @@ const PaymentRow = ({ place, payment, guests }) => {
         {guest?.name}
         {payment &&
           <Modal title={guest?.name} open={open} handleOpen={handleOpen} >
-            {guest?.name}
+            <h2 className="font-bold">
+              {guest?.name}
+            </h2>
             <PaymentDetails payment={payment} />
             {/* <GuestDetails place={place} guest={guest} /> */}
           </Modal>
