@@ -3,7 +3,6 @@ import { useUser } from '@comps/context/userContext'
 import { deletePlace } from "../../firebase/places";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import GuestsHistory from "../GuestsHistory";
 import MainModal from "../Modal/MainModal";
 import Section from "../Section";
 
@@ -89,9 +88,7 @@ export default function PlaceDetails({ place = {} }) {
           </Section>
         }
       </div>
-      {/*  {!!user &&
-        <GuestsHistory place={place} />
-      } */}
+
     </div>
   )
 }

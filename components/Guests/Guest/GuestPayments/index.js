@@ -29,7 +29,7 @@ const GuestPayments = ({ place, guest }) => {
       </div>
       {!payments?.length && <p className="text-center" >Sin pagos aún</p >}
       {payments?.map(payment =>
-        <Section title={`$${parseFloat(payment.mxnTotal).toFixed(2)}`} subtitle={`${formatDate(payment?.dates?.starts)} - ${formatDate(payment?.dates?.ends)}`}>
+        <Section key={payment?.id} title={`$${parseFloat(payment.mxnTotal).toFixed(2)}`} subtitle={`${formatDate(payment?.dates?.starts)} - ${formatDate(payment?.dates?.ends)}`}>
           <PaymentDetails payment={payment} key={payment.id} />
         </Section>
       )}

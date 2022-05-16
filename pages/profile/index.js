@@ -10,10 +10,6 @@ export default function Profile() {
     listenUserPlaces(setPlaces)
   }, [])
 
-
-
-
-
   return (
     <div>
       <h1 className="text-center">Perfil de usuario</h1>
@@ -28,7 +24,7 @@ export default function Profile() {
         </div>
         <div className="grid gap-4 max-w-lg mx-auto">
           {places?.map(place =>
-            <PlaceCard place={place} linkToDashboard isOwner />)}
+            <PlaceCard key={place?.id} place={place} linkToDashboard isOwner />)}
         </div>
       </div>
     </div>
