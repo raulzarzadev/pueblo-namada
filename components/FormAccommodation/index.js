@@ -7,13 +7,15 @@ import InputNumber from "../inputs/InputNumber";
 import Text from "../inputs/text";
 
 export default function FormAccommodation({ guest, place, editing = false }) {
-  const { register, handleSubmit, watch, setValue, reset, formState: { errors, isDirty } } = useForm(
+  const { register, handleSubmit, watch, setValue, reset, formState } = useForm(
     {
       defaultValues: {
         accommodationStarts: format(new Date(), "yyyy-MM-dd"),
       }
     }
   );
+
+  console.log(formState)
 
   const FORM_STATUS = {
     0: 'Pagar',
@@ -28,33 +30,34 @@ export default function FormAccommodation({ guest, place, editing = false }) {
   const [labelSave, setLabelSave] = useState(defaultLabel);
 
   const onSubmit = data => {
-    setLabelSave(FORM_STATUS[3])
-    const accomodation = {
-      place: place.id,
-      guest: guest.id, ...data,
-      mxnTotal: getTotal().mxn,
-      usdTotal: getTotal().usd,
-      prices: {
-        night: place?.price || null,
-        usd: place?.usdPrice || null,
-
-      },
-      discountedNights: data.discountedNights,
-      dates: {
-        starts: watch('accommodationStarts'),
-        ends: accommodationEnds()
+    console.log('pasa', data)
+    /*   setLabelSave(FORM_STATUS[3])
+      const accomodation = {
+        place: place.id,
+        guest: guest.id, ...data,
+        mxnTotal: getTotal().mxn,
+        usdTotal: getTotal().usd,
+        prices: {
+          night: place?.price || null,
+          usd: place?.usdPrice || null,
+  
+        },
+        discountedNights: data.discountedNights,
+        dates: {
+          starts: watch('accommodationStarts'),
+          ends: accommodationEnds()
+        }
       }
-    }
-    newAccommodation(accomodation)
-      .then(res => {
-        console.log('place created', res)
-        setLabelSave(FORM_STATUS[1])
-        setTimeout(() => {
-          setLabelSave(FORM_STATUS[0])
-          //router.back()
-          reset()
-        }, 1000)
-      })
+      newAccommodation(accomodation)
+        .then(res => {
+          console.log('place created', res)
+          setLabelSave(FORM_STATUS[1])
+          setTimeout(() => {
+            setLabelSave(FORM_STATUS[0])
+            //router.back()
+            reset()
+          }, 1000)
+        }) */
   };
 
   const getTotal = () => {
@@ -120,14 +123,16 @@ export default function FormAccommodation({ guest, place, editing = false }) {
             <p className="">
               Total (usd) :
               <span className="font-bold text-xl">
-
                 {`$${getTotal().usd}`}
               </span>
             </p>
           </div>
 
 
-          <button className="btn btn-primary" disabled={[FORM_STATUS[1], FORM_STATUS[2], FORM_STATUS[3]].includes(labelSave) || !isDirty}>
+          <button
+            className="btn btn-primary"
+          /* disabled={[FORM_STATUS[1], FORM_STATUS[2], FORM_STATUS[3]].includes(labelSave) || !isDirty} */
+          >
             {labelSave}
           </button>
         </div>

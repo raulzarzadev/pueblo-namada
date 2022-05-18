@@ -23,7 +23,8 @@ const GuestPayments = ({ place, guest }) => {
     <div>
       <h1 className="text-center font-bold mt-10">Historial de pagos</h1>
       <div className="flex justify-center">
-        <MainModal title="Nuevo huesped" OpenComponentType='primary' buttonLabel="Nuevo pago">
+        <MainModal title={`Nuevo pago de ${guest?.name}`} OpenComponentType='primary' buttonLabel="Nuevo pago">
+          <h1 className="text-xl ">{guest?.name}</h1>
           <FormAccommodation place={place} guest={guest} />
         </MainModal>
       </div>

@@ -109,7 +109,7 @@ const PaymentRow = ({ place, payment, guests }) => {
       <Cell className="max-w-[75px] truncate">
         {guest?.name}
         {payment &&
-          <Modal title={guest?.name} open={open} handleOpen={handleOpen} >
+          <Modal title={`Nuevo pago de ${guest?.name}`} open={open} handleOpen={handleOpen} >
             <h2 className="font-bold">
               {guest?.name}
             </h2>
@@ -171,12 +171,15 @@ const GuestRow = ({ place, guest, payments }) => {
     if (toNumber(a?.createdAt) < toNumber(b?.createdAt)) return -1
     return 0
   })
+
+  console.log(sortedPayments)
+  const lastPay = sortedPayments[0]
   return (
     <>
       <tr className="cursor-pointer hover:bg-base-200" onClick={() => handleOpen()} >
         <Cell>
           {guest?.name}
-          <Modal title={guest?.name} open={open} handleOpen={handleOpen} >
+          <Modal title={`Información de ${guest?.name} `} open={open} handleOpen={handleOpen} >
             <GuestDetails place={place} guest={guest} />
           </Modal>
         </Cell>
@@ -188,10 +191,10 @@ const GuestRow = ({ place, guest, payments }) => {
         </Cell>
         <Cell>
           <div className="text-sm">
-            {formatDate(sortedPayments[0]?.createdAt, 'dd MMM yy')}
+            {lastPay?.createdAt && formatDate(lastPay?.createdAt, 'dd MMM yy')}
           </div>
           <div className="text-sm">
-            {`$${parseFloat(sortedPayments[0]?.mxnTotal).toFixed(2)}`}
+            {`$${lastPay?.mxnTotal && parseFloat(lastPay?.mxnTotal).toFixed(2)}`}
           </div>
           {/*   {payments.sort((a, b) => {
             const toNumber = date => date.getTime()

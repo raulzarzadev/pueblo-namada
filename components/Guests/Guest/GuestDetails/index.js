@@ -26,7 +26,7 @@ export const GuestDetails = ({ guest, place }) => {
   return (
     <div className="max-w-sm mx-auto">
       <p>
-        <span className="font-bold">Nombre:</span> {guest.name}
+        <span className="font-bold">Nombre:</span> {guest?.name}
       </p>
       {plates &&
         <p>

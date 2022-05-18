@@ -2,6 +2,7 @@
 import { format } from "date-fns"
 
 export const formatDate = (date, stringFormat = 'dd/MM/yy') => {
+  if (!date) return console.error('no date')
   const objectDate = new Date(date)
   function isValidDate(d) {
     return d instanceof Date && !isNaN(d)
