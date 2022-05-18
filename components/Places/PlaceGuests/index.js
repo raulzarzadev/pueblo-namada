@@ -188,10 +188,10 @@ const GuestRow = ({ place, guest, payments }) => {
         </Cell>
         <Cell>
           <div className="text-sm">
-            {formatDate(sortedPayments[0].createdAt, 'dd MMM yy')}
+            {formatDate(sortedPayments[0]?.createdAt, 'dd MMM yy')}
           </div>
           <div className="text-sm">
-            {`$${parseFloat(sortedPayments[0].mxnTotal).toFixed(2)}`}
+            {`$${parseFloat(sortedPayments[0]?.mxnTotal).toFixed(2)}`}
           </div>
           {/*   {payments.sort((a, b) => {
             const toNumber = date => date.getTime()
