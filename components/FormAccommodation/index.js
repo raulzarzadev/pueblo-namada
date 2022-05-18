@@ -15,7 +15,6 @@ export default function FormAccommodation({ guest, place, editing = false }) {
     }
   );
 
-  console.log(formState)
 
   const FORM_STATUS = {
     0: 'Pagar',
@@ -30,34 +29,34 @@ export default function FormAccommodation({ guest, place, editing = false }) {
   const [labelSave, setLabelSave] = useState(defaultLabel);
 
   const onSubmit = data => {
-    console.log('pasa', data)
-    /*   setLabelSave(FORM_STATUS[3])
-      const accomodation = {
-        place: place.id,
-        guest: guest.id, ...data,
-        mxnTotal: getTotal().mxn,
-        usdTotal: getTotal().usd,
-        prices: {
-          night: place?.price || null,
-          usd: place?.usdPrice || null,
-  
-        },
-        discountedNights: data.discountedNights,
-        dates: {
-          starts: watch('accommodationStarts'),
-          ends: accommodationEnds()
-        }
+    // console.log('pasa', data)
+    setLabelSave(FORM_STATUS[3])
+    const accomodation = {
+      place: place.id,
+      guest: guest.id, ...data,
+      mxnTotal: getTotal().mxn,
+      usdTotal: getTotal().usd,
+      prices: {
+        night: place?.price || null,
+        usd: place?.usdPrice || null,
+
+      },
+      discountedNights: data.discountedNights,
+      dates: {
+        starts: watch('accommodationStarts'),
+        ends: accommodationEnds()
       }
-      newAccommodation(accomodation)
-        .then(res => {
-          console.log('place created', res)
-          setLabelSave(FORM_STATUS[1])
-          setTimeout(() => {
-            setLabelSave(FORM_STATUS[0])
-            //router.back()
-            reset()
-          }, 1000)
-        }) */
+    }
+    newAccommodation(accomodation)
+      .then(res => {
+        console.log('payment created', res)
+        setLabelSave(FORM_STATUS[1])
+        setTimeout(() => {
+          setLabelSave(FORM_STATUS[0])
+          //router.back()
+          reset()
+        }, 1000)
+      })
   };
 
   const getTotal = () => {
@@ -80,9 +79,12 @@ export default function FormAccommodation({ guest, place, editing = false }) {
   }
 
 
+  // TODO why handlesubmit from react hook form dont works??
+
   return (
     <div className="p-1">
-      <form onSubmit={handleSubmit(onSubmit)}>
+
+      <form onSubmit={(e) => { console.log(e) }}>
         <div className="grid gap-1 place-content-stretch ">
           <div>
             <p className="">Precio x noche (mxn):
@@ -106,8 +108,8 @@ export default function FormAccommodation({ guest, place, editing = false }) {
             </p>
           </div>
           <div className="sm:flex justify-center text-center">
-            <Text {...register('accommodationStarts')} type='date' label='Desde' />
-            <Text value={accommodationEnds()} type='date' disabled label='Hasta' />
+            <Text type='date' label='Desde'  {...register('accommodationStarts')} />
+            <Text type='date' label='Hasta' disabled value={accommodationEnds()} />
           </div>
           <div className="flex justify-end flex-col items-end">
             <InputNumber type='number' {...register('nights')} label={'Noches'} smallSize sideLabel min={0} max={99} />
@@ -130,8 +132,10 @@ export default function FormAccommodation({ guest, place, editing = false }) {
 
 
           <button
+            type="submit"
             className="btn btn-primary"
-          /* disabled={[FORM_STATUS[1], FORM_STATUS[2], FORM_STATUS[3]].includes(labelSave) || !isDirty} */
+            /* disabled={[FORM_STATUS[1], FORM_STATUS[2], FORM_STATUS[3]].includes(labelSave) || !isDirty} */
+            onClick={() => onSubmit(watch())}
           >
             {labelSave}
           </button>
