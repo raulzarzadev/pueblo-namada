@@ -79,7 +79,12 @@ export default function FormAccommodation({ guest, place, editing = false }) {
   }
 
 
-  // TODO why handlesubmit from react hook form dont works??
+  /**
+  * TODO fix handleSubmit
+  * ! handle submit from react-hook-forms dont works! 
+  * 
+  */
+
 
   return (
     <div className="p-1">

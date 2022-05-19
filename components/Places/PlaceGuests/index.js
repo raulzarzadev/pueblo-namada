@@ -8,6 +8,8 @@ import { GuestDetails } from "../../Guests/Guest/GuestDetails";
 import { PaymentDetails } from "../../Guests/Guest/GuestPayments";
 import Modal from "../../Modal";
 
+
+
 export default function PlaceGuests({ place, showTable = false, showCards = false, showPaymentsTable = false }) {
 
   const { user } = useUser()
@@ -46,7 +48,7 @@ export default function PlaceGuests({ place, showTable = false, showCards = fals
     <div className="">
       <h1 className="text-center font-bold border">Huespedes</h1>
 
-      <div className="text-sm">
+      <div className="text-sm max-w-sm mx-auto">
         {showCards &&
           guests?.map((guest, i) => <GuestCard key={`${guest.id}-${i}`} guest={guest} isOwner={isOwner} place={place} />)
         }
@@ -63,15 +65,17 @@ export default function PlaceGuests({ place, showTable = false, showCards = fals
 }
 
 const PaymentsTable = ({ place, guests }) => {
+
   const [payments, setPayments] = useState(undefined)
+
   useEffect(() => {
     listenPlacePayments(place?.id, setPayments)
-
   }, [])
+
   return (
     <div>
       <h2 className="font-bold text-center">Pagos</h2>
-      <table className="mx-auto">
+      <table className="mx-auto w-full">
         <thead>
           <tr>
             <th>
@@ -134,7 +138,7 @@ const PaymentRow = ({ place, payment, guests }) => {
 const GuestsTable = ({ guests, payments, place }) => {
 
   return (
-    <table className="mx-auto">
+    <table className="mx-auto w-full">
 
       <thead>
         <tr >
@@ -172,7 +176,6 @@ const GuestRow = ({ place, guest, payments }) => {
     return 0
   })
 
-  console.log(sortedPayments)
   const lastPay = sortedPayments[0]
   return (
     <>

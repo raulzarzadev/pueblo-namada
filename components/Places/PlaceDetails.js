@@ -23,10 +23,11 @@ export default function PlaceDetails({ place = {} }) {
     router.push(`/places/${place.id}/edit`)
   }
 
+  const alreadyInDashboard = router.pathname.includes('/dashboard')
   const { image } = place
 
   return (
-    <div className=" mx-auto ">
+    <div className=" mx-auto  relative">
       {image &&
         <figure className="relative w-full h-52" >
           <Image src={image} layout="fill" objectFit="contain" />
@@ -37,11 +38,13 @@ export default function PlaceDetails({ place = {} }) {
 
       {isOwner &&
         <div className="grid gap-4 sm:grid-flow-col px-2 my-2 max-w-lg mx-auto">
-          <Link href={`/places/${place.id}/dashboard`}>
-            <button className="btn btn-outline btn-sm" >
-              Dashboard
-            </button>
-          </Link>
+          {!alreadyInDashboard &&
+            <Link href={`/places/${place.id}/dashboard`}>
+              <button className="btn btn-outline btn-sm" >
+                Dashboard
+              </button>
+            </Link>
+          }
           <Link href={`/places/${place.id}/new-guest`}>
             <button className="btn btn-primary btn-sm" >
               Nuevo huesped
@@ -66,24 +69,21 @@ export default function PlaceDetails({ place = {} }) {
       }
 
 
-      <div className="max-w-md mx-auto pb-12">
+      <div className="max-w-md mx-auto pb-12 ">
         <p className="text-center">{place.contact}</p>
         <p className="my-2 p-1">{place.resume}</p>
         {place?.amenities &&
-          <div>
-            <h2 className="font-bold">
-              Amenidades
-            </h2>
+          <Section title='Amenidades' sticky open>
             <p className="mb-2  whitespace-pre-line">{place?.amenities}</p>
-          </div>
+          </Section>
         }
         {place.rules &&
-          <Section title='Reglamento'>
+          <Section title='Reglamento' sticky>
             <p className="p-1 whitespace-pre-line">{place.rules}</p>
           </Section>
         }
         {place?.recomendations &&
-          <Section title='Recomendaciones'>
+          <Section title='Recomendaciones' sticky>
             <p className="p-1 whitespace-pre-line">{place.recomendations}</p>
           </Section>
         }

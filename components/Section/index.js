@@ -13,11 +13,16 @@ export default function Section({
     setShow(open)
   }, [open])
   return (
-    <section className="my-2 bg-base-100   text-base-content shadow-lg px-1 rounded-md  pt-1 ">
+    <section
+      className={`
+          my-2 bg-base-100   text-base-content shadow-lg px-1 rounded-md pt-1
+        `}
+    >
       <h3
         className={`
-        text-left flex  mb-1 font-bold items-center justify-between cursor-pointer
-        ${sticky && `sticky top-16`}`}
+        text-left flex  mb-1 font-bold items-center justify-between cursor-pointer 
+        ${sticky && ' sticky top-0 bg-base-100 '}
+       `}
         onClick={() => setShow(!show)}
       >
         {title} <span className="font-medium  text-xs mx-2">{subtitle}</span>
