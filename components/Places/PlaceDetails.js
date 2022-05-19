@@ -71,7 +71,7 @@ export default function PlaceDetails({ place = {} }) {
 
       <div className="max-w-md mx-auto pb-12 ">
         <p className="text-center">{place.contact}</p>
-        <p className="my-2 p-1">{place.resume}</p>
+        <p className="my-2 p-1 whitespace-pre-line">{place.resume}</p>
         {place?.amenities &&
           <Section title='Amenidades' sticky open>
             <p className="mb-2  whitespace-pre-line">{place?.amenities}</p>
