@@ -13,14 +13,21 @@ export default function Section({
     setShow(open)
   }, [open])
   return (
-    <section className="my-2 bg-base-100   text-base-content shadow-lg px-1 rounded-md  pt-1 ">
+    <section
+      className={`
+          bg-base-100   text-base-content shadow-lg  rounded-md py-0.5
+        `}
+    >
       <h3
-        className={`
-        text-left flex  mb-1 font-bold items-center justify-between cursor-pointer
-        ${sticky && `sticky top-16`}`}
+        className={` p-1
+        text-left flex   font-bold  items-center justify-between cursor-pointer z-10
+        ${sticky && ' sticky top-0 bg-base-100 '}
+        `}
         onClick={() => setShow(!show)}
       >
-        {title} <span className="font-thin  text-xs mx-2">{subtitle}</span>
+        <div className=''>
+          {title} <span className="font-medium  text-xs mx-2 ">{subtitle}</span>
+        </div>
         {show ? <svg width="24px" height="24px" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path fillRule="evenodd" clipRule="evenodd" d="M8.34921 4.24075C7.92989 4.60017 7.88132 5.23147 8.24075 5.65079L13.6829 12L8.24075 18.3492C7.88132 18.7685 7.92989 19.3998 8.34921 19.7593C8.76854 20.1187 9.39984 20.0701 9.75926 19.6508L15.7593 12.6508C16.0803 12.2763 16.0803 11.7237 15.7593 11.3492L9.75926 4.34921C9.39984 3.92989 8.76854 3.88132 8.34921 4.24075Z" fill="currentColor" />
         </svg> : <svg

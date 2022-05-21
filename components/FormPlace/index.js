@@ -30,16 +30,17 @@ export default function FormPlace({ place, editing = false }) {
   const onSubmit = data => {
     setLabelSave(FORM_STATUS[2])
     editing ? updatePlace(place.id, data).then(res => {
+      console.log(res)
       setLabelSave(FORM_STATUS[1])
       setTimeout(() => {
         setLabelSave(defaultLabel)
-        router.back()
+        // router.back()
       }, 1000)
     }) : newPlace(data).then(res => {
       setLabelSave(FORM_STATUS[1])
       setTimeout(() => {
         setLabelSave(defaultLabel)
-        router.back()
+        // router.back()
       }, 1000)
     });
   };

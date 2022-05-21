@@ -1,12 +1,12 @@
 {
   "name": "Parking Place App",
-  "short_name": "Parking-Place",
+  "short_name": "ParkPlace",
   "theme_color": "#ffffff",
   "background_color": "#004740",
   "display": "fullscreen",
   "orientation": "portrait",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "/profile",
   "icons": [
     {
       "src": "icons/icon-48x48.png",

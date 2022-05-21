@@ -2,6 +2,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import PlaceCard from "../../components/Places/PlaceCard"
 import { listenUserPlaces } from "../../firebase/places"
+import PrivatePage from '../../components/HOC/PrivatePage'
 
 export default function Profile() {
   const [places, setPlaces] = useState(undefined)
@@ -14,8 +15,7 @@ export default function Profile() {
 
 
   return (
-    <div>
-      <h1 className="text-center">Perfil de usuario</h1>
+    <PrivatePage>
       <div>
         <h2 className="text-center">Mis Lugares</h2>
         <div className="flex w-full justify-center p-2">
@@ -30,6 +30,6 @@ export default function Profile() {
             <PlaceCard place={place} linkToDashboard />)}
         </div>
       </div>
-    </div>
+    </PrivatePage >
   )
 }

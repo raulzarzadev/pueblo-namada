@@ -21,19 +21,23 @@ export async function signIn({ email, password }) {
 }
 
 export function authStateChanged(...props) {
-  const cb = props.pop()
+  const cb = props?.pop()
   return onAuthStateChanged(auth, (user) => {
     if (user) {
-      const uid = user.uid;
       cb(mapUserFromFirebase(user))
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
       // ...
     } else {
-      cb(null)
-      return null
-      // User is signed out
-      // ...
+      if (cb) {
+        console.log(cb)
+        cb(null)
+
+      } else {
+        return
+      }
+
+
     }
   });
 }
