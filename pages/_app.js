@@ -9,7 +9,7 @@ export default function MyApp({ Component, pageProps }) {
     <>
       <Head>
         <title>
-          {INFO.name | INFO.short_name}
+          {INFO?.name}
         </title>
         <meta name="description" content='Keep control of your guests with this simple and powerfull web app. ' />
         <link rel="icon" href="/icon.png"></link>
