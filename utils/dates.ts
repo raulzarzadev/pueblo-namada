@@ -14,8 +14,9 @@ export const format = (date: string | number | Date, stringFormat = 'dd/MM/yy'):
   if (isValidDate(objectDate)) {
     return fnsFormat(new Date(objectDate.setMinutes(objectDate.getMinutes() + objectDate.getTimezoneOffset())), stringFormat)
   } else {
-    console.error('date is not valid date')
+    return 'NaD'
   }
+  console.error('date is not valid date')
 
 }
 

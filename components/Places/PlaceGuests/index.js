@@ -2,15 +2,22 @@ import { useEffect, useState } from "react"
 import { listenPlacePayments } from "../../../firebase/accomodations";
 import { listenPlaceGuests } from "../../../firebase/guests";
 import { formatDate } from "../../../utils/dates";
+import sortByDate from "../../../utils/sortByDate";
 import { useUser } from "../../context/userContext";
 import GuestCard from "../../Guests/Guest/GuestCard";
 import { GuestDetails } from "../../Guests/Guest/GuestDetails";
 import { PaymentDetails } from "../../Guests/Guest/GuestPayments";
 import Modal from "../../Modal";
+import PlaceCosts from "../PlaceCosts";
 
 
 
-export default function PlaceGuests({ place, showTable = false, showCards = false, showPaymentsTable = false }) {
+export default function PlaceGuests({ place,
+  showTable = false,
+  showCards = false,
+  showPaymentsTable = false,
+  showOperatingCosts = false
+}) {
 
   const { user } = useUser()
   const isOwner = place?.userId === user?.uid
@@ -57,7 +64,9 @@ export default function PlaceGuests({ place, showTable = false, showCards = fals
         }
         {showPaymentsTable &&
           <PaymentsTable place={place} guests={guests} />}
-
+        {showOperatingCosts &&
+          <PlaceCosts place={place} />
+        }
 
       </div>
     </div>
@@ -93,7 +102,7 @@ const PaymentsTable = ({ place, guests }) => {
           </tr>
         </thead>
         <tbody>
-          {payments?.map(payment => <PaymentRow key={payment.id} place={place} payment={payment} guests={guests} />)}
+          {sortByDate(payments)?.map(payment => <PaymentRow key={payment.id} place={place} payment={payment} guests={guests} />)}
         </tbody>
       </table>
     </div>
@@ -101,6 +110,7 @@ const PaymentsTable = ({ place, guests }) => {
 }
 
 const PaymentRow = ({ place, payment, guests }) => {
+  console.log(payment)
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
   const guest = guests?.find(({ id }) => id === payment?.guest)

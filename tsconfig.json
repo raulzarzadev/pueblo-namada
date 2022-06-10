@@ -20,6 +20,15 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
+      "inputs/*": [
+        "components/inputs/*"
+      ],
+      "comps/*": [
+        "components/*"
+      ],
+      "@firebase/*": [
+        "firebase/*"
+      ],
       "@comps/*": [
         "components/*"
       ],
@@ -28,15 +37,12 @@
       ]
     }
   },
+  "exclude": [
+    "node_modules"
+  ],
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx",
-    "pages/index.js",
-    "firebase/CRUD-firebase-base.js",
-    "components/HOC/PrivatePage.tsx}"
-  ],
-  "exclude": [
-    "node_modules"
+    "**/*.tsx"
   ]
 }

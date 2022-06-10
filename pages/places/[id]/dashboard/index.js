@@ -31,7 +31,7 @@ export default function dashboard() {
               <PlaceDetails place={place} />
             </Section>
             <FormPlaceConfig place={place} />
-            <PlaceGuests place={place} showTable showPaymentsTable />
+            <PlaceGuests place={place} showTable showPaymentsTable showOperatingCosts />
           </>
         }
       </div>
