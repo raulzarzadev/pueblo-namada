@@ -198,8 +198,10 @@ const GuestRow = ({ place, guest, payments }) => {
   return (
     <>
       <tr className="cursor-pointer hover:bg-base-200" onClick={() => handleOpen()} >
-        <Cell className="truncate">
-          {guest?.name}
+        <Cell className=" truncate max-w-[75px]   ">
+          <span className="">
+            {guest?.name}
+          </span>
           <Modal title={`Información de ${guest?.name} `} open={open} handleOpen={handleOpen} >
             <GuestDetails place={place} guest={guest} />
           </Modal>
