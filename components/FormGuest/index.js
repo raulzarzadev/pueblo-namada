@@ -7,6 +7,7 @@ import File from "../inputs/file";
 import Phone from "../inputs/phone";
 import Text from "../inputs/text";
 import Checkbox from '../inputs/checkbox';
+import Loading from "../Loadign";
 
 
 export default function FormGuest({ guest }) {
@@ -60,6 +61,7 @@ export default function FormGuest({ guest }) {
 
   const handleUploadFile = async ({ fieldName, file }) => {
     setLabelSave(FORM_STATUS[2])
+
     uploadFile(file, `gests/${fieldName}s/`, (progress, downloadURL) => {
       if (downloadURL) {
         setValue(fieldName, downloadURL)
@@ -68,14 +70,12 @@ export default function FormGuest({ guest }) {
     });
   }
 
-
-
-
   return (
     <div className="max-w-sm mx-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex justify-end sticky top-0 bg-base-300 p-1">
           <button className="btn btn-primary my-1" disabled={['Guardado', 'Guardando', 'Cancelado'].includes(labelSave)}>
+            {labelSave == FORM_STATUS[2] && <Loading />}
             {labelSave}
           </button>
         </div>
