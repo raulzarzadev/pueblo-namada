@@ -5,20 +5,25 @@ import Textarea from "../inputs/textarea"
 import { createCost } from '../../firebase/Costs/main'
 import { FirebaseCRUD } from "../../firebase/FirebaseCRUD"
 const FormCost = ({ place }) => {
-  const { handleSubmit, register, watch, formState: { errors } } = useForm({
+  const { handleSubmit, register, watch, formState: { errors }, reset } = useForm({
     defaultValues: {
       date: FirebaseCRUD.format(new Date(), 'yyyy-MM-dd'),
     }
   })
   const onSubmit = (data) => {
-    console.log(data)
     createCost({
       placeId: place.id,
       ...data
-    }).then(res => console.log(res))
+    }).then(res => {
+      reset({
+        title: '',
+        description: '',
+        value: 0,
+      })
+      console.log(res)
+    })
       .catch(err => console.error(err))
   }
-  console.log(watch())
   return (
     <form onSubmit={handleSubmit(onSubmit)} className=''>
       <div className="sticky top-0 left-0 right-0 flex w-full justify-end  z-10 p-1">
@@ -37,6 +42,7 @@ const FormCost = ({ place }) => {
         {...register('value', { required: true })}
         placeholder='Costo'
         helperText={errors.value && 'Campo requerido'}
+        step={0.01}
       />
       <Textarea
         {...register('description')}

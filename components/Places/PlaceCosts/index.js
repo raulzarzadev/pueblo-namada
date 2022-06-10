@@ -22,10 +22,7 @@ const PlaceCosts = ({ place }) => {
         </MainModal>
       </div>
       <div>
-
         <CostsTable costs={placeCosts} />
-
-
       </div>
     </div>
   )

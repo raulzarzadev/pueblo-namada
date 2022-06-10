@@ -1,9 +1,11 @@
+import { formatDistance } from "date-fns";
 import { useEffect, useState } from "react"
 import { listenPlacePayments } from "../../../firebase/accomodations";
 import { listenPlaceGuests } from "../../../firebase/guests";
 import { formatDate } from "../../../utils/dates";
 import sortByDate from "../../../utils/sortByDate";
 import { useUser } from "../../context/userContext";
+import { CurrencySpan } from "../../CurrencySpan";
 import GuestCard from "../../Guests/Guest/GuestCard";
 import { GuestDetails } from "../../Guests/Guest/GuestDetails";
 import { PaymentDetails } from "../../Guests/Guest/GuestPayments";
@@ -97,12 +99,15 @@ const PaymentsTable = ({ place, guests }) => {
               Salida
             </th>
             <th>
+              Creado
+            </th>
+            <th>
               Pago
             </th>
           </tr>
         </thead>
         <tbody>
-          {sortByDate(payments)?.map(payment => <PaymentRow key={payment.id} place={place} payment={payment} guests={guests} />)}
+          {sortByDate(payments, 'createdAt', 'dec')?.map(payment => <PaymentRow key={payment.id} place={place} payment={payment} guests={guests} />)}
         </tbody>
       </table>
     </div>
@@ -110,7 +115,6 @@ const PaymentsTable = ({ place, guests }) => {
 }
 
 const PaymentRow = ({ place, payment, guests }) => {
-  console.log(payment)
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
   const guest = guests?.find(({ id }) => id === payment?.guest)
@@ -132,14 +136,19 @@ const PaymentRow = ({ place, payment, guests }) => {
           </Modal>
         }
       </Cell>
-      <Cell>
+      <Cell className="text-xs">
         {dates && formatDate(dates?.starts, 'dd MMM yy')}
       </Cell>
-      <Cell>
+      <Cell className="text-xs">
         {dates && formatDate(dates?.ends, 'dd MMM yy')}
       </Cell>
+      <Cell className="text-xs">
+        {formatDistance(new Date(payment.createdAt), new Date(), { addSuffix: true })}
+      </Cell>
       <Cell>
-        ${parseFloat(payment.mxnTotal).toFixed(2)}
+        <CurrencySpan value={payment.mxnTotal} />
+
+
       </Cell>
     </tr>
   )
@@ -149,7 +158,6 @@ const GuestsTable = ({ guests, payments, place }) => {
 
   return (
     <table className="mx-auto w-full">
-
       <thead>
         <tr >
           <th>Nombre</th>
@@ -190,7 +198,7 @@ const GuestRow = ({ place, guest, payments }) => {
   return (
     <>
       <tr className="cursor-pointer hover:bg-base-200" onClick={() => handleOpen()} >
-        <Cell>
+        <Cell className="truncate">
           {guest?.name}
           <Modal title={`Información de ${guest?.name} `} open={open} handleOpen={handleOpen} >
             <GuestDetails place={place} guest={guest} />
@@ -203,12 +211,16 @@ const GuestRow = ({ place, guest, payments }) => {
           {payments?.length}
         </Cell>
         <Cell>
-          <div className="text-sm">
-            {lastPay?.createdAt && formatDate(lastPay?.createdAt, 'dd MMM yy')}
-          </div>
-          <div className="text-sm">
-            {`$${lastPay?.mxnTotal && parseFloat(lastPay?.mxnTotal).toFixed(2)}`}
-          </div>
+          {lastPay ?
+            <>
+              {/*  <div className="text-xs text-right">
+                {lastPay?.createdAt && formatDate(lastPay?.createdAt, 'dd MMM yy')}
+              </div> */}
+              <div className="">
+                <CurrencySpan value={lastPay?.mxnTotal} />
+              </div>
+            </>
+            : <span className="text-xs">Sin pagos aún</span>}
           {/*   {payments.sort((a, b) => {
             const toNumber = date => date.getTime()
             if (toNumber(a.createdAt) > toNumber(b.createdAt)) return 1
@@ -223,7 +235,7 @@ const GuestRow = ({ place, guest, payments }) => {
 
 const Cell = ({ children, className = '' }) => {
   return (
-    <td className={`${className} px-2 py-1 text-center items-center`}>
+    <td className={`${className} px-2 py-1 text-center items-center relative`}>
       {children}
     </td>
   )

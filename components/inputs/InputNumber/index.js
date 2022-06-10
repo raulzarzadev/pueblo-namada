@@ -5,13 +5,26 @@ const InputNumber = React.forwardRef(({ label, sideLabel, helperText, smallSize,
     <div className={`form-control  ${sideLabel ? 'flex-row ' : ''} flex`}>
       <label className="label">
         {label &&
-          <span className="label-text font-bold">{label}:</span>
+          <span
+            className="label-text font-bold"
+          >
+            {label}:
+          </span>
         }
       </label>
-      <input type="number" className={`input input-bordered  ${smallSize ? 'w-14' : 'w-full'}`} {...rest} ref={ref} />
+
+      <input
+        ref={ref}
+        type="number"
+        className={`input input-bordered  ${smallSize ? 'w-14' : 'w-full'}`}
+        {...rest}
+      />
+
       {helperText &&
         <label className="label">
-          <span className="label-text-alt">{helperText}</span>
+          <span className="label-text-alt">
+            {helperText}
+          </span>
         </label>
       }
     </div>

@@ -15,7 +15,6 @@ export class FirebaseCRUD {
       console.error('not a date')
       return 'NaD'
     }
-    console.log(date)
     const objectDate = new Date(date)
     function isValidDate(d: string | number | Date): boolean {
       return d instanceof Date && !isNaN(d as any)
