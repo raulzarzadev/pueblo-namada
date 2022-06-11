@@ -12,7 +12,7 @@ const PlaceCosts = ({ place }) => {
   }, [place])
   return (
     <div className="my-4">
-      <h2 className="font-bold text-center">Operating Costs Table</h2>
+      <h2 className="font-bold text-center">Gastos</h2>
       <div className="flex justify-center my-4">
         <MainModal title='Nuevo gasto' buttonLabel="Nuevo Gasto" OpenComponentType={'primary'} >
           <div  >

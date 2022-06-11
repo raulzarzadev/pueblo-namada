@@ -4,6 +4,7 @@ import { useRouter } from "next/router"
 import { deleteGuest } from "../../../../firebase/guests"
 import SendIcon from "../../../icons/SendIcon"
 import MainModal from "../../../Modal/MainModal"
+import PreviewImage from "../../../PreviewImage"
 import GuestPayments from "../GuestPayments"
 
 export const GuestDetails = ({ guest, place }) => {
@@ -67,17 +68,21 @@ export const GuestDetails = ({ guest, place }) => {
       </div>
 
       <div className="sm:flex sm:justify-evenly">
-        {publicImage &&
-          <figure className="relative mx-auto h-40 sm:w-1/2">
-            <Image src={publicImage} objectFit='cover' layout="fill" />
-          </figure>
-        }
 
-        {imageID &&
+
+        <PreviewImage label='Public image:' image={publicImage} />
+        {/* {publicImage &&
+          <figure className="relative mx-auto h-40 sm:w-1/2">
+          <Image src={publicImage} objectFit='cover' layout="fill" />
+          </figure>
+        } */}
+        <PreviewImage label='ID image' image={imageID} />
+
+        {/* {imageID &&
           <figure className="relative mx-auto h-40 sm:w-1/2">
             <Image src={imageID} objectFit='cover' layout="fill" />
           </figure>
-        }
+        } */}
       </div>
 
       <div>

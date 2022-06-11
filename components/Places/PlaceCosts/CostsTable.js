@@ -5,6 +5,8 @@ import sortByDate from "../../../utils/sortByDate"
 import Modal from "../../Modal"
 import { useState } from "react"
 import { CurrencySpan } from "../../CurrencySpan"
+import Image from "next/image"
+import PreviewImage from "../../PreviewImage"
 const CostsTable = ({ costs = [] }) => {
 
   return (
@@ -56,12 +58,10 @@ const RowCost = ({ cost }) => {
           <p className="text-left  mx-auto">
             <CurrencySpan cost={cost.value} />
           </p>
-          <p>
-            Creado:
 
-            {FirebaseCRUD.format(cost?.createdAt, 'dd MMM yy')} by {cost?.userId}
-
-          </p>
+          {cost?.image &&
+            <PreviewImage image={cost.image} />
+          }
 
           <ModalDelete handleDelete={() => handleDeleteCost(cost.id)} />
 

@@ -6,6 +6,7 @@ import { v4 as uidGenerator } from 'uuid';
 export const storageRef = (path = '') => ref(storage, path)
 
 export const uploadFile = (file, fieldName = '', cb = (progress = 0, downloadURL = null) => { }) => {
+
   const uuid = uidGenerator()
   const imageRef = storageRef(`${fieldName}/${uuid}`)
   const uploadTask = uploadBytesResumable(imageRef, file)

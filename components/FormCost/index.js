@@ -4,8 +4,9 @@ import Text from "../inputs/text"
 import Textarea from "../inputs/textarea"
 import { createCost } from '../../firebase/Costs/main'
 import { FirebaseCRUD } from "../../firebase/FirebaseCRUD"
+import InputFile from "../inputs/InputFile"
 const FormCost = ({ place }) => {
-  const { handleSubmit, register, watch, formState: { errors }, reset } = useForm({
+  const { handleSubmit, register, watch, setValue, formState: { errors }, reset } = useForm({
     defaultValues: {
       date: FirebaseCRUD.format(new Date(), 'yyyy-MM-dd'),
     }
@@ -24,6 +25,13 @@ const FormCost = ({ place }) => {
     })
       .catch(err => console.error(err))
   }
+
+  const handleUpladImage = ({ fieldName, file }) => FirebaseCRUD.uploadFile(file, fieldName,
+    (proggress, downladURL) => {
+      if (downladURL) setValue(fieldName, downladURL)
+      // console.log(proggress, downladURL)
+    })
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className=''>
       <div className="sticky top-0 left-0 right-0 flex w-full justify-end  z-10 p-1">
@@ -44,6 +52,7 @@ const FormCost = ({ place }) => {
         helperText={errors.value && 'Campo requerido'}
         step={0.01}
       />
+      <InputFile onUpload={handleUpladImage} />
       <Textarea
         {...register('description')}
         placeholder='Description (opcional)'

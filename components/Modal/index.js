@@ -17,7 +17,7 @@ const Modal = React.forwardRef(({
       onClick={(e) => {
         // e.preventDefault()
         /**
-       *!TODO: if e.preventDefault() is called, the modal will make fails the form inside
+       * !TODO: if e.preventDefault() is called, the modal will make fails the form inside
        *
        */
         e.stopPropagation()
