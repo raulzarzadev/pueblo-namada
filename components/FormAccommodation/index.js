@@ -79,17 +79,10 @@ export default function FormAccommodation({ guest, place, editing = false }) {
   }
 
 
-  /**
-  * TODO fix handleSubmit
-  * ! handle submit from react-hook-forms dont works! 
-  * 
-  */
-
-
   return (
     <div className="p-1">
 
-      <form onSubmit={(e) => { console.log(e) }}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-1 place-content-stretch ">
           <div>
             <p className="">Precio x noche (mxn):
@@ -139,8 +132,8 @@ export default function FormAccommodation({ guest, place, editing = false }) {
           <button
             type="submit"
             className="btn btn-primary"
-            /* disabled={[FORM_STATUS[1], FORM_STATUS[2], FORM_STATUS[3]].includes(labelSave) || !isDirty} */
-            onClick={() => onSubmit(watch())}
+          /* disabled={[FORM_STATUS[1], FORM_STATUS[2], FORM_STATUS[3]].includes(labelSave) || !isDirty} */
+          //onClick={() => onSubmit(watch())}
           >
             {labelSave}
           </button>

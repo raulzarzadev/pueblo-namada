@@ -181,7 +181,7 @@ export class FirebaseCRUD {
 
   async create(item: object) {
     const currentUser = getAuth().currentUser
-    console.log(currentUser)
+    // console.log(currentUser)
     // if (!this.currentUser) return console.error('No user logged')
     return await addDoc(collection(db, this.collectionName), {
       ...FirebaseCRUD.deepFormatFirebaseDates({
