@@ -27,7 +27,7 @@ const Modal = React.forwardRef(({
       <div className='bg-base-100 overflow-auto max-h-full rounded-lg w-full max-w-sm  '>
         <header className={'flex justify-between sticky top-0 bg-base-100 z-10 px-3 py-1'}>
           <div className={''}>
-            <h5 className='font-bold'>{title}</h5>
+            <h5 className='font-bold max-w-[180px] truncate'>{title}</h5>
           </div>
           <button
             className={''}
