@@ -6,10 +6,16 @@ import { formatDate } from "../../../utils/dates";
 import sortByDate from "../../../utils/sortByDate";
 import { useUser } from "../../context/userContext";
 import { CurrencySpan } from "../../CurrencySpan";
+import FormAccommodation from "../../FormAccommodation";
+import FormCashCut from "../../FormCashCut";
+import FormCost from "../../FormCost";
+import FormPlace from "../../FormPlace";
 import GuestCard from "../../Guests/Guest/GuestCard";
 import { GuestDetails } from "../../Guests/Guest/GuestDetails";
 import { PaymentDetails } from "../../Guests/Guest/GuestPayments";
 import Modal from "../../Modal";
+import MainModal from "../../Modal/MainModal";
+import Section from "../../Section";
 import PlaceCosts from "../PlaceCosts";
 
 
@@ -55,22 +61,52 @@ export default function PlaceGuests({ place,
 
   return (
     <div className="">
-      <h1 className="text-center font-bold border">Huespedes</h1>
+      <div>
+        <h3 className="text-xl font-bold text-left my-4">Operaciones</h3>
+        <div className="flex justify-evenly">
 
-      <div className="text-sm max-w-sm mx-auto">
+          <MainModal title={`Nuevo pago`} OpenComponentType='primary' buttonLabel="Nuevo pago">
+            <FormAccommodation place={place} guests={guests} />
+          </MainModal>
+          <MainModal title={`Nuevo Huesped`} OpenComponentType='primary' buttonLabel="Nuevo Huesped">
+            <FormPlace place={place} />
+          </MainModal>
+          <MainModal title='Nuevo gasto' buttonLabel="Nuevo Gasto" OpenComponentType='primary' >
+            <div  >
+              <FormCost place={place} />
+            </div>
+          </MainModal>
+          <MainModal title={`Nuevo Corte`} OpenComponentType='primary' buttonLabel="Corte">
+            <FormCashCut place={place} />
+          </MainModal>
+        </div>
+      </div>
+
+      <div className="grid gap-4 py-4 mt-4">
+
         {showCards &&
           guests?.map((guest, i) => <GuestCard key={`${guest.id}-${i}`} guest={guest} isOwner={isOwner} place={place} />)
         }
+
         {showTable &&
-          <GuestsTable guests={guests} payments={placePayments} place={place} />
-        }
-        {showPaymentsTable &&
-          <PaymentsTable place={place} guests={guests} />}
-        {showOperatingCosts &&
-          <PlaceCosts place={place} />
+          <Section title='Huespedes'>
+            <GuestsTable guests={guests} payments={placePayments} place={place} />
+          </Section>
         }
 
+        {showPaymentsTable &&
+          <Section title='Pagos'>
+            <PaymentsTable place={place} guests={guests} />
+          </Section>}
+
+
+        {showOperatingCosts &&
+          <Section title='Costos'>
+            <PlaceCosts place={place} />
+          </Section>
+        }
       </div>
+
     </div>
   )
 }
@@ -147,8 +183,6 @@ const PaymentRow = ({ place, payment, guests }) => {
       </Cell>
       <Cell>
         <CurrencySpan value={payment.mxnTotal} />
-
-
       </Cell>
     </tr>
   )
