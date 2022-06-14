@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { deleteAccommodation, listenAccommodationPayments } from "../../../../firebase/accomodations"
-import { formatDate } from "../../../../utils/dates"
+import { Dates } from "../../../../firebase/Dates.utils"
 import FormAccommodation from "../../../FormAccommodation"
 import MainModal from "../../../Modal/MainModal"
 import Section from "../../../Section"
@@ -18,7 +18,6 @@ const GuestPayments = ({ place, guest }) => {
   }, [])
 
 
-
   return (
     <div>
       <h1 className="text-center font-bold mt-10">Historial de pagos</h1>
@@ -29,16 +28,17 @@ const GuestPayments = ({ place, guest }) => {
         </MainModal>
       </div>
       {!payments?.length && <p className="text-center" >Sin pagos aún</p >}
+
       {payments?.map(payment =>
-        <Section key={payment?.id} title={`$${parseFloat(payment.mxnTotal).toFixed(2)}`} subtitle={`${formatDate(payment?.dates?.starts)} - ${formatDate(payment?.dates?.ends)}`}>
-          <PaymentDetails payment={payment} key={payment.id} />
+        <Section key={payment?.id} title={`$${parseFloat(payment.mxnTotal).toFixed(2)}`} subtitle={`${Dates.format(payment?.dates?.starts)} - ${Dates.format(payment?.dates?.ends)}`}>
+          <PaymentDetails payment={payment} key={payment.id} place={place} />
         </Section>
       )}
     </div>
   )
 }
 
-export const PaymentDetails = ({ payment }) => {
+export const PaymentDetails = ({ payment, place }) => {
 
   const handleDeleteAccommodation = (id) => {
     deleteAccommodation(id).then(res => {
@@ -70,19 +70,19 @@ export const PaymentDetails = ({ payment }) => {
               <div>
                 Desde:
                 <span className="font-bold">
-                  {dates && formatDate(dates?.starts) || 'n/d'}
+                  {dates && Dates.format(dates?.starts) || 'n/d'}
                 </span>
               </div>
               <div>
                 Hasta:
                 <span className="font-bold">
-                  {dates && formatDate(new Date(dates?.ends), "dd/MM/yy") || 'n/d'}
+                  {dates && Dates.format(new Date(dates?.ends), "dd/MM/yy") || 'n/d'}
                 </span>
               </div>
               <div>
                 Creado :
                 <span className="font-bold">
-                  {createdAt && formatDate(new Date(createdAt), "dd/MM/yy HH:mm") || 'n/d'}
+                  {createdAt && Dates.format(new Date(createdAt), "dd/MM/yy HH:mm") || 'n/d'}
                 </span>
               </div>
             </div>
@@ -106,6 +106,9 @@ export const PaymentDetails = ({ payment }) => {
         </div>
 
         <div className="flex justify-center my-4">
+          <MainModal title={'Editar pago'} buttonLabel="Editar" OpenComponentType='info'>
+            <FormAccommodation place={place} guest={payment.guest} payment={payment} />
+          </MainModal>
           <MainModal title='Eliminar pago' buttonLabel="Eliminar" OpenComponentType='delete'>
             <div className="flex flex-col items-center flex-center">
               <p className="text-center">¿Seguro de que deseas eliminar este hospedaje?</p>

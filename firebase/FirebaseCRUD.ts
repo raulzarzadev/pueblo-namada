@@ -6,6 +6,7 @@ import { v4 as uidGenerator } from 'uuid';
 import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, query, Timestamp, updateDoc, where } from "firebase/firestore";
 import { db, storage } from ".";
 
+type Target = 'firebase' | 'milliseconds' | 'date' | 'fieldDate'
 export class FirebaseCRUD {
   constructor(
     private collectionName: string = '',
@@ -58,17 +59,21 @@ export class FirebaseCRUD {
       'endsAt',
       'startsAt',
     ]
+
+    /* 
     const TARGETS = ['firebase', 'milliseconds', 'date', 'fieldDate']
-
-
     if (!TARGETS.includes(target)) return console.error('target must be one of:', TARGETS)
+     */
     // target is firebase transform to Timestamp
     // target is milis transform to milis
     // target is date transofrm to Date
     // target is fieldDate transform to yyyy-mm-dd
 
     const objective = {
-      firebase: (date: Date): Timestamp => Timestamp.fromDate(date),
+      firebase: (date: Date): Timestamp => {
+
+        return Timestamp.fromDate(date)
+      },
       milliseconds: (date: Date): number => date.getTime(),
       date: (date: Date): Date => date,
       fieldDate: (date: Date): string => FirebaseCRUD.format(date, 'yyyy-MM-dd')
@@ -83,32 +88,40 @@ export class FirebaseCRUD {
      * * if is a valid field in DATE_FIELDS, transform it
      * 
      */
-    let aux_obj = { ...object }
-    Object.keys(aux_obj).forEach(key => {
 
-      const objProperty = aux_obj[key]
-      if (DATE_FIELDS.includes(key)) {
 
-        // * Is a valid field in DATE_FIELDS, transform it to @target
-        const date = FirebaseCRUD.transformAnyToDate(objProperty)
-        const res = date ? (objective[target](date)) : null
-        aux_obj[key] = res
-      } else if (typeof objProperty === 'object') {
 
-        // * Is an object, iterate over each item and transform it
-        FirebaseCRUD.deepFormatFirebaseDates(objProperty, target)
 
-      } else if (Array.isArray(objProperty)) {
+    function formatDatesTo(object: any, target: Target) {
 
-        // * Is an array, iterate over each item and transform it
-        objProperty.map(item => FirebaseCRUD.deepFormatFirebaseDates(item, target))
+      let aux_obj = { ...object }
+      Object.keys(aux_obj).forEach(key => {
 
-      }
-    })
+        const objProperty = aux_obj[key]
 
-    console.log(aux_obj)
+        if (DATE_FIELDS.includes(key)) {
+          // * Is a valid field in DATE_FIELDS, transform it to @target
+          const date = FirebaseCRUD.transformAnyToDate(objProperty)
+          const res = date ? (objective[target](date)) : null
+          aux_obj[key] = res
 
-    return { ...aux_obj }
+        } else if (typeof objProperty === 'object') {
+          // * Is an object, iterate over each item and transform it
+          formatDatesTo(objProperty, target)
+
+        } else if (Array.isArray(objProperty)) {
+
+          // * Is an array, iterate over each item and transform it
+          objProperty.map(item => formatDatesTo(item, target))
+
+        }
+      })
+      return aux_obj
+    }
+
+
+
+    return formatDatesTo(object, target)
   }
 
   static uploadFile = (
@@ -180,15 +193,16 @@ export class FirebaseCRUD {
 
   async create(item: object) {
     const currentUser = getAuth().currentUser
-    // console.log(currentUser)
-    // if (!this.currentUser) return console.error('No user logged')
-    return await addDoc(collection(db, this.collectionName), {
-      ...FirebaseCRUD.deepFormatFirebaseDates({
-        createdAt: new Date(),
-        userId: currentUser?.uid,
-        ...item
-      }, 'firebase')
-    })
+
+    const newItem = {
+      createdAt: new Date(),
+      userId: currentUser?.uid,
+      ...item
+    }
+
+    const itemDatesToFirebaseTimestamp = FirebaseCRUD.deepFormatFirebaseDates(newItem, 'firebase')
+
+    return await addDoc(collection(db, this.collectionName), itemDatesToFirebaseTimestamp)
       .then((res) => FirebaseCRUD.formatResponse(true, `${this.collectionName}_CREATED`, res))
       .catch((err) => console.error(err))
   }

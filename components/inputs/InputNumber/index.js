@@ -16,7 +16,7 @@ const InputNumber = React.forwardRef(({ label, sideLabel, helperText, smallSize,
       <input
         ref={ref}
         type="number"
-        className={`input input-bordered  ${smallSize ? 'w-14' : 'w-full'}`}
+        className={`input input-bordered  ${smallSize ? 'w-16 input-sm' : 'w-full'}`}
         {...rest}
       />
 

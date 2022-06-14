@@ -1,11 +1,8 @@
 //@ts-check
 import Image from "next/image"
-import { useRouter } from "next/router"
-import { deleteGuest } from "../../../../firebase/guests"
-import SendIcon from "../../../icons/SendIcon"
 import MainModal from "../../../Modal/MainModal"
 import { GuestDetails } from "../GuestDetails"
-import GuestPayments from "../GuestPayments"
+
 
 const GuestCard = ({ guest, place, isOwner }) => {
 

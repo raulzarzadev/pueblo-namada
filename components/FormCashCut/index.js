@@ -14,7 +14,7 @@ const FormCashCut = ({ place }) => {
   })
 
   const onSubmit = (data) => {
-
+    console.log('save', data)
   }
 
   const handleGetCashcut = (from, to) => {

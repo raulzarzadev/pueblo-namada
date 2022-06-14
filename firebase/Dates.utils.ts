@@ -7,6 +7,7 @@ export class Dates {
 
   ) { }
   static format = (date: string | number | Date, stringFormat = 'dd/MM/yy'): string => {
+
     if (!date) {
       console.error('not a date')
       return 'NaD'

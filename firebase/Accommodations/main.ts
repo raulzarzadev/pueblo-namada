@@ -24,8 +24,8 @@ export const getPaymentsBettwenDates = (
   endDate: string,
   cb: CallableFunction
 ) => {
-  console.log(placeId, startDate, endDate)
-  console.log(FirebaseCRUD.dateToFirebase(startDate)?.toDate())
+  /*   console.log(placeId, startDate, endDate)
+    console.log(FirebaseCRUD.dateToFirebase(startDate)?.toDate()) */
   return AccommodationsCRUD.listenDocsByFilters(
     [
       where('dates.starts', '>', FirebaseCRUD.dateToFirebase(startDate)),

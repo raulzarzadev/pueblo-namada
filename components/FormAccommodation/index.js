@@ -1,40 +1,45 @@
 import { format, addDays } from "date-fns";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { createAccommodation } from "../../firebase/Accommodations/main";
+import { createAccommodation, updateAccommodation } from "../../firebase/Accommodations/main";
 //import { newAccommodation } from "../../firebase/accomodations";
 import { formatDate } from "../../utils/dates";
 import InputNumber from "../inputs/InputNumber";
 import Text from "../inputs/text";
 
-export default function FormAccommodation({ guest, guests = [], place, editing = false }) {
+export default function FormAccommodation({ guest, guests = [], place, payment = null }) {
 
   const defaultGuestId = guest?.id || null
+  const defaultValues = payment || {
+    guest: defaultGuestId,
+    accommodationStarts: `${format(new Date(), "yyyy-MM-dd")}T:12:00.000Z`,
+  }
   const { register, handleSubmit, watch, setValue, reset, formState } = useForm(
     {
-      defaultValues: {
-        guest: defaultGuestId,
-        accommodationStarts: format(new Date(), "yyyy-MM-dd"),
-      }
+      defaultValues
     }
   );
+
 
 
   const FORM_STATUS = {
     0: 'Pagar',
     1: 'Pagado',
     2: 'Cancelado',
-    3: 'Guardando'
+    3: 'Guardando',
+    4: 'Editar',
+    5: 'Editado'
   }
 
-  const defaultLabel = FORM_STATUS[0]
+  const defaultLabel = payment ? FORM_STATUS[4] : FORM_STATUS[0]
   const [labelSave, setLabelSave] = useState(defaultLabel);
 
   const onSubmit = data => {
     const accomodation = {
-      place: place.id,
-      mxnTotal: getTotal().mxn,
-      usdTotal: getTotal().usd,
+      ...data,
+      place: place?.id,
+      mxnTotal: getTotals().mxn,
+      usdTotal: getTotals().usd,
       prices: {
         night: place?.price || null,
         usd: place?.usdPrice || null,
@@ -48,32 +53,34 @@ export default function FormAccommodation({ guest, guests = [], place, editing =
       },
       startsAt: watch('accommodationStarts'),
       endsAt: accommodationEnds(),
-      ...data
     }
-    // console.log(accomodation)
     setLabelSave(FORM_STATUS[3])
 
-    createAccommodation(accomodation)
-      .then(res => {
-        console.log('payment created', res)
-        setLabelSave(FORM_STATUS[1])
-        setTimeout(() => {
-          setLabelSave(FORM_STATUS[0])
-          //router.back()
-          reset()
-        }, 1000)
-      })
-  };
 
-  const getTotal = () => {
-    const price = parseFloat(place.price || 0)
-    const usdPrice = parseFloat(place.usdPrice || 0)
-    const discountedNights = parseInt(watch('discountedNights') || 0)
-    const nights = parseInt(watch('nights') || 0)
-    const mxn = (price * nights - (discountedNights * price)).toFixed(2)
-    const usd = (usdPrice && (price * nights - (discountedNights * price)) / usdPrice).toFixed(2)
-    return { mxn: parseFloat(mxn), usd: parseFloat(usd) }
-  }
+    payment
+      ?
+      updateAccommodation(payment.id, accomodation)
+        .then(res => {
+          console.log('payment updated', { id: payment.id })
+          setLabelSave(FORM_STATUS[5])
+          setTimeout(() => {
+            setLabelSave(FORM_STATUS[4])
+            //router.back()
+            // reset()
+          }, 1000)
+        })
+      :
+      createAccommodation(accomodation)
+        .then(res => {
+          console.log('payment created', res)
+          setLabelSave(FORM_STATUS[1])
+          setTimeout(() => {
+            setLabelSave(FORM_STATUS[0])
+            //router.back()
+            reset()
+          }, 1000)
+        })
+  };
 
 
   const accommodationEnds = () => {
@@ -83,6 +90,22 @@ export default function FormAccommodation({ guest, guests = [], place, editing =
     const endDate = addDays(startDate, nights)
     return formatDate(endDate, "yyyy-MM-dd")
   }
+
+  //  console.log(place)
+
+
+  const [totals, setTotals] = useState({ mxn: 0, usd: 0 })
+  const getTotals = () => {
+    const price = parseFloat(place?.price || 0)
+    const usdPrice = parseFloat(place?.usdPrice || 0)
+    const discountedNights = parseInt(watch('discountedNights') || 0)
+    const nights = parseInt(watch('nights') || 0)
+    const mxn = (price * nights - (discountedNights * price)).toFixed(2)
+    const usd = (usdPrice && (price * nights - (discountedNights * price)) / usdPrice).toFixed(2)
+    return { mxn: parseFloat(mxn), usd: parseFloat(usd) }
+  }
+
+
 
   return (
     <div className="p-1">
@@ -119,8 +142,9 @@ export default function FormAccommodation({ guest, guests = [], place, editing =
 
               <p className="">
                 Precio x USD:
+
                 <span className="font-bold">
-                  {` $${parseFloat(place.usdPrice).toFixed(2)}mxn`}
+                  {` $${parseFloat(place?.usdPrice).toFixed(2)}mxn`}
                 </span>
               </p>
             </div>
@@ -135,14 +159,14 @@ export default function FormAccommodation({ guest, guests = [], place, editing =
             <div className="text-center">
               <p className="">Total (mxn):
                 <span className="font-bold text-xl">
-                  {`$${getTotal().mxn}`}
+                  {`$${getTotals().mxn}`}
                 </span>
               </p>
 
               <p className="">
                 Total (usd) :
                 <span className="font-bold text-xl">
-                  {`$${getTotal().usd}`}
+                  {`$${getTotals().usd}`}
                 </span>
               </p>
             </div>

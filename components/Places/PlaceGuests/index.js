@@ -1,9 +1,7 @@
-import { formatDistance } from "date-fns";
 import { useEffect, useState } from "react"
 import { listenPlaceAccommodations } from "../../../firebase/Accommodations/main";
 // import { listenPlacePayments } from "../../../firebase/accomodations";
 import { listenPlaceGuests } from "../../../firebase/guests";
-import { formatDate } from "../../../utils/dates";
 import sortByDate from "../../../utils/sortByDate";
 import { useUser } from "../../context/userContext";
 import { CurrencySpan } from "../../CurrencySpan";
@@ -156,7 +154,6 @@ const PaymentRow = ({ place, payment, guests }) => {
   const handleOpen = () => setOpen(!open)
   const guest = guests?.find(({ id }) => id === payment?.guest)
   const { dates } = payment
-  console.log(payment)
   return (
     <tr
       className=" cursor-pointer hover:bg-base-200"
@@ -169,7 +166,7 @@ const PaymentRow = ({ place, payment, guests }) => {
             <h2 className="font-bold">
               {guest?.name}
             </h2>
-            <PaymentDetails payment={payment} />
+            <PaymentDetails payment={payment} place={place} />
             {/* <GuestDetails place={place} guest={guest} /> */}
           </Modal>
         }

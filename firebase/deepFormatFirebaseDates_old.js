@@ -45,7 +45,7 @@ export function deepFormatFirebaseDates(
   }
 
   const objective = {
-    firebase: (date) => Timestamp.fromDate(date),
+    fireabse: (date) => Timestamp.fromDate(date),
     milliseconds: (date) => date.getTime(),
     date: (date) => date,
     fieldDate: (date) => format(date, 'yyyy-MM-dd')
