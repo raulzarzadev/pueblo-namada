@@ -1,7 +1,8 @@
 import { format, addDays } from "date-fns";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { newAccommodation } from "../../firebase/accomodations";
+import { createAccommodation } from "../../firebase/Accommodations/main";
+//import { newAccommodation } from "../../firebase/accomodations";
 import { formatDate } from "../../utils/dates";
 import InputNumber from "../inputs/InputNumber";
 import Text from "../inputs/text";
@@ -42,13 +43,17 @@ export default function FormAccommodation({ guest, guests = [], place, editing =
       discountedNights: data.discountedNights,
       dates: {
         starts: watch('accommodationStarts'),
-        ends: accommodationEnds()
+        ends: accommodationEnds(),
+
       },
+      startsAt: watch('accommodationStarts'),
+      endsAt: accommodationEnds(),
       ...data
     }
     // console.log(accomodation)
     setLabelSave(FORM_STATUS[3])
-    newAccommodation(accomodation)
+
+    createAccommodation(accomodation)
       .then(res => {
         console.log('payment created', res)
         setLabelSave(FORM_STATUS[1])
@@ -86,7 +91,7 @@ export default function FormAccommodation({ guest, guests = [], place, editing =
           <div>
             <label >
               <span>Huesped:</span>
-              <select value={defaultGuestId} defaultValue='' {...register('guest')} className='input select input-bordered my-2'>
+              <select defaultValue='' {...register('guest')} className='input select input-bordered my-2'>
                 <option value='' disabled >Debes seleccionar un huesped</option>
                 {guests?.map(({ id, name }) => (
                   <option key={id} value={id}>{name}</option>

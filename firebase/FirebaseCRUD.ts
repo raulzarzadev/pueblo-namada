@@ -31,6 +31,13 @@ export class FirebaseCRUD {
 
   }
 
+  static dateToFirebase(date: string): Timestamp | null {
+    const dateFormated = FirebaseCRUD.transformAnyToDate(date)
+    if (!dateFormated) return null
+    return Timestamp.fromDate(dateFormated)
+  }
+
+
 
   static deepFormatFirebaseDates(
     object: any,
@@ -47,7 +54,9 @@ export class FirebaseCRUD {
       'registryDate',
       'publishEnds',
       'publishStart',
-      'lastUpdate'
+      'lastUpdate',
+      'endsAt',
+      'startsAt',
     ]
     const TARGETS = ['firebase', 'milliseconds', 'date', 'fieldDate']
 
@@ -58,29 +67,6 @@ export class FirebaseCRUD {
     // target is date transofrm to Date
     // target is fieldDate transform to yyyy-mm-dd
 
-    const transformAnyToDate = (date: unknown): Date | null => {
-      if (!date) return null
-      if (date instanceof Timestamp) {
-        return date.toDate()
-      } else if (date instanceof Date) {
-        return date
-      } else if (typeof date === 'number') {
-        return new Date(date)
-      } else if (typeof date === 'string') {
-        let aux = new Date(date)
-        if (isNaN(aux.getTime())) {
-          return null
-        } else {
-          return aux
-        }
-      } else {
-        console.error('date is not valid date')
-        return null
-      }
-    }
-
-
-
     const objective = {
       firebase: (date: Date): Timestamp => Timestamp.fromDate(date),
       milliseconds: (date: Date): number => date.getTime(),
@@ -88,26 +74,39 @@ export class FirebaseCRUD {
       fieldDate: (date: Date): string => FirebaseCRUD.format(date, 'yyyy-MM-dd')
     }
 
-    let aux_obj = { ...object }
 
+    /**
+     * * if is an array, iterate over each item and transform it
+     * 
+     * * if is an object, iterate over each item and transform it
+     *
+     * * if is a valid field in DATE_FIELDS, transform it
+     * 
+     */
+    let aux_obj = { ...object }
     Object.keys(aux_obj).forEach(key => {
-      const objProperty = object[key]
+
+      const objProperty = aux_obj[key]
       if (DATE_FIELDS.includes(key)) {
-        const date = transformAnyToDate(objProperty)
-        /* console.log('target', target) */
+
+        // * Is a valid field in DATE_FIELDS, transform it to @target
+        const date = FirebaseCRUD.transformAnyToDate(objProperty)
         const res = date ? (objective[target](date)) : null
         aux_obj[key] = res
-        // console.log('res', res);
-
-        // ***************************+RECURSIVO OBJECTS AND ARRAYS
-        // if is object
       } else if (typeof objProperty === 'object') {
+
+        // * Is an object, iterate over each item and transform it
         FirebaseCRUD.deepFormatFirebaseDates(objProperty, target)
-        // if is an array
+
       } else if (Array.isArray(objProperty)) {
+
+        // * Is an array, iterate over each item and transform it
         objProperty.map(item => FirebaseCRUD.deepFormatFirebaseDates(item, target))
+
       }
     })
+
+    console.log(aux_obj)
 
     return { ...aux_obj }
   }
@@ -251,6 +250,29 @@ export class FirebaseCRUD {
 
   }
 
+  async listenDocsByFilters(filters: any, cb: CallableFunction) {
+    /**
+    * listen all documents in a collection implmementing filters
+    * @param filters[]: where(itemField,'==','value')
+    */
+
+    if (!filters) return console.error('Should have filters implentade')
+    console.log(filters)
+    const q = query(
+      collection(db, this.collectionName),
+      ...filters
+    )
+
+    onSnapshot(q, (querySnapshot) => {
+      const res: any[] = []
+      querySnapshot.forEach((doc) => {
+        res.push(FirebaseCRUD.normalizeDoc(doc))
+      })
+      cb(res)
+    })
+
+  }
+
   async listenAll(cb: CallableFunction) {
     /**
    * listen all documents in a collection 
@@ -268,10 +290,29 @@ export class FirebaseCRUD {
       cb(res)
     })
   }
+
+  static transformAnyToDate = (date: unknown): Date | null => {
+    if (!date) return null
+    if (date instanceof Timestamp) {
+      return date.toDate()
+    } else if (date instanceof Date) {
+      return date
+    } else if (typeof date === 'number') {
+      return new Date(date)
+    } else if (typeof date === 'string') {
+      let aux = new Date(date)
+      if (isNaN(aux.getTime())) {
+        return null
+      } else {
+        return aux
+      }
+    } else {
+      console.error('date is not valid date')
+      return null
+    }
+  }
 }
 
 
-function storageRef(arg0: string) {
-  throw new Error('Function not implemented.');
-}
+
 

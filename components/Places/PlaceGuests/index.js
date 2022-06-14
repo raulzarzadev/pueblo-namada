@@ -1,6 +1,7 @@
 import { formatDistance } from "date-fns";
 import { useEffect, useState } from "react"
-import { listenPlacePayments } from "../../../firebase/accomodations";
+import { listenPlaceAccommodations } from "../../../firebase/Accommodations/main";
+// import { listenPlacePayments } from "../../../firebase/accomodations";
 import { listenPlaceGuests } from "../../../firebase/guests";
 import { formatDate } from "../../../utils/dates";
 import sortByDate from "../../../utils/sortByDate";
@@ -17,7 +18,7 @@ import Modal from "../../Modal";
 import MainModal from "../../Modal/MainModal";
 import Section from "../../Section";
 import PlaceCosts from "../PlaceCosts";
-
+import { Dates } from '../../../firebase/Dates.utils'
 
 
 export default function PlaceGuests({ place,
@@ -49,7 +50,7 @@ export default function PlaceGuests({ place,
   const [placePayments, setPlacePayments] = useState(undefined)
 
   useEffect(() => {
-    listenPlacePayments(place.id, setPlacePayments)
+    listenPlaceAccommodations(place.id, setPlacePayments)
   }, [])
   useEffect(() => {
     listenPlaceGuests(place.id, setGuests)
@@ -63,7 +64,7 @@ export default function PlaceGuests({ place,
     <div className="">
       <div>
         <h3 className="text-xl font-bold text-left my-4">Operaciones</h3>
-        <div className="flex justify-evenly">
+        <div className="grid gap-2 sm:flex justify-evenly">
 
           <MainModal title={`Nuevo pago`} OpenComponentType='primary' buttonLabel="Nuevo pago">
             <FormAccommodation place={place} guests={guests} />
@@ -96,7 +97,7 @@ export default function PlaceGuests({ place,
 
         {showPaymentsTable &&
           <Section title='Pagos'>
-            <PaymentsTable place={place} guests={guests} />
+            <PaymentsTable place={place} guests={guests} payments={placePayments} />
           </Section>}
 
 
@@ -111,13 +112,13 @@ export default function PlaceGuests({ place,
   )
 }
 
-const PaymentsTable = ({ place, guests }) => {
+const PaymentsTable = ({ place, guests, payments }) => {
 
-  const [payments, setPayments] = useState(undefined)
-
-  useEffect(() => {
-    listenPlacePayments(place?.id, setPayments)
-  }, [])
+  /*   const [payments, setPayments] = useState(undefined)
+  
+    useEffect(() => {
+      listenPlaceAccommodations(place?.id, setPayments)
+    }, []) */
 
   return (
     <div>
@@ -155,6 +156,7 @@ const PaymentRow = ({ place, payment, guests }) => {
   const handleOpen = () => setOpen(!open)
   const guest = guests?.find(({ id }) => id === payment?.guest)
   const { dates } = payment
+  console.log(payment)
   return (
     <tr
       className=" cursor-pointer hover:bg-base-200"
@@ -173,13 +175,14 @@ const PaymentRow = ({ place, payment, guests }) => {
         }
       </Cell>
       <Cell className="text-xs">
-        {dates && formatDate(dates?.starts, 'dd MMM yy')}
+        {dates && Dates.format(dates?.starts, 'dd MMM yy')}
       </Cell>
       <Cell className="text-xs">
-        {dates && formatDate(dates?.ends, 'dd MMM yy')}
+        {dates && Dates.format(dates?.ends, 'dd MMM yy')}
       </Cell>
       <Cell className="text-xs">
-        {formatDistance(new Date(payment.createdAt), new Date(), { addSuffix: true })}
+        {Dates.fromNow(payment?.createdAt)}
+        {/* {formatDistance(new Date(payment?.createdAt), new Date(), { addSuffix: true })} */}
       </Cell>
       <Cell>
         <CurrencySpan value={payment.mxnTotal} />
