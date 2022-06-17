@@ -73,7 +73,7 @@ export default function FormGuest({ guest }) {
   return (
     <div className="max-w-sm mx-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex justify-end sticky top-0 bg-base-300 p-1">
+        <div className="flex justify-end sticky top-8 bg-base-100 pb-1  ">
           <button className="btn btn-primary my-1" disabled={['Guardado', 'Guardando', 'Cancelado'].includes(labelSave)}>
             {labelSave == FORM_STATUS[2] && <Loading />}
             {labelSave}

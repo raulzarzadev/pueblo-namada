@@ -17,6 +17,7 @@ import MainModal from "../../Modal/MainModal";
 import Section from "../../Section";
 import PlaceCosts from "../PlaceCosts";
 import { Dates } from '../../../firebase/Dates.utils'
+import FormGuest from "../../FormGuest";
 
 
 export default function PlaceGuests({ place,
@@ -68,7 +69,8 @@ export default function PlaceGuests({ place,
             <FormAccommodation place={place} guests={guests} />
           </MainModal>
           <MainModal title={`Nuevo Huesped`} OpenComponentType='primary' buttonLabel="Nuevo Huesped">
-            <FormPlace place={place} />
+            {/* <FormPlace place={place} /> */}
+            <FormGuest />
           </MainModal>
           <MainModal title='Nuevo gasto' buttonLabel="Nuevo Gasto" OpenComponentType='primary' >
             <div  >
