@@ -69,7 +69,7 @@ export default function PlaceDetails({ place = {} }) {
       }
 
 
-      <div className="max-w-md mx-auto pb-12 ">
+      <div className="max-w-md mx-auto pb-12 grid gap-2 ">
         <p className="text-center">{place.contact}</p>
         <p className="my-2 p-1 whitespace-pre-line">{place.resume}</p>
         {place?.amenities &&

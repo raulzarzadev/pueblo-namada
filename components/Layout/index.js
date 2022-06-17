@@ -69,7 +69,7 @@ export default function Layout({ children }) {
         {children}
       </main>
       {showMobileNav &&
-        <footer className={`relative  `}>
+        <footer className={`relative z-10  `}>
           <MobileNav />
         </footer>
       }
