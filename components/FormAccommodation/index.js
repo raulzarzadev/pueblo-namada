@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { createAccommodation, updateAccommodation } from "../../firebase/Accommodations/main";
 //import { newAccommodation } from "../../firebase/accomodations";
 import { formatDate } from "../../utils/dates";
+import InputDate from "../inputs/date";
 import InputNumber from "../inputs/InputNumber";
 import Text from "../inputs/text";
 
@@ -12,7 +13,7 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
   const defaultGuestId = guest?.id || null
   const defaultValues = payment || {
     guest: defaultGuestId,
-    accommodationStarts: `${format(new Date(), "yyyy-MM-dd")}T:12:00.000Z`,
+    accommodationStarts: `${format(new Date(), "yyyy-MM-dd")}`,
   }
   const { register, handleSubmit, watch, setValue, reset, formState } = useForm(
     {
@@ -149,8 +150,8 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
               </p>
             </div>
             <div className="sm:flex justify-center text-center">
-              <Text type='date' label='Desde'  {...register('accommodationStarts')} />
-              <Text type='date' label='Hasta' disabled value={accommodationEnds()} />
+              <InputDate type='date' label='Desde'  {...register('dates.starts', { valueAsDate: true })} />
+              <InputDate type='date' label='Hasta' disabled {...register('dates.ends', { valueAsDate: true })} />
             </div>
             <div className="flex justify-end flex-col items-end">
               <InputNumber type='number' {...register('nights')} label={'Noches'} smallSize sideLabel min={0} max={99} />

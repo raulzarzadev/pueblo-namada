@@ -176,7 +176,7 @@ export class FirebaseCRUD {
     const data = doc.data()
     const id = doc.id
 
-    const res = FirebaseCRUD.deepFormatFirebaseDates(data, 'fieldDate')
+    const res = FirebaseCRUD.deepFormatFirebaseDates(data, 'milliseconds')
 
     return {
       id,

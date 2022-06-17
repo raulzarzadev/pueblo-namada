@@ -28,12 +28,13 @@ const FormCashCut = ({ place }) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Text {...register('from')} type='date' label='Desde' />
-        <Text {...register('to')} type='date' label='Hasta' />
+      <form onSubmit={handleSubmit(onSubmit)} className='relative '>
+        <h2 className="absolute top-0 w-full bottom-0 bg-slate-400 bg-opacity-60 text-white font-bold text-3xl text-center flex justify-center items-center"> Feature en desarrollo</h2>
+        <Text {...register('from')} disabled type='date' label='Desde' />
+        <Text {...register('to')} disabled type='date' label='Hasta' />
         <div className="grid gap-2 my-4">
-          <button onClick={() => handleGetCashcut(watch('from'), watch('to'))} className="btn  btn-outline ">Hacer corte</button>
-          <button className="btn   ">Guardar corte</button>
+          <button disabled onClick={() => handleGetCashcut(watch('from'), watch('to'))} className="btn  btn-outline ">Hacer corte</button>
+          <button disabled className="btn   ">Guardar corte</button>
         </div>
       </form>
     </div >

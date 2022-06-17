@@ -178,6 +178,7 @@ const PaymentRow = ({ place, payment, guests }) => {
         {dates && Dates.format(dates?.ends, 'dd MMM yy')}
       </Cell>
       <Cell className="text-xs">
+        {console.log(payment?.createdAt)}
         {Dates.fromNow(payment?.createdAt)}
         {/* {formatDistance(new Date(payment?.createdAt), new Date(), { addSuffix: true })} */}
       </Cell>
