@@ -6,7 +6,7 @@ import sortByDate from "../../../utils/sortByDate";
 import { useUser } from "../../context/userContext";
 import { CurrencySpan } from "../../CurrencySpan";
 import FormAccommodation from "../../FormAccommodation";
-import FormCashCut from "../../FormCashCut";
+import FormCashBalance from "../../FormCashBalance";
 import FormCost from "../../FormCost";
 import FormPlace from "../../FormPlace";
 import GuestCard from "../../Guests/Guest/GuestCard";
@@ -78,7 +78,7 @@ export default function PlaceGuests({ place,
             </div>
           </MainModal>
           <MainModal title={`Nuevo Corte`} OpenComponentType='primary' buttonLabel="Corte">
-            <FormCashCut place={place} />
+            <FormCashBalance place={place} />
           </MainModal>
         </div>
       </div>
@@ -156,6 +156,7 @@ const PaymentRow = ({ place, payment, guests }) => {
   const handleOpen = () => setOpen(!open)
   const guest = guests?.find(({ id }) => id === payment?.guest)
   const { dates } = payment
+  console.log(payment)
   return (
     <tr
       className=" cursor-pointer hover:bg-base-200"
@@ -174,10 +175,10 @@ const PaymentRow = ({ place, payment, guests }) => {
         }
       </Cell>
       <Cell className="text-xs">
-        {dates && Dates.format(dates?.starts, 'dd MMM yy')}
+        {dates && Dates.format(dates?.startsAt || dates?.starts, 'dd MMM yy')}
       </Cell>
       <Cell className="text-xs">
-        {dates && Dates.format(dates?.ends, 'dd MMM yy')}
+        {dates && Dates.format(dates?.endsAt || dates?.ends, 'dd MMM yy')}
       </Cell>
       <Cell className="text-xs">
         {console.log(payment?.createdAt)}

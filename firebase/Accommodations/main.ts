@@ -1,3 +1,4 @@
+import { Dates } from "firebase-dates-util";
 import { where } from "firebase/firestore";
 import { FirebaseCRUD } from "../FirebaseCRUD";
 import { Accommodation } from "./accommodation.model";
@@ -18,20 +19,19 @@ export const listenPlaceAccommodations = (
   cb
 )
 
-export const getPaymentsBettwenDates = (
+export const getPlaceAccomodationsBettwenDates = (
   placeId: string,
   startDate: string,
-  endDate: string,
-  cb: CallableFunction
+  endDate: string
 ) => {
   /*   console.log(placeId, startDate, endDate)
     console.log(FirebaseCRUD.dateToFirebase(startDate)?.toDate()) */
-  return AccommodationsCRUD.listenDocsByFilters(
+  return AccommodationsCRUD.getMany(
     [
-      where('dates.starts', '>', FirebaseCRUD.dateToFirebase(startDate)),
+      // where('dates.startsAt', '>', Dates.toMiliseconds(startDate)),
+      // where('dates.startsAt', '<', Dates.toMiliseconds(endDate)),
       where('place', '==', placeId)
-    ],
-    cb
+    ]
   )
 }
 /*  //[

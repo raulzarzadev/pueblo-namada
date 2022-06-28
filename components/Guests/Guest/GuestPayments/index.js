@@ -70,13 +70,13 @@ export const PaymentDetails = ({ payment, place }) => {
               <div>
                 Desde:
                 <span className="font-bold">
-                  {dates && Dates.format(dates?.starts) || 'n/d'}
+                  {dates && Dates.format(dates?.startsAt || dates?.starts, 'dd MMM yy')}
                 </span>
               </div>
               <div>
                 Hasta:
                 <span className="font-bold">
-                  {dates && Dates.format(new Date(dates?.ends), "dd/MM/yy") || 'n/d'}
+                  {dates && Dates.format(dates?.endsAt || dates?.ends, 'dd MMM yy')}
                 </span>
               </div>
               <div>

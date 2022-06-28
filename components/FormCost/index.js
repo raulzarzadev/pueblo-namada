@@ -5,10 +5,11 @@ import Textarea from "../inputs/textarea"
 import { createCost } from '../../firebase/Costs/main'
 import { FirebaseCRUD } from "../../firebase/FirebaseCRUD"
 import InputFile from "../inputs/InputFile"
+import { format, formatISO } from "date-fns"
 const FormCost = ({ place }) => {
   const { handleSubmit, register, watch, setValue, formState: { errors }, reset } = useForm({
     defaultValues: {
-      date: FirebaseCRUD.format(new Date(), 'yyyy-MM-dd'),
+      date: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
     }
   })
   const onSubmit = (data) => {
@@ -39,7 +40,8 @@ const FormCost = ({ place }) => {
           Guardar
         </button>
       </div>
-      <Text type='date' label='Fecha'  {...register('date')} />
+      <input type='datetime-local' {...register('date')} />
+      {/* <Text type='datetime-local' label='Fecha'  {...register('date')} /> */}
       <Text
         {...register('title', { required: true })}
         placeholder='Titulo'

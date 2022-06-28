@@ -7,6 +7,7 @@ import { useState } from "react"
 import { CurrencySpan } from "../../CurrencySpan"
 import Image from "next/image"
 import PreviewImage from "../../PreviewImage"
+import { format } from "date-fns"
 const CostsTable = ({ costs = [] }) => {
 
   return (
@@ -41,7 +42,7 @@ const RowCost = ({ cost }) => {
   return (
     <tr onClick={handleOpen} className={`hover:bg-base-100 cursor-pointer`} >
       <td className="p-1 ">{cost.title}</td>
-      <td className="p-1 ">{FirebaseCRUD.format(cost.date, 'dd MMM yy')}</td>
+      <td className="p-1 ">{format(cost.date, 'dd MMMM yy HH:mm')}</td>
       <td className="p-1 text-left"><CurrencySpan cost={cost.value} /> </td>
       <td className="p-1 ">
 
@@ -50,7 +51,7 @@ const RowCost = ({ cost }) => {
             {cost?.title}
           </h2>
           <p>
-            {`${FirebaseCRUD.format(cost?.date, 'dd MMM yy')}`}
+            {`${format(cost?.date, 'dd MMMM yy HH:mm')}`}
           </p>
           <p>
             {cost?.description}

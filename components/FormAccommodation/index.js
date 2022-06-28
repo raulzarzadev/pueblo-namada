@@ -48,9 +48,8 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
       },
       discountedNights: data.discountedNights,
       dates: {
-        starts: watch('accommodationStarts'),
-        ends: accommodationEnds(),
-
+        startsAt: watch('accommodationStarts'),
+        endsAt: accommodationEnds(),
       },
       startsAt: watch('accommodationStarts'),
       endsAt: accommodationEnds(),

@@ -3,9 +3,10 @@ import { getAuth } from "firebase/auth";
 import { format as fnsFormat } from "date-fns"
 import { v4 as uidGenerator } from 'uuid';
 
-import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, query, Timestamp, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, onSnapshot, query, Timestamp, updateDoc, where } from "firebase/firestore";
 import { db, storage } from ".";
 import { Dates } from 'firebase-dates-util';
+import { es } from 'date-fns/locale';
 
 type Target = 'firebase' | 'milliseconds' | 'date' | 'fieldDate'
 export class FirebaseCRUD {
@@ -25,7 +26,7 @@ export class FirebaseCRUD {
     }
 
     if (isValidDate(objectDate)) {
-      return fnsFormat(new Date(objectDate.setMinutes(objectDate.getMinutes() + objectDate.getTimezoneOffset())), stringFormat)
+      return fnsFormat(new Date(objectDate.setMinutes(objectDate.getMinutes() + objectDate.getTimezoneOffset())), stringFormat, { locale: es })
     } else {
       console.error('date is not valid date')
       return 'NaD'
@@ -137,7 +138,7 @@ export class FirebaseCRUD {
 
   async update(itemId: string, item: object) {
     return await updateDoc(doc(db, this.collectionName, itemId), {
-      ...FirebaseCRUD.deepFormatFirebaseDates({ ...item, updatedAt: new Date() }, 'timestamp')
+      ...FirebaseCRUD.deepFormatFirebaseDates({ ...item, updatedAt: new Date() }, 'number')
     })
       .then(res => FirebaseCRUD.formatResponse(true, `${this.collectionName}_UPDATED`, res),)
       .catch(err => console.error(err))
@@ -158,7 +159,25 @@ export class FirebaseCRUD {
     const docSnap = await getDoc(ref)
     return FirebaseCRUD.normalizeDoc(docSnap)
   }
+  async getMany(filters: any[]) {
+    /**
+   * * get all documents in a collection implmementing filters
+   * @param filters: where(itemField,'==','value')
+   */
+    const q = query(
+      collection(db, this.collectionName),
+      ...filters
+    )
 
+    const querySnapshot = await getDocs(q);
+    const res: ({ id: any; } | null)[] = []
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      //console.log(doc.id, " => ", doc.data());
+      res.push(FirebaseCRUD.normalizeDoc(doc))
+    });
+    return res
+  }
 
 
   async listen(itemId: string, cb: CallableFunction) {
