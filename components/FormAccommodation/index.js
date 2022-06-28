@@ -150,12 +150,42 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
               </p>
             </div>
             <div className="sm:flex justify-center text-center">
-              <InputDate type='date' label='Desde'  {...register('dates.starts', { valueAsDate: true })} />
-              <InputDate type='date' label='Hasta' disabled {...register('dates.ends', { valueAsDate: true })} />
+              <InputDate
+                type='date'
+                label='Desde'
+                {...register('dates.starts',
+                  {
+                    value: format(new Date(watch('dates.starts') || new Date()), 'yyyy-MM-dd')
+                  })}
+              />
+              <InputDate
+                type='date'
+                label='Hasta'
+                disabled
+                {...register('dates.ends',
+                  {
+                    value: format(new Date(watch('dates.ends') || new Date()), 'yyyy-MM-dd')
+                  })}
+              />
             </div>
             <div className="flex justify-end flex-col items-end">
-              <InputNumber type='number' {...register('nights')} label={'Noches'} smallSize sideLabel min={0} max={99} />
-              <InputNumber type='number' {...register('discountedNights')} label={'Descuento (noches)'} smallSize sideLabel min={0} max={99} />
+              <InputNumber
+                type='number' {...register('nights')}
+                label={'Noches'}
+                smallSize
+                sideLabel
+                min={0}
+                max={99}
+              />
+              <InputNumber
+                type='number'
+                {...register('discountedNights')}
+                label={'Descuento (noches)'}
+                smallSize
+                sideLabel
+                min={0}
+                max={99}
+              />
             </div>
             <div className="text-center">
               <p className="">Total (mxn):

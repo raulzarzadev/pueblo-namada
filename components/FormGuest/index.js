@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { newPlaceGuest, updateGuest } from "../../firebase/guests";
 import { uploadFile } from "../../firebase/uploadImage";
 import File from "../inputs/file";
 import Phone from "../inputs/phone";
@@ -9,6 +8,7 @@ import Text from "../inputs/text";
 import Checkbox from '../inputs/checkbox';
 import Loading from "../Loadign";
 
+import { createGuest, updateGuest } from '../../firebase/Gests/main'
 
 export default function FormGuest({ guest }) {
 
@@ -49,7 +49,7 @@ export default function FormGuest({ guest }) {
           }
         })
     } else {
-      newPlaceGuest({ ...data, placeId }).then(({ document }) => {
+      createGuest({ ...data, placeId }).then(({ document }) => {
         if (document?.id) {
           setLabelSave(FORM_STATUS[1])
           console.log('saved');
