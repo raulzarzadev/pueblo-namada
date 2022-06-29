@@ -137,9 +137,11 @@ export class FirebaseCRUD {
 
 
   async update(itemId: string, item: object) {
-    return await updateDoc(doc(db, this.collectionName, itemId), {
+    const newItem = {
       ...FirebaseCRUD.deepFormatFirebaseDates({ ...item, updatedAt: new Date() }, 'number')
-    })
+    }
+    console.log(newItem)
+    return await updateDoc(doc(db, this.collectionName, itemId), newItem)
       .then(res => FirebaseCRUD.formatResponse(true, `${this.collectionName}_UPDATED`, res),)
       .catch(err => console.error(err))
   }

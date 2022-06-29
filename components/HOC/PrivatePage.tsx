@@ -10,7 +10,6 @@ const PrivatePage = (
     { children?: ReactNode, permissionTo: PermissionTo, elementOwner?: string | null }
 ): ReactNode => {
   const { user } = useUser()
-  console.log(user)
 
   const AUTH_PAGES = {
     public: () => <>{children}</>,

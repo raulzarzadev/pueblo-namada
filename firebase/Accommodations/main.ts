@@ -26,10 +26,12 @@ export const getPlaceAccomodationsBettwenDates = (
 ) => {
   /*   console.log(placeId, startDate, endDate)
     console.log(FirebaseCRUD.dateToFirebase(startDate)?.toDate()) */
+  console.log(Dates.toMiliseconds(startDate))
+
   return AccommodationsCRUD.getMany(
     [
-      // where('dates.startsAt', '>', Dates.toMiliseconds(startDate)),
-      // where('dates.startsAt', '<', Dates.toMiliseconds(endDate)),
+      where('dates.startsAt', '>=', Dates.toMiliseconds(startDate)),
+      where('dates.startsAt', '<=', Dates.toMiliseconds(endDate)),
       where('place', '==', placeId)
     ]
   )

@@ -1,12 +1,10 @@
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
-import Text from "../inputs/text"
-import { getPaymentsBettwenDates } from '../../firebase/Accommodations/main'
-import { formatDate } from "../../utils/dates"
 import { getPlaceCashBalanceBettweenDates } from '../../firebase/CashBalance/main'
-import { async } from "@firebase/util"
 import { format } from "date-fns"
+import CashBalance from "../CashBalance"
+
 const FormCashBalance = ({ place, }) => {
   const { handleSubmit, register, watch } = useForm({
     defaultValues: {
@@ -23,30 +21,35 @@ const FormCashBalance = ({ place, }) => {
 
   const handleGetCashBalance = async (from, to) => {
 
-    const balance = await getPlaceCashBalanceBettweenDates(place?.id, from, to)
-    setCashBalance(balance)
-    console.log(balance)
-
-    // const payments = getPaymentsBettwenDates(place?.id, from, to, (data) => console.log(data))
-
-    // const guest = getGuestsRegistaredBettweenDate(from, to)
-    // const cost = getCostBettwenDates(from, to)
+    getPlaceCashBalanceBettweenDates(place?.id, from, to)
+      .then(setCashBalance)
+      .catch(err => console.error(err))
   }
 
 
   const outOfService = false
+
   return (
     <div>
-      {cashBalance && <div>
-        <h2>Gastos</h2>
-        {cashBalance?.costs?.map(cost => <CostCard cost={cost} />)}
-      </div>}
+
       <form onSubmit={handleSubmit(onSubmit)} className='relative '>
         {outOfService &&
           <h2 className="absolute top-0 w-full bottom-0 bg-slate-400 bg-opacity-60 text-white font-bold text-3xl text-center flex justify-center items-center"> Feature en desarrollo</h2>
         }
-        <input type='datetime-local' {...register('from')} />
-        <input type='datetime-local' {...register('to')} />
+
+        <div className="flex justify-end my-2">
+          <label>
+            Desde:
+            <input className="input input-sm input-bordered" type='datetime-local' {...register('from')} />
+          </label>
+        </div>
+
+        <div className="flex justify-end my-2">
+          <label >
+            Hasta:
+            <input className="input input-sm input-bordered" type='datetime-local' {...register('to')} />
+          </label>
+        </div>
         {/*  <Text {...register('from')} label='Desde' /> */}
         {/*  <Text {...register('to')} type='date' label='Hasta' /> */}
         <div className="grid gap-2 my-4">
@@ -54,25 +57,12 @@ const FormCashBalance = ({ place, }) => {
           <button disabled className="btn   ">Guardar corte</button>
         </div>
       </form>
+      {cashBalance &&
+        <CashBalance cashBalance={cashBalance} />
+      }
     </div >
   )
 }
 
-const CostCard = ({ cost }) => {
-  console.log(cost)
-  return (
-    <div>
-      <h4>
-        <span className="font-bold">
-          {cost?.title} :
-        </span>
-        <span>
-          {format(cost?.date, ' dd MMM yy HH:mm ')}
-        </span>
-      </h4>
-
-    </div>
-  )
-}
 
 export default FormCashBalance

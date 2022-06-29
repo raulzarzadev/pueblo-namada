@@ -156,7 +156,7 @@ const PaymentRow = ({ place, payment, guests }) => {
   const handleOpen = () => setOpen(!open)
   const guest = guests?.find(({ id }) => id === payment?.guest)
   const { dates } = payment
-  console.log(payment)
+
   return (
     <tr
       className=" cursor-pointer hover:bg-base-200"
@@ -165,7 +165,7 @@ const PaymentRow = ({ place, payment, guests }) => {
       <Cell className="max-w-[75px] truncate">
         {guest?.name}
         {payment &&
-          <Modal title={`Nuevo pago de ${guest?.name}`} open={open} handleOpen={handleOpen} >
+          <Modal title={`Pago de ${guest?.name}`} open={open} handleOpen={handleOpen} >
             <h2 className="font-bold">
               {guest?.name}
             </h2>
@@ -181,7 +181,7 @@ const PaymentRow = ({ place, payment, guests }) => {
         {dates && Dates.format(dates?.endsAt || dates?.ends, 'dd MMM yy')}
       </Cell>
       <Cell className="text-xs">
-        {console.log(payment?.createdAt)}
+
         {Dates.fromNow(payment?.createdAt)}
         {/* {formatDistance(new Date(payment?.createdAt), new Date(), { addSuffix: true })} */}
       </Cell>

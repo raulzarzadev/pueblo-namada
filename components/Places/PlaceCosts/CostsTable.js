@@ -14,7 +14,7 @@ const CostsTable = ({ costs = [] }) => {
     <div>
       <table className="table-auto w-full text-center">
         <thead>
-          <tr className="bg-gray-200">
+          <tr className="">
             <th className="px-1 py-2">Nombre</th>
             <th className="px-1 py-2">Fecha</th>
             <th className="px-1 py-2">Costo</th>
@@ -42,7 +42,7 @@ const RowCost = ({ cost }) => {
   return (
     <tr onClick={handleOpen} className={`hover:bg-base-100 cursor-pointer`} >
       <td className="p-1 ">{cost.title}</td>
-      <td className="p-1 ">{format(cost.date, 'dd MMMM yy HH:mm')}</td>
+      <td className="p-1 ">{format(cost.date, 'dd MMMM yy ')}</td>
       <td className="p-1 text-left"><CurrencySpan cost={cost.value} /> </td>
       <td className="p-1 ">
 

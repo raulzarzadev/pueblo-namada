@@ -46,7 +46,7 @@ export const PaymentDetails = ({ payment, place }) => {
     })
   }
 
-  const { discountedNights, mxnTotal, usdTotal, nights, createdAt, dates, prices } = payment
+  const { discountedNights, mxnTotal, usdTotal, nights, createdAt, dates, prices, accommodationStarts } = payment
 
   return (
     <>
@@ -72,6 +72,7 @@ export const PaymentDetails = ({ payment, place }) => {
                 <span className="font-bold">
                   {dates && Dates.format(dates?.startsAt || dates?.starts, 'dd MMM yy')}
                 </span>
+
               </div>
               <div>
                 Hasta:

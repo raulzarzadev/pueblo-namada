@@ -11,17 +11,26 @@ import Text from "../inputs/text";
 export default function FormAccommodation({ guest, guests = [], place, payment = null }) {
 
   const defaultGuestId = guest?.id || null
-  const defaultValues = payment || {
+  const defaultValues = {
+    ...payment, dates: {
+      ...payment?.dates,
+      //startsAt: payment?.accommodationStarts
+    }
+  } || {
     guest: defaultGuestId,
-    accommodationStarts: `${format(new Date(), "yyyy-MM-dd")}`,
+    nights: 1,
+    discountedNights: 0,
+    dates: {
+      startsAt: `${format(new Date(), "yyyy-MM-dd")}`
+    }
+    // accommodationStarts: `${format(new Date(), "yyyy-MM-dd")}`,
   }
+  console.log(defaultValues)
   const { register, handleSubmit, watch, setValue, reset, formState } = useForm(
     {
       defaultValues
     }
   );
-
-
 
   const FORM_STATUS = {
     0: 'Pagar',
@@ -32,27 +41,31 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
     5: 'Editado'
   }
 
+  console.log(watch(), payment)
+
   const defaultLabel = payment ? FORM_STATUS[4] : FORM_STATUS[0]
   const [labelSave, setLabelSave] = useState(defaultLabel);
+
+
+  const startsAt = watch('dates.startsAt')
+  const nights = watch('nights')
+  useEffect(() => {
+    setValue('dates.endsAt', accommodationEnds(startsAt))
+    setTotals(getTotals())
+  }, [startsAt, nights])
+
 
   const onSubmit = data => {
     const accomodation = {
       ...data,
       place: place?.id,
-      mxnTotal: getTotals().mxn,
-      usdTotal: getTotals().usd,
+      placeId: place?.id,
+      mxnTotal: totals?.mxn,
+      usdTotal: totals?.usd,
       prices: {
         night: place?.price || null,
         usd: place?.usdPrice || null,
-
       },
-      discountedNights: data.discountedNights,
-      dates: {
-        startsAt: watch('accommodationStarts'),
-        endsAt: accommodationEnds(),
-      },
-      startsAt: watch('accommodationStarts'),
-      endsAt: accommodationEnds(),
     }
     setLabelSave(FORM_STATUS[3])
 
@@ -83,16 +96,14 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
   };
 
 
-  const accommodationEnds = () => {
-    const date = watch('accommodationStarts')
-    const nights = watch('nights') || 0
-    const startDate = new Date(date)
+  const accommodationEnds = (startAt) => {
+    const nights = watch('nights') || 1
+    const startDate = new Date(startAt)
     const endDate = addDays(startDate, nights)
     return formatDate(endDate, "yyyy-MM-dd")
   }
 
   //  console.log(place)
-
 
   const [totals, setTotals] = useState({ mxn: 0, usd: 0 })
   const getTotals = () => {
@@ -104,7 +115,6 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
     const usd = (usdPrice && (price * nights - (discountedNights * price)) / usdPrice).toFixed(2)
     return { mxn: parseFloat(mxn), usd: parseFloat(usd) }
   }
-
 
 
   return (
@@ -152,24 +162,24 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
               <InputDate
                 type='date'
                 label='Desde'
-                {...register('dates.starts',
+                {...register('dates.startsAt',
                   {
-                    value: format(new Date(watch('dates.starts') || new Date()), 'yyyy-MM-dd')
+                    value: format(new Date(watch('dates.startsAt') || new Date()), 'yyyy-MM-dd')
                   })}
               />
               <InputDate
                 type='date'
                 label='Hasta'
                 disabled
-                {...register('dates.ends',
+                {...register('dates.endsAt',
                   {
-                    value: format(new Date(watch('dates.ends') || new Date()), 'yyyy-MM-dd')
+                    value: accommodationEnds(startsAt)
                   })}
               />
             </div>
             <div className="flex justify-end flex-col items-end">
               <InputNumber
-                type='number' {...register('nights')}
+                type='number' {...register('nights', { valueAsNumber: true })}
                 label={'Noches'}
                 smallSize
                 sideLabel
@@ -178,7 +188,7 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
               />
               <InputNumber
                 type='number'
-                {...register('discountedNights')}
+                {...register('discountedNights', { valueAsNumber: true })}
                 label={'Descuento (noches)'}
                 smallSize
                 sideLabel
@@ -189,14 +199,14 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
             <div className="text-center">
               <p className="">Total (mxn):
                 <span className="font-bold text-xl">
-                  {`$${getTotals().mxn}`}
+                  {`$${totals?.mxn}`}
                 </span>
               </p>
 
               <p className="">
                 Total (usd) :
                 <span className="font-bold text-xl">
-                  {`$${getTotals().usd}`}
+                  {`$${totals?.usd}`}
                 </span>
               </p>
             </div>
