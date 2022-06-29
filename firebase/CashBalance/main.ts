@@ -18,7 +18,7 @@ export const listenPlaceCashBalances = (placeId: string, cb: CallableFunction) =
 
 export const listenUserCashBalances = (userId: string, cb: CallableFunction) => CashBalancesCRUD.listenDocs([where('userId', '==', userId)], cb)
 
-export const getPlaceCashBalanceBettweenDates = async (placeId: string, from, to) => {
+export const getPlaceCashBalanceBettweenDates = async (placeId: string, from: any, to: any) => {
 
   const accommodations = await getPlaceAccomodationsBettwenDates(placeId, from, to)
   const costs = await getPlaceCostBetteenDates(placeId, from, to)
