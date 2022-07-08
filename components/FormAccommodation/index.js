@@ -10,8 +10,10 @@ import Text from "../inputs/text";
 
 export default function FormAccommodation({ guest, guests = [], place, payment = null }) {
 
+
   const defaultGuestId = guest?.id || null
   const defaultValues = {
+    guest: defaultGuestId,
     ...payment, dates: {
       ...payment?.dates,
       //startsAt: payment?.accommodationStarts
@@ -25,7 +27,6 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
     }
     // accommodationStarts: `${format(new Date(), "yyyy-MM-dd")}`,
   }
-  console.log(defaultValues)
   const { register, handleSubmit, watch, setValue, reset, formState } = useForm(
     {
       defaultValues
@@ -41,7 +42,6 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
     5: 'Editado'
   }
 
-  console.log(watch(), payment)
 
   const defaultLabel = payment ? FORM_STATUS[4] : FORM_STATUS[0]
   const [labelSave, setLabelSave] = useState(defaultLabel);
@@ -103,7 +103,6 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
     return formatDate(endDate, "yyyy-MM-dd")
   }
 
-  //  console.log(place)
 
   const [totals, setTotals] = useState({ mxn: 0, usd: 0 })
   const getTotals = () => {
@@ -115,6 +114,7 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
     const usd = (usdPrice && (price * nights - (discountedNights * price)) / usdPrice).toFixed(2)
     return { mxn: parseFloat(mxn), usd: parseFloat(usd) }
   }
+
 
 
   return (
