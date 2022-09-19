@@ -1,5 +1,5 @@
-import { format } from "@/utils/dates"
-import { Timestamp } from "firebase/firestore"
+import { format } from '@/utils/dates'
+import { Timestamp } from 'firebase/firestore'
 
 const DATE_FIELDS = [
   'birth',
@@ -16,12 +16,12 @@ const DATE_FIELDS = [
 ]
 const TARGETS = ['firebase', 'milliseconds', 'date', 'fieldDate']
 
-
 export function deepFormatFirebaseDates(
   object: any,
-  target: 'firebase' | 'milliseconds' | 'date' | 'fieldDate',
+  target: 'firebase' | 'milliseconds' | 'date' | 'fieldDate'
 ) {
-  if (!TARGETS.includes(target)) return console.error('target must be one of:', TARGETS)
+  if (!TARGETS.includes(target))
+    return console.error('target must be one of:', TARGETS)
   // target is firebase transform to Timestamp
   // target is milis transform to milis
   // target is date transofrm to Date
@@ -48,8 +48,6 @@ export function deepFormatFirebaseDates(
     }
   }
 
-
-
   const objective = {
     firebase: (date: Date): Timestamp => Timestamp.fromDate(date),
     milliseconds: (date: Date): number => date.getTime(),
@@ -59,12 +57,12 @@ export function deepFormatFirebaseDates(
 
   let aux_obj = { ...object }
 
-  Object.keys(aux_obj).forEach(key => {
+  Object.keys(aux_obj).forEach((key) => {
     const objProperty = object[key]
     if (DATE_FIELDS.includes(key)) {
       const date = transformAnyToDate(objProperty)
       /* console.log('target', target) */
-      const res = date ? (objective[target](date)) : null
+      const res = date ? objective[target](date) : null
       aux_obj[key] = res
       // console.log('res', res);
 
@@ -74,7 +72,7 @@ export function deepFormatFirebaseDates(
       deepFormatFirebaseDates(objProperty, target)
       // if is an array
     } else if (Array.isArray(objProperty)) {
-      objProperty.map(item => deepFormatFirebaseDates(item, target))
+      objProperty.map((item) => deepFormatFirebaseDates(item, target))
     }
   })
 

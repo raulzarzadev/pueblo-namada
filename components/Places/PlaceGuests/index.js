@@ -19,7 +19,7 @@ import PlaceCosts from '../PlaceCosts'
 import { Dates } from '../../../firebase/Dates.utils'
 import FormGuest from '../../FormGuest'
 
-export default function PlaceGuests ({
+export default function PlaceGuests({
   place,
   showTable = false,
   showCards = false,
@@ -61,49 +61,77 @@ export default function PlaceGuests ({
       <div>
         <h3 className="text-xl font-bold text-left my-4">Operaciones</h3>
         <div className="grid gap-2 sm:flex justify-evenly">
-
-          <MainModal title={'Nuevo pago'} OpenComponentType='primary' buttonLabel="Nuevo pago">
+          <MainModal
+            title={'Nuevo pago'}
+            OpenComponentType="primary"
+            buttonLabel="Nuevo pago"
+          >
             <FormAccommodation place={place} guests={guests} />
           </MainModal>
-          <MainModal title={'Nuevo Huesped'} OpenComponentType='primary' buttonLabel="Nuevo Huesped">
+          <MainModal
+            title={'Nuevo Huesped'}
+            OpenComponentType="primary"
+            buttonLabel="Nuevo Huesped"
+          >
             {/* <FormPlace place={place} /> */}
             <FormGuest />
           </MainModal>
-          <MainModal title='Nuevo gasto' buttonLabel="Nuevo Gasto" OpenComponentType='primary' >
-            <div >
+          <MainModal
+            title="Nuevo gasto"
+            buttonLabel="Nuevo Gasto"
+            OpenComponentType="primary"
+          >
+            <div>
               <FormCost place={place} />
             </div>
           </MainModal>
-          <MainModal title={'Nuevo Corte'} OpenComponentType='primary' buttonLabel="Corte">
+          <MainModal
+            title={'Nuevo Corte'}
+            OpenComponentType="primary"
+            buttonLabel="Corte"
+          >
             <FormCashBalance place={place} />
           </MainModal>
         </div>
       </div>
 
       <div className="grid gap-4 py-4 mt-4">
-
         {showCards &&
-          guests?.map((guest, i) => <GuestCard key={`${guest.id}-${i}`} guest={guest} isOwner={isOwner} place={place} />)
-        }
+          guests?.map((guest, i) => (
+            <GuestCard
+              key={`${guest.id}-${i}`}
+              guest={guest}
+              isOwner={isOwner}
+              place={place}
+            />
+          ))}
 
-        {showTable &&
-          <Section title='Huespedes'>
-            <GuestsTable guests={guests} payments={placePayments} place={place} />
+        {showTable && (
+          <Section title="Huespedes">
+            <GuestsTable
+              guests={guests}
+              payments={placePayments}
+              place={place}
+            />
           </Section>
-        }
+        )}
 
-        {showPaymentsTable &&
-          <Section title='Pagos'>
-            <PaymentsTable place={place} guests={guests} payments={placePayments} />
-          </Section>}
+        {showPaymentsTable && (
+          <Section title="Pagos">
+            <PaymentsTable
+              place={place}
+              guests={guests}
+              payments={placePayments}
+            />
+          </Section>
+        )}
 
-        {showOperatingCosts &&
-          <Section title='Costos'>
+        {showOperatingCosts && (
+          <Section title="Costos">
             <PlaceCosts place={place} />
           </Section>
-        }
+        )}
       </div>
-
     </div>
   )
 }
@@ -121,25 +149,22 @@ const PaymentsTable = ({ place, guests, payments }) => {
       <table className="mx-auto w-full">
         <thead>
           <tr>
-            <th>
-              Huesped
-            </th>
-            <th>
-              Entrada
-            </th>
-            <th>
-              Salida
-            </th>
-            <th>
-              Creado
-            </th>
-            <th>
-              Pago
-            </th>
+            <th>Huesped</th>
+            <th>Entrada</th>
+            <th>Salida</th>
+            <th>Creado</th>
+            <th>Pago</th>
           </tr>
         </thead>
         <tbody>
-          {sortByDate(payments, 'createdAt', 'dec')?.map(payment => <PaymentRow key={payment.id} place={place} payment={payment} guests={guests} />)}
+          {sortByDate(payments, 'createdAt', 'dec')?.map((payment) => (
+            <PaymentRow
+              key={payment.id}
+              place={place}
+              payment={payment}
+              guests={guests}
+            />
+          ))}
         </tbody>
       </table>
     </div>
@@ -159,15 +184,17 @@ const PaymentRow = ({ place, payment, guests }) => {
     >
       <Cell className="max-w-[75px] truncate">
         {guest?.name}
-        {payment &&
-          <Modal title={`Pago de ${guest?.name}`} open={open} handleOpen={handleOpen} >
-            <h2 className="font-bold">
-              {guest?.name}
-            </h2>
+        {payment && (
+          <Modal
+            title={`Pago de ${guest?.name}`}
+            open={open}
+            handleOpen={handleOpen}
+          >
+            <h2 className="font-bold">{guest?.name}</h2>
             <PaymentDetails payment={payment} place={place} />
             {/* <GuestDetails place={place} guest={guest} /> */}
           </Modal>
-        }
+        )}
       </Cell>
       <Cell className="text-xs">
         {dates && Dates.format(dates?.startsAt || dates?.starts, 'dd MMM yy')}
@@ -176,7 +203,6 @@ const PaymentRow = ({ place, payment, guests }) => {
         {dates && Dates.format(dates?.endsAt || dates?.ends, 'dd MMM yy')}
       </Cell>
       <Cell className="text-xs">
-
         {Dates.fromNow(payment?.createdAt)}
         {/* {formatDistance(new Date(payment?.createdAt), new Date(), { addSuffix: true })} */}
       </Cell>
@@ -191,7 +217,7 @@ const GuestsTable = ({ guests, payments, place }) => {
   return (
     <table className="mx-auto w-full">
       <thead>
-        <tr >
+        <tr>
           <th>Nombre</th>
           <th>Placas</th>
           <th>Pagos</th>
@@ -200,9 +226,14 @@ const GuestsTable = ({ guests, payments, place }) => {
       </thead>
 
       <tbody>
-        {guests?.map((guest, i) =>
-          <GuestRow guest={guest} place={place} key={guest + i} payments={payments.filter(pay => pay.guest === guest.id)} />
-        )}
+        {guests?.map((guest, i) => (
+          <GuestRow
+            guest={guest}
+            place={place}
+            key={guest + i}
+            payments={payments.filter((pay) => pay.guest === guest.id)}
+          />
+        ))}
       </tbody>
     </table>
   )
@@ -212,7 +243,7 @@ const GuestRow = ({ place, guest, payments }) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
   const sortedPayments = payments.sort((a, b) => {
-    const toNumber = date => {
+    const toNumber = (date) => {
       const newDate = new Date(date)
       if (newDate instanceof Date) {
         return newDate?.getTime()
@@ -228,24 +259,25 @@ const GuestRow = ({ place, guest, payments }) => {
   const lastPay = sortedPayments[0]
   return (
     <>
-      <tr className="cursor-pointer hover:bg-base-200" onClick={() => handleOpen()} >
+      <tr
+        className="cursor-pointer hover:bg-base-200"
+        onClick={() => handleOpen()}
+      >
         <Cell className=" truncate max-w-[75px]   ">
-          <span className="">
-            {guest?.name}
-          </span>
-          <Modal title={`Información de ${guest?.name} `} open={open} handleOpen={handleOpen} >
+          <span className="">{guest?.name}</span>
+          <Modal
+            title={`Información de ${guest?.name} `}
+            open={open}
+            handleOpen={handleOpen}
+          >
             <GuestDetails place={place} guest={guest} />
           </Modal>
         </Cell>
+        <Cell>{guest?.plates}</Cell>
+        <Cell>{payments?.length}</Cell>
         <Cell>
-          {guest?.plates}
-        </Cell>
-        <Cell >
-          {payments?.length}
-        </Cell>
-        <Cell>
-          {lastPay
-            ? <>
+          {lastPay ? (
+            <>
               {/*  <div className="text-xs text-right">
                 {lastPay?.createdAt && formatDate(lastPay?.createdAt, 'dd MMM yy')}
               </div> */}
@@ -253,7 +285,9 @@ const GuestRow = ({ place, guest, payments }) => {
                 <CurrencySpan value={lastPay?.mxnTotal} />
               </div>
             </>
-            : <span className="text-xs">Sin pagos aún</span>}
+          ) : (
+            <span className="text-xs">Sin pagos aún</span>
+          )}
           {/*   {payments.sort((a, b) => {
             const toNumber = date => date.getTime()
             if (toNumber(a.createdAt) > toNumber(b.createdAt)) return 1

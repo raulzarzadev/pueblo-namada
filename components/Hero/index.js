@@ -1,7 +1,10 @@
 import { INFO } from '../../CONSTANTS/PROJECT'
-export default function Hero () {
+export default function Hero() {
   return (
-    <div className="hero min-h-screen" style={{ backgroundImage: 'url(/images/overlander.jpg)' }}>
+    <div
+      className="hero min-h-screen"
+      style={{ backgroundImage: 'url(/images/overlander.jpg)' }}
+    >
       <div className="hero-overlay bg-opacity-60"></div>
       <div className="hero-content text-center text-neutral-content">
         <div className="max-w-md">
@@ -15,5 +18,6 @@ export default function Hero () {
           </Link> */}
         </div>
       </div>
-    </div>)
+    </div>
+  )
 }

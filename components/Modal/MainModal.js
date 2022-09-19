@@ -1,7 +1,7 @@
 import Modal from '.'
 import { useState, useRef } from 'react'
 
-export default function MainModal ({
+export default function MainModal({
   children,
   title,
   buttonLabel = 'open modal',
@@ -20,19 +20,29 @@ export default function MainModal ({
     setOpenModal(!openModal)
   }
 
-  return <>
-    {OpenComponent
-      ? <OpenComponent onClick={handleOpenModal} {...OpenComponentProps} />
-      : <button
-        onClick={() => handleOpenModal()}
-        {...OpenComponentProps}
-        className={`${OpenComponentProps?.className || ''} ${OPEN_COMPONENT_STYLE[OpenComponentType]}`}
+  return (
+    <>
+      {OpenComponent ? (
+        <OpenComponent onClick={handleOpenModal} {...OpenComponentProps} />
+      ) : (
+        <button
+          onClick={() => handleOpenModal()}
+          {...OpenComponentProps}
+          className={`${OpenComponentProps?.className || ''} ${
+            OPEN_COMPONENT_STYLE[OpenComponentType]
+          }`}
+        >
+          {buttonLabel}
+        </button>
+      )}
+      <Modal
+        ref={modalRef}
+        title={title}
+        open={openModal}
+        handleOpen={handleOpenModal}
       >
-        {buttonLabel}
-      </button>
-    }
-    <Modal ref={modalRef} title={title} open={openModal} handleOpen={handleOpenModal} >
-      {children}
-    </Modal>
-  </>
+        {children}
+      </Modal>
+    </>
+  )
 }

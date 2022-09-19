@@ -1,7 +1,6 @@
-import { Base } from "../Base.model";
+import { Base } from '../Base.model'
 
 export interface Cost extends Base {
-
   name: string
   description: string
   value: number
@@ -15,6 +14,4 @@ export interface Cost extends Base {
   notes: string
   isDeleted: boolean
   isArchived: boolean
-
-
 }

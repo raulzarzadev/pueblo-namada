@@ -4,7 +4,7 @@ import { formatDate } from '../../../utils/dates'
 import SettingsIcon from '../../icons/SettingsIcon'
 import MainModal from '../../Modal/MainModal'
 
-export default function PlacePyments ({ place }) {
+export default function PlacePyments({ place }) {
   const [payments, setPayments] = useState(undefined)
   useEffect(() => {
     listenPlaceAccomomodations(place.id, setPayments)
@@ -12,9 +12,7 @@ export default function PlacePyments ({ place }) {
 
   return (
     <div>
-      <h1 className="text-center font-bold text-lg">
-        Pagos
-      </h1>
+      <h1 className="text-center font-bold text-lg">Pagos</h1>
       <table className="mx-auto">
         <tr>
           <th>id</th>
@@ -23,8 +21,9 @@ export default function PlacePyments ({ place }) {
           <th>Salida</th>
           <th>Opciones</th>
         </tr>
-        {payments?.map(payment => <PaymentRow payment={payment} key={payment.id} />
-        )}
+        {payments?.map((payment) => (
+          <PaymentRow payment={payment} key={payment.id} />
+        ))}
       </table>
     </div>
   )
@@ -39,9 +38,7 @@ const PaymentRow = ({ payment }) => {
       <td>{formatDate(dates?.starts, 'dd MMM yy')}</td>
       <td>{formatDate(dates?.ends, 'dd MMM yy')}</td>
       <td>
-        <MainModal>
-
-        </MainModal>
+        <MainModal></MainModal>
         <button>
           <SettingsIcon />
         </button>

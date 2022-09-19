@@ -1,11 +1,10 @@
-import { Base } from "../Base.model";
+import { Base } from '../Base.model'
 
 export interface Accommodation extends Base {
-
-  accommodationStarts: string;
+  accommodationStarts: string
   createdAt: Date
   dates: {
-    startsAt: Date,
+    startsAt: Date
     endsAt: Date
   }
 
@@ -14,12 +13,10 @@ export interface Accommodation extends Base {
   nights: number
   place: string
   prices: {
-    nigth: number,
-    usd: number,
+    nigth: number
+    usd: number
   }
   useTodal: number
   mxnTotal: number
   userId: string
-
-
 }

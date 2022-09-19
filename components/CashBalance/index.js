@@ -8,20 +8,17 @@ const CashBalance = ({ cashBalance }) => {
   const { costs, accommodations } = cashBalance
   const sumarField = (arrayOfObjects, field) => {
     const aux = 0
-    arrayOfObjects.map(item => aux += parseFloat(item[field] || 0))
+    arrayOfObjects.map((item) => (aux += parseFloat(item[field] || 0)))
     return aux
   }
 
   return (
     <div className="grid gap-4 pb-4">
-
       <div>
         <h2 className="font-bold ">Gastos</h2>
 
         <div className="flex justify-around">
-          <div>
-            Gastos : {costs?.length}
-          </div>
+          <div>Gastos : {costs?.length}</div>
 
           <div className="flex">
             Total : <CurrencySpan value={sumarField(costs, 'value')} />
@@ -32,11 +29,10 @@ const CashBalance = ({ cashBalance }) => {
       <div>
         <h2 className="font-bold ">Hospedajes</h2>
         <div className="flex justify-around">
+          <div className="flex">Pagos :{accommodations.length}</div>
           <div className="flex">
-            Pagos :{accommodations.length}
-          </div>
-          <div className="flex">
-            Total : <CurrencySpan value={sumarField(accommodations, 'mxnTotal')} />
+            Total :{' '}
+            <CurrencySpan value={sumarField(accommodations, 'mxnTotal')} />
           </div>
           <div className="text-center">
             Total noches: {sumarField(accommodations, 'nights')}
@@ -45,25 +41,24 @@ const CashBalance = ({ cashBalance }) => {
       </div>
 
       <Section title={'Gastos'} subtitle={`${costs?.length}`}>
-
         <table className="w-full">
           <tr>
             <th>Título</th>
             <th>Costo</th>
             <th>Fecha</th>
           </tr>
-          {costs?.map(cost => <CostRow key={cost.id} cost={cost} />)}
-          <tr >
-            <td colSpan={2} className='text-right'>
+          {costs?.map((cost) => (
+            <CostRow key={cost.id} cost={cost} />
+          ))}
+          <tr>
+            <td colSpan={2} className="text-right">
               Gastos:
             </td>
 
-            <td className="text-center">
-              {costs?.length}
-            </td>
+            <td className="text-center">{costs?.length}</td>
           </tr>
-          <tr >
-            <td colSpan={2} className='text-right'>
+          <tr>
+            <td colSpan={2} className="text-right">
               Total:
             </td>
             <td>
@@ -81,19 +76,21 @@ const CashBalance = ({ cashBalance }) => {
             <th>Fecha</th>
           </tr>
           <tbody>
-
-            {accommodations?.map(accommodation => <AccommodationRow key={accommodation.id} accommodation={accommodation} />)}
+            {accommodations?.map((accommodation) => (
+              <AccommodationRow
+                key={accommodation.id}
+                accommodation={accommodation}
+              />
+            ))}
             <tr>
-              <td colSpan={2} className='text-right'>
+              <td colSpan={2} className="text-right">
                 Pagos:
               </td>
-              <td className="text-center">
-                {accommodations.length || 0}
-              </td>
+              <td className="text-center">{accommodations.length || 0}</td>
             </tr>
 
             <tr>
-              <td colSpan={2} className='text-right'>
+              <td colSpan={2} className="text-right">
                 Noches:
               </td>
 
@@ -103,7 +100,7 @@ const CashBalance = ({ cashBalance }) => {
             </tr>
 
             <tr>
-              <td colSpan={2} className='text-right'>
+              <td colSpan={2} className="text-right">
                 Total:
               </td>
               <td className="text-center">
@@ -113,18 +110,15 @@ const CashBalance = ({ cashBalance }) => {
           </tbody>
         </table>
       </Section>
-    </div >
+    </div>
   )
 }
 
 const CostRow = ({ cost }) => {
   return (
     <tr className=" border-2 border-transparent hover:border-base-200">
-
       <td className="max-w-[120px]  ">
-        <h4 className="truncate">
-          {cost?.title}
-        </h4>
+        <h4 className="truncate">{cost?.title}</h4>
       </td>
 
       <td>
@@ -136,14 +130,20 @@ const CostRow = ({ cost }) => {
           {format(cost?.date, ' dd MMM yy HH:mm ')}
         </div>
       </td>
-
     </tr>
-
   )
 }
 
 const AccommodationRow = ({ accommodation }) => {
-  const { guestId, guest, nights, dates, mxnTotal, usdTotal, discountedNights } = accommodation
+  const {
+    guestId,
+    guest,
+    nights,
+    dates,
+    mxnTotal,
+    usdTotal,
+    discountedNights
+  } = accommodation
   useEffect(() => {
     getGuest(guestId || guest).then(setGuestInfo)
   }, [])
@@ -151,11 +151,8 @@ const AccommodationRow = ({ accommodation }) => {
   return (
     <tr className="border-2 border-transparent hover:border-base-200">
       <td>
-        <h4>
-          {guestInfo?.name}
-        </h4>
+        <h4>{guestInfo?.name}</h4>
         <div className="flex flex-col text-sm">
-
           <span>noches: {nights || 0} </span>
           <span>descuento: {discountedNights || 0} </span>
         </div>
@@ -166,25 +163,16 @@ const AccommodationRow = ({ accommodation }) => {
       </td>
 
       <td className="flex justify-center">
-
         <div className="flex justify-center flex-col items-center mr-2">
           <span className="text-xs">Entrada</span>
-          <span>
-            {format(dates?.startsAt || dates.starts, 'dd MMM yy')}
-          </span>
+          <span>{format(dates?.startsAt || dates.starts, 'dd MMM yy')}</span>
         </div>
 
         <div className="flex flex-col items-center justify-center ">
-          <span className="text-xs">
-            Salida
-          </span>
-          <span>
-            {format(dates?.endsAt || dates.ends, 'dd MMM yy')}
-          </span>
+          <span className="text-xs">Salida</span>
+          <span>{format(dates?.endsAt || dates.ends, 'dd MMM yy')}</span>
         </div>
-
       </td>
-
     </tr>
   )
 }

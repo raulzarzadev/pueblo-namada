@@ -25,7 +25,7 @@ const CostsTable = ({ costs = [] }) => {
           ))}
         </tbody>
       </table>
-    </div >
+    </div>
   )
 }
 
@@ -34,40 +34,33 @@ const RowCost = ({ cost }) => {
   const handleOpen = () => setOpen(!open)
   const handleDeleteCost = (costId) => {
     deleteCost(costId)
-      .then(res => console.log(res))
-      .catch(err => console.error(err))
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err))
   }
 
   return (
-    <tr onClick={handleOpen} className={'hover:bg-base-100 cursor-pointer'} >
+    <tr onClick={handleOpen} className={'hover:bg-base-100 cursor-pointer'}>
       <td className="p-1 ">{cost.title}</td>
       <td className="p-1 ">{format(cost.date, 'dd MMMM yy ')}</td>
-      <td className="p-1 text-left"><CurrencySpan cost={cost.value} /> </td>
+      <td className="p-1 text-left">
+        <CurrencySpan cost={cost.value} />{' '}
+      </td>
       <td className="p-1 ">
-
-        <Modal title={'Detalles'} open={open} handleOpen={handleOpen} >
-          <h2 className="font-bold">
-            {cost?.title}
-          </h2>
-          <p>
-            {`${format(cost?.date, 'dd MMMM yy HH:mm')}`}
-          </p>
-          <p>
-            {cost?.description}
-          </p>
+        <Modal title={'Detalles'} open={open} handleOpen={handleOpen}>
+          <h2 className="font-bold">{cost?.title}</h2>
+          <p>{`${format(cost?.date, 'dd MMMM yy HH:mm')}`}</p>
+          <p>{cost?.description}</p>
           <p className="text-left  mx-auto">
             <CurrencySpan cost={cost.value} />
           </p>
 
-          {cost?.image &&
-            <PreviewImage image={cost.image} />
-          }
+          {cost?.image && <PreviewImage image={cost.image} />}
 
           <ModalDelete handleDelete={() => handleDeleteCost(cost.id)} />
-
         </Modal>
       </td>
-    </tr>)
+    </tr>
+  )
 }
 
 export default CostsTable

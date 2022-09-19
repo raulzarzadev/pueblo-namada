@@ -4,12 +4,17 @@ import { v4 as uidGenerator } from 'uuid'
 
 export const storageRef = (path = '') => ref(storage, path)
 
-export const uploadFile = (file, fieldName = '', cb = (progress = 0, downloadURL = null) => { }) => {
+export const uploadFile = (
+  file,
+  fieldName = '',
+  cb = (progress = 0, downloadURL = null) => {}
+) => {
   const uuid = uidGenerator()
   const imageRef = storageRef(`${fieldName}/${uuid}`)
   const uploadTask = uploadBytesResumable(imageRef, file)
 
-  uploadTask.on('state_changed',
+  uploadTask.on(
+    'state_changed',
     (snapshot) => {
       // Observe state change events such as progress, pause, and resume
       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
@@ -25,7 +30,9 @@ export const uploadFile = (file, fieldName = '', cb = (progress = 0, downloadURL
           break
       }
     },
+
     (error) => {
+      console.error(error)
       // Handle unsuccessful uploads
     },
     () => {
@@ -33,6 +40,7 @@ export const uploadFile = (file, fieldName = '', cb = (progress = 0, downloadURL
       // For instance, get the download URL: https://firebasestorage.googleapis.com/...
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
         console.log('File available at', downloadURL)
+        // eslint-disable-next-line n/no-callback-literal
         cb(100, downloadURL)
       })
     }

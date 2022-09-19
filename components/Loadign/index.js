@@ -1,4 +1,4 @@
-export default function Loading ({ size = 'sm' }) {
+export default function Loading({ size = 'sm' }) {
   const sizing = {
     sm: 'border-4 w-7 h-7',
     md: 'border-8 w-14 h-14',

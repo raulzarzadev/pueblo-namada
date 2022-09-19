@@ -1,4 +1,3 @@
-
 const EditIcon = (props) => (
   <svg
     width={24}

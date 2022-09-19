@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router'
-import { useUser } from '@comps/context/userContext'
 import { useEffect, useState } from 'react'
 import FormPlaceConfig from '../../../../components/FormPlaceConfig'
 import PlaceDetails from '../../../../components/Places/PlaceDetails'
@@ -8,9 +7,11 @@ import PlaceGuests from '../../../../components/Places/PlaceGuests'
 import Section from '../../../../components/Section'
 import PrivatePage from '../../../../components/HOC/PrivatePage'
 
-export default function dashboard () {
+export default function dashboard() {
   const [place, setPlace] = useState(undefined)
-  const { query: { id } } = useRouter()
+  const {
+    query: { id }
+  } = useRouter()
 
   useEffect(() => {
     listenPlace(id, setPlace)
@@ -21,17 +22,24 @@ export default function dashboard () {
       <div className="max-w-lg mx-auto">
         <h1 className="text-center font-bold border">Dashboard</h1>
 
-        {place &&
+        {place && (
           <>
-            <Section title={'Detalles del lugar'} subtitle={`${place?.name || ''}`}
+            <Section
+              title={'Detalles del lugar'}
+              subtitle={`${place?.name || ''}`}
               sticky
             >
               <PlaceDetails place={place} />
             </Section>
             <FormPlaceConfig place={place} />
-            <PlaceGuests place={place} showTable showPaymentsTable showOperatingCosts />
+            <PlaceGuests
+              place={place}
+              showTable
+              showPaymentsTable
+              showOperatingCosts
+            />
           </>
-        }
+        )}
       </div>
     </PrivatePage>
   )

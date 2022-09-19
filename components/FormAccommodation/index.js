@@ -1,14 +1,22 @@
 import { format, addDays } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { createAccommodation, updateAccommodation } from '../../firebase/Accommodations/main'
+import {
+  createAccommodation,
+  updateAccommodation
+} from '../../firebase/Accommodations/main'
 // import { newAccommodation } from "../../firebase/accomodations";
 import { formatDate } from '../../utils/dates'
 import InputDate from '../inputs/date'
 import InputNumber from '../inputs/InputNumber'
 import Text from '../inputs/text'
 
-export default function FormAccommodation ({ guest, guests = [], place, payment = null }) {
+export default function FormAccommodation({
+  guest,
+  guests = [],
+  place,
+  payment = null
+}) {
   const defaultGuestId = guest?.id || null
   const defaultValues = {
     guest: defaultGuestId,
@@ -51,7 +59,7 @@ export default function FormAccommodation ({ guest, guests = [], place, payment 
     setTotals(getTotals())
   }, [startsAt, nights])
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     const accomodation = {
       ...data,
       place: place?.id,
@@ -66,8 +74,7 @@ export default function FormAccommodation ({ guest, guests = [], place, payment 
     setLabelSave(FORM_STATUS[3])
 
     payment
-      ? updateAccommodation(payment.id, accomodation)
-        .then(res => {
+      ? updateAccommodation(payment.id, accomodation).then((res) => {
           console.log('payment updated', { id: payment.id })
           setLabelSave(FORM_STATUS[5])
           setTimeout(() => {
@@ -76,8 +83,7 @@ export default function FormAccommodation ({ guest, guests = [], place, payment 
             // reset()
           }, 1000)
         })
-      : createAccommodation(accomodation)
-        .then(res => {
+      : createAccommodation(accomodation).then((res) => {
           console.log('payment created', res)
           setLabelSave(FORM_STATUS[1])
           setTimeout(() => {
@@ -101,32 +107,42 @@ export default function FormAccommodation ({ guest, guests = [], place, payment 
     const usdPrice = parseFloat(place?.usdPrice || 0)
     const discountedNights = parseInt(watch('discountedNights') || 0)
     const nights = parseInt(watch('nights') || 0)
-    const mxn = (price * nights - (discountedNights * price)).toFixed(2)
-    const usd = (usdPrice && (price * nights - (discountedNights * price)) / usdPrice).toFixed(2)
+    const mxn = (price * nights - discountedNights * price).toFixed(2)
+    const usd = (
+      usdPrice && (price * nights - discountedNights * price) / usdPrice
+    ).toFixed(2)
     return { mxn: parseFloat(mxn), usd: parseFloat(usd) }
   }
 
   return (
     <div className="p-1">
       <form onSubmit={handleSubmit(onSubmit)}>
-        {!!guests.length &&
+        {!!guests.length && (
           <div>
-            <label >
+            <label>
               <span>Huesped:</span>
-              <select defaultValue='' {...register('guest')} className='input select input-bordered my-2'>
-                <option value='' disabled >Debes seleccionar un huesped</option>
+              <select
+                defaultValue=""
+                {...register('guest')}
+                className="input select input-bordered my-2"
+              >
+                <option value="" disabled>
+                  Debes seleccionar un huesped
+                </option>
                 {guests?.map(({ id, name }) => (
-                  <option key={id} value={id}>{name}</option>
+                  <option key={id} value={id}>
+                    {name}
+                  </option>
                 ))}
               </select>
             </label>
           </div>
-        }
-        {
-          !!watch('guest') &&
+        )}
+        {!!watch('guest') && (
           <div className="grid gap-1 place-content-stretch ">
             <div>
-              <p className="">Precio x noche (mxn):
+              <p className="">
+                Precio x noche (mxn):
                 <span className="font-bold">
                   {` $${parseFloat(place?.price).toFixed(2)}`}
                 </span>
@@ -135,13 +151,14 @@ export default function FormAccommodation ({ guest, guests = [], place, payment 
               <p className="">
                 Precio x noche (usd):
                 <span className="font-bold">
-                  {` $${parseFloat(place?.price) * parseFloat(place?.usdPrice || 0)}`}
+                  {` $${
+                    parseFloat(place?.price) * parseFloat(place?.usdPrice || 0)
+                  }`}
                 </span>
               </p>
 
               <p className="">
                 Precio x USD:
-
                 <span className="font-bold">
                   {` $${parseFloat(place?.usdPrice).toFixed(2)}mxn`}
                 </span>
@@ -149,26 +166,28 @@ export default function FormAccommodation ({ guest, guests = [], place, payment 
             </div>
             <div className="sm:flex justify-center text-center">
               <InputDate
-                type='date'
-                label='Desde'
-                {...register('dates.startsAt',
-                  {
-                    value: format(new Date(watch('dates.startsAt') || new Date()), 'yyyy-MM-dd')
-                  })}
+                type="date"
+                label="Desde"
+                {...register('dates.startsAt', {
+                  value: format(
+                    new Date(watch('dates.startsAt') || new Date()),
+                    'yyyy-MM-dd'
+                  )
+                })}
               />
               <InputDate
-                type='date'
-                label='Hasta'
+                type="date"
+                label="Hasta"
                 disabled
-                {...register('dates.endsAt',
-                  {
-                    value: accommodationEnds(startsAt)
-                  })}
+                {...register('dates.endsAt', {
+                  value: accommodationEnds(startsAt)
+                })}
               />
             </div>
             <div className="flex justify-end flex-col items-end">
               <InputNumber
-                type='number' {...register('nights', { valueAsNumber: true })}
+                type="number"
+                {...register('nights', { valueAsNumber: true })}
                 label={'Noches'}
                 smallSize
                 sideLabel
@@ -176,7 +195,7 @@ export default function FormAccommodation ({ guest, guests = [], place, payment 
                 max={99}
               />
               <InputNumber
-                type='number'
+                type="number"
                 {...register('discountedNights', { valueAsNumber: true })}
                 label={'Descuento (noches)'}
                 smallSize
@@ -186,30 +205,27 @@ export default function FormAccommodation ({ guest, guests = [], place, payment 
               />
             </div>
             <div className="text-center">
-              <p className="">Total (mxn):
-                <span className="font-bold text-xl">
-                  {`$${totals?.mxn}`}
-                </span>
+              <p className="">
+                Total (mxn):
+                <span className="font-bold text-xl">{`$${totals?.mxn}`}</span>
               </p>
 
               <p className="">
                 Total (usd) :
-                <span className="font-bold text-xl">
-                  {`$${totals?.usd}`}
-                </span>
+                <span className="font-bold text-xl">{`$${totals?.usd}`}</span>
               </p>
             </div>
             <button
               type="submit"
               className="btn btn-primary"
-            /* disabled={[FORM_STATUS[1], FORM_STATUS[2], FORM_STATUS[3]].includes(labelSave) || !isDirty} */
-            // onClick={() => onSubmit(watch())}
+              /* disabled={[FORM_STATUS[1], FORM_STATUS[2], FORM_STATUS[3]].includes(labelSave) || !isDirty} */
+              // onClick={() => onSubmit(watch())}
             >
               {labelSave}
             </button>
           </div>
-        }
-      </form >
-    </div >
+        )}
+      </form>
+    </div>
   )
 }

@@ -6,13 +6,13 @@ import Link from 'next/link'
 import MainModal from '../Modal/MainModal'
 import Section from '../Section'
 
-export default function PlaceDetails ({ place = {} }) {
+export default function PlaceDetails({ place = {} }) {
   const { user } = useUser()
   const router = useRouter()
   const isOwner = place?.userId === user?.uid
 
   const handleDeletePlace = () => {
-    deletePlace(place.id).then(res => {
+    deletePlace(place.id).then((res) => {
       if (res) router.push('/places')
     })
   }
@@ -28,35 +28,36 @@ export default function PlaceDetails ({ place = {} }) {
 
   return (
     <div className=" mx-auto  relative">
-      {image &&
-        <figure className="relative w-full h-52" >
+      {image && (
+        <figure className="relative w-full h-52">
           <Image src={image} layout="fill" objectFit="contain" />
         </figure>
-      }
+      )}
 
       <h1 className="text-2xl font-bold text-center">{place.name}</h1>
 
-      {isOwner &&
+      {isOwner && (
         <div className="grid gap-4 sm:grid-flow-col px-2 my-2 max-w-lg mx-auto">
-          {!alreadyInDashboard &&
+          {!alreadyInDashboard && (
             <Link href={`/places/${place.id}/dashboard`}>
-              <button className="btn btn-outline btn-sm" >
-                Dashboard
-              </button>
+              <button className="btn btn-outline btn-sm">Dashboard</button>
             </Link>
-          }
+          )}
           <Link href={`/places/${place.id}/new-guest`}>
-            <button className="btn btn-primary btn-sm" >
-              Nuevo huesped
-            </button>
+            <button className="btn btn-primary btn-sm">Nuevo huesped</button>
           </Link>
-          <MainModal buttonLabel="Eliminar" title="Eliminar lugar" OpenComponentProps={{ className: 'btn btn-error btn-sm' }}>
+          <MainModal
+            buttonLabel="Eliminar"
+            title="Eliminar lugar"
+            OpenComponentProps={{ className: 'btn btn-error btn-sm' }}
+          >
             <div className="flex justify-center flex-col items-center">
-              <h2 >
-                ¿Eliminar lugar de forma permanente?
-              </h2>
+              <h2>¿Eliminar lugar de forma permanente?</h2>
               <div className="my-4">
-                <button className="btn btn-error btn-sm" onClick={handleDeletePlace}>
+                <button
+                  className="btn btn-error btn-sm"
+                  onClick={handleDeletePlace}
+                >
                   Eliminar
                 </button>
               </div>
@@ -66,28 +67,27 @@ export default function PlaceDetails ({ place = {} }) {
             Editar
           </button>
         </div>
-      }
+      )}
 
       <div className="max-w-md mx-auto pb-12 grid gap-2 ">
         <p className="text-center">{place.contact}</p>
         <p className="my-2 p-1 whitespace-pre-line">{place.resume}</p>
-        {place?.amenities &&
-          <Section title='Amenidades' sticky open>
+        {place?.amenities && (
+          <Section title="Amenidades" sticky open>
             <p className="mb-2  whitespace-pre-line">{place?.amenities}</p>
           </Section>
-        }
-        {place.rules &&
-          <Section title='Reglamento' sticky>
+        )}
+        {place.rules && (
+          <Section title="Reglamento" sticky>
             <p className="p-1 whitespace-pre-line">{place.rules}</p>
           </Section>
-        }
-        {place?.recomendations &&
-          <Section title='Recomendaciones' sticky>
+        )}
+        {place?.recomendations && (
+          <Section title="Recomendaciones" sticky>
             <p className="p-1 whitespace-pre-line">{place.recomendations}</p>
           </Section>
-        }
+        )}
       </div>
-
     </div>
   )
 }

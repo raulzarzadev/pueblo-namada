@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import ArrowLeft from '../../icons/ArrowLeft'
 import HomeIcon from '../../icons/HomeIcon'
-export default function MobilNav () {
+export default function MobilNav() {
   const router = useRouter()
   const handleRedirect = (route) => {
     router.push(route)
@@ -15,7 +15,10 @@ export default function MobilNav () {
         <button onClick={() => handleBack()} className="btn btn-circle btn-sm">
           <ArrowLeft />
         </button>
-        <button onClick={() => handleRedirect('/')} className="btn btn-circle btn-sm">
+        <button
+          onClick={() => handleRedirect('/')}
+          className="btn btn-circle btn-sm"
+        >
           <HomeIcon />
         </button>
       </div>

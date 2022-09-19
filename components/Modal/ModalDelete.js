@@ -2,14 +2,13 @@ import { useState } from 'react'
 import Modal from '.'
 import DeleteIcon from '../icons/DeleteIcon'
 
-export default function ModalDelete ({
+export default function ModalDelete({
   handleDelete = null,
-  deleteSuccessful = () => { },
+  deleteSuccessful = () => {},
   itemLabel = 'elemento',
   itemId = '',
   deleteText = null,
   modalTitle = 'Eliminar elemento'
-
 }) {
   const [open, setOpen] = useState()
   const handleOpen = () => {
@@ -47,17 +46,19 @@ export default function ModalDelete ({
     <div>
       <button
         onClick={handleOpen}
-        className='text-error'
-      /*  iconName={'trash'}
+        className="text-error"
+        /*  iconName={'trash'}
        size={buttonSize}
        label={buttonLabel}
        variant={buttonVariant}
        className="btn-error" */
-      ><DeleteIcon />
+      >
+        <DeleteIcon />
       </button>
       <Modal title={modalTitle} open={open} handleOpen={handleOpen}>
-        <div className='text-center whitespace-pre-line'>
-          {deleteText || `¿Seguro que desea eliminar 
+        <div className="text-center whitespace-pre-line">
+          {deleteText ||
+            `¿Seguro que desea eliminar 
            ${itemLabel.toUpperCase()} 
            de forma permanente?`}
 

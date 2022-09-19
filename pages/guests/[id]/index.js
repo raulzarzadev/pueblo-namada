@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import FormGuest from '../../../components/FormGuest'
-export default function Guest ({ }) {
+export default function Guest() {
   const [guest, setGuest] = useState(undefined)
 
   useEffect(() => {

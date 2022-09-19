@@ -1,5 +1,5 @@
 import Hero from '../../components/Hero/index.js'
-export default function Home () {
+export default function Home() {
   return (
     <div>
       <Hero />

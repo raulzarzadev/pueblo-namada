@@ -1,6 +1,9 @@
-import { format as fnsFormat } from "date-fns"
+import { format as fnsFormat } from 'date-fns'
 
-export const format = (date: string | number | Date, stringFormat = 'dd/MM/yy'): string => {
+export const format = (
+  date: string | number | Date,
+  stringFormat = 'dd/MM/yy'
+): string => {
   if (!date) {
     console.error('not a date')
     return 'NaD'
@@ -12,11 +15,16 @@ export const format = (date: string | number | Date, stringFormat = 'dd/MM/yy'):
   }
 
   if (isValidDate(objectDate)) {
-    return fnsFormat(new Date(objectDate.setMinutes(objectDate.getMinutes() + objectDate.getTimezoneOffset())), stringFormat)
+    return fnsFormat(
+      new Date(
+        objectDate.setMinutes(
+          objectDate.getMinutes() + objectDate.getTimezoneOffset()
+        )
+      ),
+      stringFormat
+    )
   } else {
     return 'NaD'
   }
   console.error('date is not valid date')
-
 }
-

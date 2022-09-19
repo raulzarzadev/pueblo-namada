@@ -1,6 +1,3 @@
-export default function Guests ({ guests }) {
-  return (
-    <div>
-      Huespedes list
-    </div>)
+export default function Guests({ guests }) {
+  return <div>Huespedes list</div>
 }

@@ -1,13 +1,16 @@
-import { format as fnsFormat, formatDistanceToNow, formatDistanceToNowStrict } from 'date-fns'
+import {
+  format as fnsFormat,
+  formatDistanceToNow,
+  formatDistanceToNowStrict
+} from 'date-fns'
 import { es } from 'date-fns/locale'
 
 export class Dates {
-  constructor(
-
-
-  ) { }
-  static format = (date: string | number | Date, stringFormat = 'dd/MM/yy'): string => {
-
+  constructor() {}
+  static format = (
+    date: string | number | Date,
+    stringFormat = 'dd/MM/yy'
+  ): string => {
     if (!date) {
       console.error('not a date')
       return 'NaD'
@@ -18,12 +21,19 @@ export class Dates {
     }
 
     if (isValidDate(objectDate)) {
-      return fnsFormat(new Date(objectDate.setMinutes(objectDate.getMinutes() + objectDate.getTimezoneOffset())), stringFormat, { locale: es })
+      return fnsFormat(
+        new Date(
+          objectDate.setMinutes(
+            objectDate.getMinutes() + objectDate.getTimezoneOffset()
+          )
+        ),
+        stringFormat,
+        { locale: es }
+      )
     } else {
       console.error('date is not valid date')
       return 'NaD'
     }
-
   }
 
   static fromNow = (date: string | number | Date): string => {
@@ -36,12 +46,11 @@ export class Dates {
       return formatDistanceToNowStrict(objectDate, {
         locale: es,
         roundingMethod: 'floor',
-        addSuffix: true,
+        addSuffix: true
       })
     } else {
       console.error('date is not valid date')
       return 'NaD'
     }
   }
-
 }

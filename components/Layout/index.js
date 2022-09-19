@@ -4,7 +4,7 @@ import { useUser } from '@comps/context/userContext'
 import { useRouter } from 'next/router'
 import TopNavBar from './TopNavBar'
 import { useEffect, useState } from 'react'
-export default function Layout ({ children }) {
+export default function Layout({ children }) {
   const { user } = useUser()
 
   const ROUTES_CONFIG = {
@@ -58,18 +58,17 @@ export default function Layout ({ children }) {
   // }, []);
 
   return (
-    <div className='relative bg-base-300 pb-11 min-h-screen' >
+    <div className="relative bg-base-300 pb-11 min-h-screen">
       <Head />
-      < header className='text-4xl bg-blue-100  '>
+      <header className="text-4xl bg-blue-100  ">
         <TopNavBar user={user} />
       </header>
-      <main>
-        {children}
-      </main>
-      {showMobileNav &&
+      <main>{children}</main>
+      {showMobileNav && (
         <footer className={'relative z-10  '}>
           <MobileNav />
         </footer>
-      }
-    </div>)
+      )}
+    </div>
+  )
 }

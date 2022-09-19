@@ -10,17 +10,25 @@ import Loading from '../Loadign'
 
 import { createGuest, updateGuest } from '../../firebase/Gests/main'
 
-export default function FormGuest ({ guest }) {
+export default function FormGuest({ guest }) {
   useEffect(() => {
     const gestStorage = localStorage.getItem('new-guest-form')
     if (gestStorage) {
-
     }
   }, [])
 
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({ defaultValues: { ...guest } })
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors }
+  } = useForm({ defaultValues: { ...guest } })
 
-  const { query: { id: placeId }, back } = useRouter()
+  const {
+    query: { id: placeId },
+    back
+  } = useRouter()
 
   const FORM_STATUS = {
     0: 'Guardar',
@@ -32,19 +40,18 @@ export default function FormGuest ({ guest }) {
   const defaultLabel = FORM_STATUS[0]
   const [labelSave, setLabelSave] = useState(defaultLabel)
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     setLabelSave(FORM_STATUS[2])
     if (guest?.id) {
       // update guest
-      updateGuest(guest.id, data)
-        .then(res => {
-          console.log('res', res)
-          if (res) {
-            setLabelSave(FORM_STATUS[1])
-            localStorage.removeItem('guest-edit')
-            back()
-          }
-        })
+      updateGuest(guest.id, data).then((res) => {
+        console.log('res', res)
+        if (res) {
+          setLabelSave(FORM_STATUS[1])
+          localStorage.removeItem('guest-edit')
+          back()
+        }
+      })
     } else {
       createGuest({ ...data, placeId }).then(({ document }) => {
         if (document?.id) {
@@ -71,7 +78,12 @@ export default function FormGuest ({ guest }) {
     <div className="max-w-sm mx-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex justify-end sticky top-8 bg-base-100 pb-1  ">
-          <button className="btn btn-primary my-1" disabled={['Guardado', 'Guardando', 'Cancelado'].includes(labelSave)}>
+          <button
+            className="btn btn-primary my-1"
+            disabled={['Guardado', 'Guardando', 'Cancelado'].includes(
+              labelSave
+            )}
+          >
             {labelSave == FORM_STATUS[2] && <Loading />}
             {labelSave}
           </button>
@@ -81,35 +93,32 @@ export default function FormGuest ({ guest }) {
             <span className="mx-2 flex justify-center ">
               ¿Huesped público?
               <span className="mx-2">
-                <Checkbox size='xl' {...register('publicGuest')} />
+                <Checkbox size="xl" {...register('publicGuest')} />
               </span>
             </span>
             <span className="text-xs">
-              Otros huespedes podran ver tu "contacto publico" y podras ver el de otros huespedes
+              Otros huespedes podran ver tu "contacto publico" y podras ver el
+              de otros huespedes
             </span>
           </div>
           <Text
             {...register('name')}
-            label='Nombre'
-            placeholder='Nombre del conductor'
+            label="Nombre"
+            placeholder="Nombre del conductor"
           />
           <Text
             {...register('plates')}
-            label='Placas'
-            placeholder='Placas del auto'
+            label="Placas"
+            placeholder="Placas del auto"
           />
           <Text
             {...register('publicContact')}
-            label='Public Contact'
-            placeholder='instagram - facebook - pagina web'
+            label="Public Contact"
+            placeholder="instagram - facebook - pagina web"
           />
-          <Text
-            {...register('email')}
-            label='Email'
-            placeholder='Email '
-          />
+          <Text {...register('email')} label="Email" placeholder="Email " />
           <Phone
-            label='Teléfono (whatsapp)'
+            label="Teléfono (whatsapp)"
             onChange={(value) => {
               setValue('phone', value)
             }}
@@ -117,15 +126,18 @@ export default function FormGuest ({ guest }) {
           />
           <File
             preview={watch('imageID')}
-            onChange={({ target: { files } }) => handleUploadFile({ fieldName: 'imageID', file: files[0] })}
-            label='Imagen ID'
+            onChange={({ target: { files } }) =>
+              handleUploadFile({ fieldName: 'imageID', file: files[0] })
+            }
+            label="Imagen ID"
           />
           <File
             preview={watch('publicImage')}
-            onChange={({ target: { files } }) => handleUploadFile({ fieldName: 'publicImage', file: files[0] })}
-            label='Imagen pública '
+            onChange={({ target: { files } }) =>
+              handleUploadFile({ fieldName: 'publicImage', file: files[0] })
+            }
+            label="Imagen pública "
           />
-
         </div>
       </form>
     </div>

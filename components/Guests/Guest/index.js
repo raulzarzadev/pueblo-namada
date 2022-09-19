@@ -1,7 +1,3 @@
-export default function Guest () {
-  return (
-    <div>
-      guest
-    </div>
-  )
+export default function Guest() {
+  return <div>guest</div>
 }

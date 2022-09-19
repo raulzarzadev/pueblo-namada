@@ -5,7 +5,12 @@ import { updatePlace } from '../../firebase/places'
 import Checkbox from '../inputs/checkbox'
 
 const FormPlaceConfig = ({ place }) => {
-  const { register, watch, handleSubmit, formState: { isDirty } } = useForm({
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { isDirty }
+  } = useForm({
     defaultValues: {
       ...place.config
     }
@@ -17,8 +22,8 @@ const FormPlaceConfig = ({ place }) => {
     3: 'Cancelado'
   }
 
-  function deepEqual (x, y) {
-    const isObject = x => typeof x === 'object' && x != null
+  function deepEqual(x, y) {
+    const isObject = (x) => typeof x === 'object' && x != null
     if (x === y) {
       return true
     } else if (!isObject(x) || !isObject(y)) {
@@ -45,11 +50,11 @@ const FormPlaceConfig = ({ place }) => {
     deepEqual(watch(), { ...place.config }) ? setLabelSave(1) : setLabelSave(0)
   }, [watch()])
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     setLabelSave(2)
     updatePlace(place.id, {
       config: data
-    }).then(res => {
+    }).then((res) => {
       setLabelSave(1)
     })
   }
@@ -61,16 +66,24 @@ const FormPlaceConfig = ({ place }) => {
         <div className="divider" />
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex items-center justify-evenly ">
-            <span className="label-text whitespace-nowrap">Huespedes visibles para : </span>
+            <span className="label-text whitespace-nowrap">
+              Huespedes visibles para :{' '}
+            </span>
             <div className="flex items-center justify-evenly w-full">
-              <Checkbox {...register('guestsVisiblesFor.admin')} label='Admin' />
+              <Checkbox
+                {...register('guestsVisiblesFor.admin')}
+                label="Admin"
+              />
               {/*   <Checkbox {...register('guestsVisiblesFor.guests')} label='Huespedes' /> */}
-              <Checkbox {...register('guestsVisiblesFor.all')} label='Todos' />
+              <Checkbox {...register('guestsVisiblesFor.all')} label="Todos" />
             </div>
           </div>
 
           <div className="flex w-full justify-center mt-2">
-            <button className="btn btn-sm btn-primary" disabled={[1, 2, 3].includes(labelSave)}>
+            <button
+              className="btn btn-sm btn-primary"
+              disabled={[1, 2, 3].includes(labelSave)}
+            >
               {FORM_STATUS[labelSave]}
             </button>
           </div>
