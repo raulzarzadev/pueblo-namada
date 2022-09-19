@@ -17,8 +17,9 @@ const DATE_FIELDS = [
 const TARGETS = ['firebase', 'milliseconds', 'date', 'fieldDate']
 
 export function deepFormatFirebaseDates(object, target = 'firebase') {
-  if (!TARGETS.includes(target))
+  if (!TARGETS.includes(target)) {
     return console.error('target must be one of:', TARGETS)
+  }
   // target is firebase transform to Timestamp
   // target is milis transform to milis
   // target is date transofrm to Date

@@ -15,12 +15,13 @@ export default function Place() {
     listenPlace(id, setPlace)
   }, [])
   if (place === undefined) return <div>Cargando ...</div>
-  if (place === null)
+  if (place === null) {
     return (
       <div>
         No existe el lugar <button onClick={() => back()}>Regresar</button>
       </div>
     )
+  }
   return (
     <PrivatePage permissionTo="public">
       <div className="max-w-md mx-auto">
