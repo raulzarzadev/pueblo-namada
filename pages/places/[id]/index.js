@@ -4,7 +4,7 @@ import PrivatePage from '../../../components/HOC/PrivatePage'
 import PlaceDetails from '../../../components/Places/PlaceDetails'
 import { listenPlace } from '../../../firebase/places'
 
-export default function Place() {
+export default function Place () {
   const {
     query: { id },
     back
