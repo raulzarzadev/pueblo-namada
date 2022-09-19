@@ -3,12 +3,16 @@ import { signIn, signUp } from '../../firebase/user'
 import FormUser from '../FormUser'
 import RecoverPassawordForm from '../FormUser/recover'
 
-export default function LoginCard({ formVariant = 'login', formProps = {} }) {
+export default function LoginCard ({ formVariant = 'login', formProps = {} }) {
   const router = useRouter()
   const loginSumbit = ({ email, password }) => {
     signIn({ email, password }).then((res) => {
       console.log(res)
-    })
+      router.push('/profile')
+    }).catch((err) =>
+      console.error(err)
+
+    )
   }
 
   const recoverSubmit = ({ email }) => {
