@@ -5,8 +5,8 @@ const runtimeCaching = require('next-pwa/cache')
 module.exports = withPWA({
   pwa: {
     dest: 'public',
-    runtimeCaching,
-  },
+    runtimeCaching
+  }
 })
 module.exports = {
   images: {
@@ -17,7 +17,6 @@ module.exports = {
     formats: [
       'image/avif',
       'image/webp'
-    ],
-  },
+    ]
+  }
 }
-

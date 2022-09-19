@@ -1,15 +1,15 @@
-import { useForm } from "react-hook-form"
-import InputNumber from "../inputs/InputNumber"
-import Text from "../inputs/text"
-import Textarea from "../inputs/textarea"
+import { useForm } from 'react-hook-form'
+import InputNumber from '../inputs/InputNumber'
+import Text from '../inputs/text'
+import Textarea from '../inputs/textarea'
 import { createCost } from '../../firebase/Costs/main'
-import { FirebaseCRUD } from "../../firebase/FirebaseCRUD"
-import InputFile from "../inputs/InputFile"
-import { format, formatISO } from "date-fns"
+import { FirebaseCRUD } from '../../firebase/FirebaseCRUD'
+import InputFile from '../inputs/InputFile'
+import { format, formatISO } from 'date-fns'
 const FormCost = ({ place }) => {
   const { handleSubmit, register, watch, setValue, formState: { errors }, reset } = useForm({
     defaultValues: {
-      date: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+      date: format(new Date(), "yyyy-MM-dd'T'HH:mm")
     }
   })
   const onSubmit = (data) => {
@@ -20,7 +20,7 @@ const FormCost = ({ place }) => {
       reset({
         title: '',
         description: '',
-        value: 0,
+        value: 0
       })
       console.log(res)
     })

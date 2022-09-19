@@ -1,14 +1,12 @@
-import { useEffect, useState } from 'react';
-import FormGuest from '../../../components/FormGuest';
-export default function Guest({ }) {
-
-  const [guest, setGuest] = useState(undefined);
+import { useEffect, useState } from 'react'
+import FormGuest from '../../../components/FormGuest'
+export default function Guest ({ }) {
+  const [guest, setGuest] = useState(undefined)
 
   useEffect(() => {
     const storageGuest = localStorage.getItem('guest-edit')
     if (storageGuest) {
       setGuest(JSON.parse(storageGuest))
-
     }
     return () => {
       localStorage.removeItem('guest-edit')

@@ -1,9 +1,8 @@
-import { format } from "date-fns"
-import { useEffect, useState } from "react"
-import { getGuest } from "../../firebase/Gests/main"
-import { CurrencySpan } from "../CurrencySpan"
-import Section from "../Section"
-
+import { format } from 'date-fns'
+import { useEffect, useState } from 'react'
+import { getGuest } from '../../firebase/Gests/main'
+import { CurrencySpan } from '../CurrencySpan'
+import Section from '../Section'
 
 const CashBalance = ({ cashBalance }) => {
   const { costs, accommodations } = cashBalance
@@ -117,7 +116,6 @@ const CashBalance = ({ cashBalance }) => {
     </div >
   )
 }
-
 
 const CostRow = ({ cost }) => {
   return (

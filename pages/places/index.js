@@ -1,9 +1,7 @@
 
-import PlacesList from "../../components/Places/PlacesList";
+import PlacesList from '../../components/Places/PlacesList'
 
-export default function Places(second) {
-
-
+export default function Places (second) {
   return (
     <PlacesList places={places} />
   )

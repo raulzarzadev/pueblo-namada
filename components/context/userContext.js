@@ -3,14 +3,13 @@ import { useRouter } from 'next/router'
 import { authStateChanged } from '../../firebase/user'
 const UserContext = createContext()
 
-export function UserProvider({ children }) {
+export function UserProvider ({ children }) {
   const [user, setUser] = useState(undefined)
   const router = useRouter()
   const { redirectTo } = router?.query
   useEffect(() => {
     authStateChanged(setUser)
   }, [])
-
 
   if (user === undefined) return <div>loading ...</div>
 

@@ -1,16 +1,16 @@
-import Image from "next/image"
+import Image from 'next/image'
 import { useUser } from '@comps/context/userContext'
-import { useEffect, useState } from "react"
-import { deleteAccommodation, listenAccommodationPayments } from "../../firebase/accomodations"
-import { deleteGuest, listenPlaceGuests } from "../../firebase/guests"
-import FormAccommodation from "../FormAccommodation"
-import MainModal from "../Modal/MainModal"
-import { format } from "date-fns"
-import Section from "../Section"
-import { formatDate } from "../../utils/dates"
-import { useRouter } from "next/router"
-import SendIcon from "../icons/SendIcon"
-export default function GuestsHistory({ place }) {
+import { useEffect, useState } from 'react'
+import { deleteAccommodation, listenAccommodationPayments } from '../../firebase/accomodations'
+import { deleteGuest, listenPlaceGuests } from '../../firebase/guests'
+import FormAccommodation from '../FormAccommodation'
+import MainModal from '../Modal/MainModal'
+import { format } from 'date-fns'
+import Section from '../Section'
+import { formatDate } from '../../utils/dates'
+import { useRouter } from 'next/router'
+import SendIcon from '../icons/SendIcon'
+export default function GuestsHistory ({ place }) {
   const { user } = useUser()
   const isOwner = place?.userId === user?.uid
 
@@ -20,7 +20,6 @@ export default function GuestsHistory({ place }) {
   }, [])
 
   const showGuest = () => {
-
     let res = false
     console.log(place)
     // visible si es propietario
@@ -50,16 +49,13 @@ export default function GuestsHistory({ place }) {
   )
 }
 
-
-
-
 const GuestCard = ({ guest, place, isOwner }) => {
   const router = useRouter()
 
   const { publicImage, publicContact, imageID, plates, phone, email } = guest
   const handleDeleteGuest = (id) => {
     deleteGuest(id).then(res => {
-      console.log('res', res);
+      console.log('res', res)
     })
   }
   const handleEditGuest = (id) => {
@@ -100,7 +96,7 @@ const GuestCard = ({ guest, place, isOwner }) => {
               {phone &&
                 <div className="flex">
                   <span className="font-bold">Teléfono:</span> {phone}
-                  <a className="flex mx-2" target='_blank' href={`https://wa.me/${phone}?text=${CONTENT_INFO}`}>
+                  <a className="flex mx-2" target='_blank' href={`https://wa.me/${phone}?text=${CONTENT_INFO}`} rel="noreferrer">
                     ws <SendIcon />
                   </a>
                 </div>
@@ -111,7 +107,7 @@ const GuestCard = ({ guest, place, isOwner }) => {
                   <a
                     target='_blank'
                     className=" "
-                    href={`mailto:${email}?subject=${SUBJECT_INFO}&body=${CONTENT_INFO}`}
+                    href={`mailto:${email}?subject=${SUBJECT_INFO}&body=${CONTENT_INFO}`} rel="noreferrer"
                   >
                     <SendIcon />
                   </a>
@@ -164,12 +160,11 @@ const GuestPayments = ({ place, guest }) => {
   }, [])
 
   const handleDeleteAccommodation = (id) => {
-    console.log('id', id);
+    console.log('id', id)
     deleteAccommodation(id).then(res => {
-      console.log('res', res);
+      console.log('res', res)
     })
   }
-
 
   return (
     <div>
@@ -190,10 +185,10 @@ const GuestPayments = ({ place, guest }) => {
             <div className="sm:flex justify-between">
               <div>
                 Desde:
-                {dates?.starts ? formatDate(dates?.starts, "dd/MM/yy") : 'n/d'}
+                {dates?.starts ? formatDate(dates?.starts, 'dd/MM/yy') : 'n/d'}
               </div>
               <div>
-                Hasta: {dates?.ends ? formatDate(dates?.ends, "dd/MM/yy") : 'n/d'}
+                Hasta: {dates?.ends ? formatDate(dates?.ends, 'dd/MM/yy') : 'n/d'}
               </div>
             </div>
             <Section title={'Detalles'}>
@@ -235,13 +230,13 @@ const GuestPayments = ({ place, guest }) => {
                   <div>
                     Hasta:
                     <span className="font-bold">
-                      {dates?.ends ? formatDate(new Date(dates?.ends), "dd/MM/yy") : 'n/d'}
+                      {dates?.ends ? formatDate(new Date(dates?.ends), 'dd/MM/yy') : 'n/d'}
                     </span>
                   </div>
                   <div>
                     Creado :
                     <span className="font-bold">
-                      {format(new Date(createdAt), "dd/MM/yy HH:mm")}
+                      {format(new Date(createdAt), 'dd/MM/yy HH:mm')}
                     </span>
                   </div>
                 </div>

@@ -1,17 +1,16 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { uploadFile } from "../../firebase/uploadImage";
-import File from "../inputs/file";
-import Phone from "../inputs/phone";
-import Text from "../inputs/text";
-import Checkbox from '../inputs/checkbox';
-import Loading from "../Loadign";
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { uploadFile } from '../../firebase/uploadImage'
+import File from '../inputs/file'
+import Phone from '../inputs/phone'
+import Text from '../inputs/text'
+import Checkbox from '../inputs/checkbox'
+import Loading from '../Loadign'
 
 import { createGuest, updateGuest } from '../../firebase/Gests/main'
 
-export default function FormGuest({ guest }) {
-
+export default function FormGuest ({ guest }) {
   useEffect(() => {
     const gestStorage = localStorage.getItem('new-guest-form')
     if (gestStorage) {
@@ -19,7 +18,7 @@ export default function FormGuest({ guest }) {
     }
   }, [])
 
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({ defaultValues: { ...guest } });
+  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({ defaultValues: { ...guest } })
 
   const { query: { id: placeId }, back } = useRouter()
 
@@ -30,10 +29,8 @@ export default function FormGuest({ guest }) {
     3: 'Cancelado'
   }
 
-
-
   const defaultLabel = FORM_STATUS[0]
-  const [labelSave, setLabelSave] = useState(defaultLabel);
+  const [labelSave, setLabelSave] = useState(defaultLabel)
 
   const onSubmit = data => {
     setLabelSave(FORM_STATUS[2])
@@ -52,7 +49,7 @@ export default function FormGuest({ guest }) {
       createGuest({ ...data, placeId }).then(({ document }) => {
         if (document?.id) {
           setLabelSave(FORM_STATUS[1])
-          console.log('saved');
+          console.log('saved')
           back()
         }
       })
@@ -67,7 +64,7 @@ export default function FormGuest({ guest }) {
         setValue(fieldName, downloadURL)
         setLabelSave(FORM_STATUS[0])
       }
-    });
+    })
   }
 
   return (
@@ -128,8 +125,6 @@ export default function FormGuest({ guest }) {
             onChange={({ target: { files } }) => handleUploadFile({ fieldName: 'publicImage', file: files[0] })}
             label='Imagen pública '
           />
-
-
 
         </div>
       </form>

@@ -1,7 +1,7 @@
 import { INFO } from '@/CONSTANTS/PROJECT'
 import NextHead from 'next/head'
 
-export default function Head({ title = INFO.short_name }) {
+export default function Head ({ title = INFO.short_name }) {
   return (<NextHead>
     <meta charSet="utf-8" />
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

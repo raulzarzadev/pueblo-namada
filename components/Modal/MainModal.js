@@ -1,7 +1,7 @@
-import Modal from "."
+import Modal from '.'
 import { useState, useRef } from 'react'
 
-export default function MainModal({
+export default function MainModal ({
   children,
   title,
   buttonLabel = 'open modal',
@@ -9,11 +9,10 @@ export default function MainModal({
   OpenComponentProps = null,
   OpenComponentType = null
 }) {
-
   const OPEN_COMPONENT_STYLE = {
-    delete: `btn btn-error btn-sm`,
-    primary: `btn btn-primary btn-sm`,
-    info: `btn btn-info btn-sm`,
+    delete: 'btn btn-error btn-sm',
+    primary: 'btn btn-primary btn-sm',
+    info: 'btn btn-info btn-sm'
   }
   const [openModal, setOpenModal] = useState(false)
   const modalRef = useRef(null)
@@ -22,8 +21,9 @@ export default function MainModal({
   }
 
   return <>
-    {OpenComponent ? <OpenComponent onClick={handleOpenModal}  {...OpenComponentProps} /> :
-      <button
+    {OpenComponent
+      ? <OpenComponent onClick={handleOpenModal} {...OpenComponentProps} />
+      : <button
         onClick={() => handleOpenModal()}
         {...OpenComponentProps}
         className={`${OpenComponentProps?.className || ''} ${OPEN_COMPONENT_STYLE[OpenComponentType]}`}

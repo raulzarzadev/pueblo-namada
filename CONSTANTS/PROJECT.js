@@ -1,7 +1,7 @@
 export const INFO = {
-  name: 'Parking-Places',
-  short_name: 'Parking-Places',
-  description: 'A peacefull camping place',
+  name: 'Pueblo Nomada',
+  short_name: 'PuebloNomada',
+  description: 'A peacefull camping place. ',
   short_description: 'A peacefull camping place',
-  url: '',
+  url: ''
 }

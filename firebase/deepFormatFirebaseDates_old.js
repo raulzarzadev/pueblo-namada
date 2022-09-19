@@ -1,5 +1,5 @@
-import { format } from "@/utils/dates"
-import { Timestamp } from "firebase/firestore"
+import { format } from '@/utils/dates'
+import { Timestamp } from 'firebase/firestore'
 
 const DATE_FIELDS = [
   'birth',
@@ -16,9 +16,9 @@ const DATE_FIELDS = [
 ]
 const TARGETS = ['firebase', 'milliseconds', 'date', 'fieldDate']
 
-export function deepFormatFirebaseDates(
+export function deepFormatFirebaseDates (
   object,
-  target = 'firebase',
+  target = 'firebase'
 ) {
   if (!TARGETS.includes(target)) return console.error('target must be one of:', TARGETS)
   // target is firebase transform to Timestamp
@@ -35,7 +35,7 @@ export function deepFormatFirebaseDates(
     } else if (typeof date === 'number') {
       return new Date(date)
     } else if (typeof date === 'string') {
-      let aux = new Date(date)
+      const aux = new Date(date)
       if (isNaN(aux.getTime())) {
         return null
       } else {
@@ -51,7 +51,7 @@ export function deepFormatFirebaseDates(
     fieldDate: (date) => format(date, 'yyyy-MM-dd')
   }
 
-  let aux_obj = { ...object }
+  const aux_obj = { ...object }
 
   Object.keys(aux_obj).forEach(key => {
     const objProperty = object[key]

@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 const Checkbox = React.forwardRef(({ label, helperText, size = 'xs', ...rest }, ref) => {
   const SIZES = {
@@ -15,6 +15,5 @@ const Checkbox = React.forwardRef(({ label, helperText, size = 'xs', ...rest }, 
     </label>
   )
 })
-
 
 export default Checkbox

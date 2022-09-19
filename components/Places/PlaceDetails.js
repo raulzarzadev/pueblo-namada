@@ -1,12 +1,12 @@
-import Image from "next/image";
+import Image from 'next/image'
 import { useUser } from '@comps/context/userContext'
-import { deletePlace } from "../../firebase/places";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import MainModal from "../Modal/MainModal";
-import Section from "../Section";
+import { deletePlace } from '../../firebase/places'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import MainModal from '../Modal/MainModal'
+import Section from '../Section'
 
-export default function PlaceDetails({ place = {} }) {
+export default function PlaceDetails ({ place = {} }) {
   const { user } = useUser()
   const router = useRouter()
   const isOwner = place?.userId === user?.uid
@@ -67,7 +67,6 @@ export default function PlaceDetails({ place = {} }) {
           </button>
         </div>
       }
-
 
       <div className="max-w-md mx-auto pb-12 grid gap-2 ">
         <p className="text-center">{place.contact}</p>

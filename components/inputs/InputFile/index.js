@@ -1,5 +1,5 @@
-import Image from "next/image";
-import React from "react"
+import Image from 'next/image'
+import React from 'react'
 
 const InputFile = React.forwardRef(({
   label,
@@ -22,7 +22,7 @@ const InputFile = React.forwardRef(({
       <input
         ref={ref}
         className="
-          input 
+          input
           input-bordered w-full
           file:btn
           file:rounded-r-none

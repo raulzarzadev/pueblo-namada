@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 const Textarea = React.forwardRef(({ label, helperText, ...rest }, ref) => {
   return (
@@ -18,4 +18,4 @@ const Textarea = React.forwardRef(({ label, helperText, ...rest }, ref) => {
   )
 })
 
-export default Textarea;
+export default Textarea

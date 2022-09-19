@@ -2,13 +2,13 @@ import { useState } from 'react'
 import Modal from '.'
 import DeleteIcon from '../icons/DeleteIcon'
 
-export default function ModalDelete({
+export default function ModalDelete ({
   handleDelete = null,
   deleteSuccessful = () => { },
   itemLabel = 'elemento',
   itemId = '',
   deleteText = null,
-  modalTitle = 'Eliminar elemento',
+  modalTitle = 'Eliminar elemento'
 
 }) {
   const [open, setOpen] = useState()
@@ -42,7 +42,6 @@ export default function ModalDelete({
       }
     }
     deleteFunc()
-
   }
   return (
     <div>
@@ -58,7 +57,7 @@ export default function ModalDelete({
       </button>
       <Modal title={modalTitle} open={open} handleOpen={handleOpen}>
         <div className='text-center whitespace-pre-line'>
-          {deleteText ? deleteText : `¿Seguro que desea eliminar 
+          {deleteText || `¿Seguro que desea eliminar 
            ${itemLabel.toUpperCase()} 
            de forma permanente?`}
 

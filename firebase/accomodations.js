@@ -1,31 +1,29 @@
-import { db } from './index'
-import { collection, query, where, onSnapshot, addDoc, doc, deleteDoc, updateDoc } from "firebase/firestore";
-import { auth } from './index'
-import { mapUserFromFirebase } from './firebase-helpers';
-import { async } from '@firebase/util';
+import { db, auth } from './index'
+import { collection, query, where, onSnapshot, addDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore'
+import { mapUserFromFirebase } from './firebase-helpers'
+import { async } from '@firebase/util'
 
-export async function getAccommodations(cb) {
-  const accommodations = collection(db, 'accommodations');
-  const docsSnapshot = await getDocs(accommodations);
-  const accommodationsList = docsSnapshot.docs.map(doc => doc.data());
+export async function getAccommodations (cb) {
+  const accommodations = collection(db, 'accommodations')
+  const docsSnapshot = await getDocs(accommodations)
+  const accommodationsList = docsSnapshot.docs.map(doc => doc.data())
   console.log(docsSnapshot)
 }
 
-export async function listenAccommodations(...props) {
+export async function listenAccommodations (...props) {
   const cb = props.pop()
   const q = query(collection(db, 'accommodations'))
   onSnapshot(q, querySnapshot => {
-    let accommodations = []
+    const accommodations = []
     querySnapshot.docs.forEach(doc => {
       accommodations.push({ ...doc.data(), id: doc.id })
     }
     )
     cb(accommodations)
   })
-
 }
 
-export async function updateAccommodations(id, accommodations) {
+export async function updateAccommodations (id, accommodations) {
   const accommodationsRef = doc(db, 'accommodations', id)
   return await updateDoc(accommodationsRef, accommodations)
     .then(res => {
@@ -34,26 +32,26 @@ export async function updateAccommodations(id, accommodations) {
     .catch(err => console.error('error', err))
 }
 
-export async function listenAccommodation(...props) {
+export async function listenAccommodation (...props) {
   const cb = props.pop()
   const id = props[0]
   const q = query(doc(collection(db, 'accommodations'), id))
   onSnapshot(q, querySnapshot => {
-    let accommodations = querySnapshot.data()
+    const accommodations = querySnapshot.data()
     accommodations ? cb({ ...accommodations, id }) : cb(null)
   }
   )
 }
 
-export async function deleteAccommodation(...props) {
+export async function deleteAccommodation (...props) {
   const id = props[0]
-  console.log(props);
+  console.log(props)
   return await deleteDoc(doc(db, 'accommodations', id)).then(
     res => true
   ).catch(err => console.error(err))
 }
 
-export async function listenUserAccommodations(...props) {
+export async function listenUserAccommodations (...props) {
   const cb = props.pop()
   let q
   if (auth.currentUser) {
@@ -62,23 +60,21 @@ export async function listenUserAccommodations(...props) {
     q = query(collection(db, 'accommodations'))
   }
   onSnapshot(q, querySnapshot => {
-    let accommodations = []
+    const accommodations = []
     querySnapshot.docs.forEach(doc => {
       accommodations.push({ ...doc.data(), id: doc.id })
     }
     )
     cb(accommodations)
   })
-
 }
 
-
-export async function listenAccommodationPayments(...props) {
+export async function listenAccommodationPayments (...props) {
   const cb = props.pop()
   const { guestId, placeId } = props[0]
   const q = query(collection(db, 'accommodations'), where('guest', '==', guestId), where('place', '==', placeId))
   onSnapshot(q, querySnapshot => {
-    let accommodations = []
+    const accommodations = []
     querySnapshot.docs.forEach(doc => {
       accommodations.push({ ...doc.data(), id: doc.id })
     }
@@ -87,12 +83,7 @@ export async function listenAccommodationPayments(...props) {
   })
 }
 
-
-
-
-
-
-export async function newAccommodation(accommodation) {
+export async function newAccommodation (accommodation) {
   const user = mapUserFromFirebase(auth.currentUser)
   if (!user) return console.error('No user logged in')
   try {
@@ -105,16 +96,14 @@ export async function newAccommodation(accommodation) {
   } catch (error) {
     console.error(error)
   }
-
 }
 
-
-export async function listenPlacePayments(...props) {
+export async function listenPlacePayments (...props) {
   const cb = props.pop()
   const placeId = props[0]
   const q = query(collection(db, 'accommodations'), where('place', '==', placeId))
   onSnapshot(q, querySnapshot => {
-    let accommodations = []
+    const accommodations = []
     querySnapshot.docs.forEach(doc => {
       accommodations.push({ ...doc.data(), id: doc.id })
     }
@@ -122,4 +111,3 @@ export async function listenPlacePayments(...props) {
     cb(accommodations)
   })
 }
-

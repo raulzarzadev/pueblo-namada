@@ -1,14 +1,13 @@
-//@ts-check
+// @ts-check
 
-import { useEffect, useState } from "react"
-import { deleteAccommodation, listenAccommodationPayments } from "../../../../firebase/accomodations"
-import { Dates } from "../../../../firebase/Dates.utils"
-import FormAccommodation from "../../../FormAccommodation"
-import MainModal from "../../../Modal/MainModal"
-import Section from "../../../Section"
+import { useEffect, useState } from 'react'
+import { deleteAccommodation, listenAccommodationPayments } from '../../../../firebase/accomodations'
+import { Dates } from '../../../../firebase/Dates.utils'
+import FormAccommodation from '../../../FormAccommodation'
+import MainModal from '../../../Modal/MainModal'
+import Section from '../../../Section'
 
 const GuestPayments = ({ place, guest }) => {
-
   const guestId = guest.id
   const placeId = place.id
   const [payments, setPayments] = useState(undefined)
@@ -16,7 +15,6 @@ const GuestPayments = ({ place, guest }) => {
   useEffect(() => {
     listenAccommodationPayments({ placeId, guestId }, setPayments)
   }, [])
-
 
   return (
     <div>
@@ -39,10 +37,9 @@ const GuestPayments = ({ place, guest }) => {
 }
 
 export const PaymentDetails = ({ payment, place }) => {
-
   const handleDeleteAccommodation = (id) => {
     deleteAccommodation(id).then(res => {
-      console.log('res', res);
+      console.log('res', res)
     })
   }
 
@@ -83,7 +80,7 @@ export const PaymentDetails = ({ payment, place }) => {
               <div>
                 Creado :
                 <span className="font-bold">
-                  {createdAt && Dates.format(new Date(createdAt), "dd/MM/yy HH:mm") || 'n/d'}
+                  {createdAt && Dates.format(new Date(createdAt), 'dd/MM/yy HH:mm') || 'n/d'}
                 </span>
               </div>
             </div>

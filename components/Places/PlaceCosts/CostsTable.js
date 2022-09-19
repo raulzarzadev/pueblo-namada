@@ -1,15 +1,14 @@
-import { deleteCost } from "../../../firebase/Costs/main"
-import { FirebaseCRUD } from "../../../firebase/FirebaseCRUD"
-import ModalDelete from "../../Modal/ModalDelete"
-import sortByDate from "../../../utils/sortByDate"
-import Modal from "../../Modal"
-import { useState } from "react"
-import { CurrencySpan } from "../../CurrencySpan"
-import Image from "next/image"
-import PreviewImage from "../../PreviewImage"
-import { format } from "date-fns"
+import { deleteCost } from '../../../firebase/Costs/main'
+import { FirebaseCRUD } from '../../../firebase/FirebaseCRUD'
+import ModalDelete from '../../Modal/ModalDelete'
+import sortByDate from '../../../utils/sortByDate'
+import Modal from '../../Modal'
+import { useState } from 'react'
+import { CurrencySpan } from '../../CurrencySpan'
+import Image from 'next/image'
+import PreviewImage from '../../PreviewImage'
+import { format } from 'date-fns'
 const CostsTable = ({ costs = [] }) => {
-
   return (
     <div>
       <table className="table-auto w-full text-center">
@@ -40,13 +39,13 @@ const RowCost = ({ cost }) => {
   }
 
   return (
-    <tr onClick={handleOpen} className={`hover:bg-base-100 cursor-pointer`} >
+    <tr onClick={handleOpen} className={'hover:bg-base-100 cursor-pointer'} >
       <td className="p-1 ">{cost.title}</td>
       <td className="p-1 ">{format(cost.date, 'dd MMMM yy ')}</td>
       <td className="p-1 text-left"><CurrencySpan cost={cost.value} /> </td>
       <td className="p-1 ">
 
-        <Modal title={`Detalles`} open={open} handleOpen={handleOpen} >
+        <Modal title={'Detalles'} open={open} handleOpen={handleOpen} >
           <h2 className="font-bold">
             {cost?.title}
           </h2>

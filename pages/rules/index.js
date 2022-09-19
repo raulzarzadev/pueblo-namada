@@ -1,4 +1,4 @@
-export default function Rules() {
+export default function Rules () {
   return (
     <div>
       <h1>Información, reglamento y sugerencias</h1>

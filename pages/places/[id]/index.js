@@ -1,10 +1,10 @@
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
-import PrivatePage from "../../../components/HOC/PrivatePage"
-import PlaceDetails from "../../../components/Places/PlaceDetails"
-import { listenPlace } from "../../../firebase/places"
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import PrivatePage from '../../../components/HOC/PrivatePage'
+import PlaceDetails from '../../../components/Places/PlaceDetails'
+import { listenPlace } from '../../../firebase/places'
 
-export default function Place() {
+export default function Place () {
   const { query: { id }, back } = useRouter()
   const [place, setPlace] = useState(undefined)
 

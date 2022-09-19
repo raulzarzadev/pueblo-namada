@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from 'react'
 import { useUser } from '../../context/userContext'
 // import { addDevit, uploadImage } from "firebase/client"
-import { useRouter } from "next/router"
+import { useRouter } from 'next/router'
 
 const COMPOSE_STATES = {
   USER_NOT_KNOWN: 0,
   LOADING: 1,
   SUCCESS: 2,
-  ERROR: -1,
+  ERROR: -1
 }
 
 const DRAG_IMAGE_STATES = {
@@ -15,11 +15,11 @@ const DRAG_IMAGE_STATES = {
   NONE: 0,
   DRAG_OVER: 1,
   UPLOADING: 2,
-  COMPLETE: 3,
+  COMPLETE: 3
 }
 
-export default function DragAndDrop() {
-  const [message, setMessage] = useState("")
+export default function DragAndDrop () {
+  const [message, setMessage] = useState('')
   const [status, setStatus] = useState(COMPOSE_STATES.USER_NOT_KNOWN)
 
   const [drag, setDrag] = useState(DRAG_IMAGE_STATES.NONE)
@@ -34,11 +34,11 @@ export default function DragAndDrop() {
       const onProgress = () => { }
       const onError = () => { }
       const onComplete = () => {
-        console.log("onComplete")
+        console.log('onComplete')
         task.snapshot.ref.getDownloadURL().then(setImgURL)
       }
 
-      task.on("state_changed", onProgress, onError, onComplete)
+      task.on('state_changed', onProgress, onError, onComplete)
     }
   }, [task])
 
@@ -55,10 +55,10 @@ export default function DragAndDrop() {
       content: message,
       userId: user.uid,
       userName: user.username,
-      img: imgURL,
+      img: imgURL
     })
       .then(() => {
-        router.push("/home")
+        router.push('/home')
       })
       .catch((err) => {
         console.error(err)
@@ -144,8 +144,8 @@ export default function DragAndDrop() {
         }
         textarea {
           border: ${drag === DRAG_IMAGE_STATES.DRAG_OVER
-          ? "3px dashed #09f"
-          : "3px solid transparent"};
+          ? '3px dashed #09f'
+          : '3px solid transparent'};
           border-radius: 10px;
           font-size: 21px;
           min-height: 200px;

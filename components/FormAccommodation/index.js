@@ -1,29 +1,28 @@
-import { format, addDays } from "date-fns";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { createAccommodation, updateAccommodation } from "../../firebase/Accommodations/main";
-//import { newAccommodation } from "../../firebase/accomodations";
-import { formatDate } from "../../utils/dates";
-import InputDate from "../inputs/date";
-import InputNumber from "../inputs/InputNumber";
-import Text from "../inputs/text";
+import { format, addDays } from 'date-fns'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { createAccommodation, updateAccommodation } from '../../firebase/Accommodations/main'
+// import { newAccommodation } from "../../firebase/accomodations";
+import { formatDate } from '../../utils/dates'
+import InputDate from '../inputs/date'
+import InputNumber from '../inputs/InputNumber'
+import Text from '../inputs/text'
 
-export default function FormAccommodation({ guest, guests = [], place, payment = null }) {
-
-
+export default function FormAccommodation ({ guest, guests = [], place, payment = null }) {
   const defaultGuestId = guest?.id || null
   const defaultValues = {
     guest: defaultGuestId,
-    ...payment, dates: {
-      ...payment?.dates,
-      //startsAt: payment?.accommodationStarts
+    ...payment,
+    dates: {
+      ...payment?.dates
+      // startsAt: payment?.accommodationStarts
     }
   } || {
     guest: defaultGuestId,
     nights: 1,
     discountedNights: 0,
     dates: {
-      startsAt: `${format(new Date(), "yyyy-MM-dd")}`
+      startsAt: `${format(new Date(), 'yyyy-MM-dd')}`
     }
     // accommodationStarts: `${format(new Date(), "yyyy-MM-dd")}`,
   }
@@ -31,7 +30,7 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
     {
       defaultValues
     }
-  );
+  )
 
   const FORM_STATUS = {
     0: 'Pagar',
@@ -42,10 +41,8 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
     5: 'Editado'
   }
 
-
   const defaultLabel = payment ? FORM_STATUS[4] : FORM_STATUS[0]
-  const [labelSave, setLabelSave] = useState(defaultLabel);
-
+  const [labelSave, setLabelSave] = useState(defaultLabel)
 
   const startsAt = watch('dates.startsAt')
   const nights = watch('nights')
@@ -53,7 +50,6 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
     setValue('dates.endsAt', accommodationEnds(startsAt))
     setTotals(getTotals())
   }, [startsAt, nights])
-
 
   const onSubmit = data => {
     const accomodation = {
@@ -64,45 +60,40 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
       usdTotal: totals?.usd,
       prices: {
         night: place?.price || null,
-        usd: place?.usdPrice || null,
-      },
+        usd: place?.usdPrice || null
+      }
     }
     setLabelSave(FORM_STATUS[3])
 
-
     payment
-      ?
-      updateAccommodation(payment.id, accomodation)
+      ? updateAccommodation(payment.id, accomodation)
         .then(res => {
           console.log('payment updated', { id: payment.id })
           setLabelSave(FORM_STATUS[5])
           setTimeout(() => {
             setLabelSave(FORM_STATUS[4])
-            //router.back()
+            // router.back()
             // reset()
           }, 1000)
         })
-      :
-      createAccommodation(accomodation)
+      : createAccommodation(accomodation)
         .then(res => {
           console.log('payment created', res)
           setLabelSave(FORM_STATUS[1])
           setTimeout(() => {
             setLabelSave(FORM_STATUS[0])
-            //router.back()
+            // router.back()
             reset()
           }, 1000)
         })
-  };
-
+  }
 
   const accommodationEnds = (startAt) => {
     const nights = watch('nights') || 1
     const startDate = new Date(startAt)
     const endDate = addDays(startDate, nights)
-    return formatDate(endDate, "yyyy-MM-dd")
+    return formatDate(endDate, 'yyyy-MM-dd')
   }
-
 
   const [totals, setTotals] = useState({ mxn: 0, usd: 0 })
   const getTotals = () => {
@@ -114,8 +105,6 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
     const usd = (usdPrice && (price * nights - (discountedNights * price)) / usdPrice).toFixed(2)
     return { mxn: parseFloat(mxn), usd: parseFloat(usd) }
   }
-
-
 
   return (
     <div className="p-1">
@@ -214,7 +203,7 @@ export default function FormAccommodation({ guest, guests = [], place, payment =
               type="submit"
               className="btn btn-primary"
             /* disabled={[FORM_STATUS[1], FORM_STATUS[2], FORM_STATUS[3]].includes(labelSave) || !isDirty} */
-            //onClick={() => onSubmit(watch())}
+            // onClick={() => onSubmit(watch())}
             >
               {labelSave}
             </button>

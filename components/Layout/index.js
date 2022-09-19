@@ -4,7 +4,7 @@ import { useUser } from '@comps/context/userContext'
 import { useRouter } from 'next/router'
 import TopNavBar from './TopNavBar'
 import { useEffect, useState } from 'react'
-export default function Layout({ children }) {
+export default function Layout ({ children }) {
   const { user } = useUser()
 
   const ROUTES_CONFIG = {
@@ -18,7 +18,7 @@ export default function Layout({ children }) {
     '/recover': {
       private: false,
       avoidWhenLogged: true
-    },
+    }
   }
 
   const { pathname, push } = useRouter()
@@ -30,34 +30,32 @@ export default function Layout({ children }) {
   } else if (avoidWhenLogged && user) {
     push('/')
   }
-  const [showMobileNav, setShowMobileNav] = useState(false);
+  const [showMobileNav, setShowMobileNav] = useState(true)
 
-  let lastScroll = 0
-  useEffect(() => {
+  // let lastScroll = 0
+  // useEffect(() => {
 
-    const handleScroll = () => {
-      const scroll = window.scrollY;
-      if (scroll > lastScroll) {
-        // scroll is going down
-        setShowMobileNav(false);
-      } else {
-        // scroll is going up
-        setShowMobileNav(true);
-      }
-      lastScroll = scroll;
+  //   const handleScroll = () => {
+  //     const scroll = window.scrollY;
+  //     if (scroll > lastScroll) {
+  //       // scroll is going down
+  //       setShowMobileNav(false);
+  //     } else {
+  //       // scroll is going up
+  //       setShowMobileNav(true);
+  //     }
+  //     lastScroll = scroll;
 
+  //   };
 
-    };
+  //   handleScroll();
 
-    handleScroll();
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <div className='relative bg-base-300 pb-11 min-h-screen' >
@@ -69,7 +67,7 @@ export default function Layout({ children }) {
         {children}
       </main>
       {showMobileNav &&
-        <footer className={`relative z-10  `}>
+        <footer className={'relative z-10  '}>
           <MobileNav />
         </footer>
       }

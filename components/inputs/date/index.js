@@ -1,5 +1,5 @@
-import React from "react"
-import { Dates } from "../../../firebase/Dates.utils"
+import React from 'react'
+import { Dates } from '../../../firebase/Dates.utils'
 
 const InputDate = React.forwardRef(({ label, helperText, type, ...rest }, ref) => {
   return (
@@ -9,7 +9,7 @@ const InputDate = React.forwardRef(({ label, helperText, type, ...rest }, ref) =
           <span className="label-text">{label}</span>
         }
       </label>
-      <input type='date' className="input input-bordered "  {...rest} ref={ref} />
+      <input type='date' className="input input-bordered " {...rest} ref={ref} />
       {helperText &&
         <label className="label">
           <span className="label-text-alt">{helperText}</span>

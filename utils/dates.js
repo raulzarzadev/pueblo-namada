@@ -1,10 +1,10 @@
-//@ts-check
-import { format } from "date-fns"
+// @ts-check
+import { format } from 'date-fns'
 
 export const formatDate = (date, stringFormat = 'dd/MM/yy') => {
   if (!date) return console.error('no date')
   const objectDate = new Date(date)
-  function isValidDate(d) {
+  function isValidDate (d) {
     return d instanceof Date && !isNaN(d)
   }
 
@@ -13,6 +13,4 @@ export const formatDate = (date, stringFormat = 'dd/MM/yy') => {
   } else {
     return console.error('date is not valid date')
   }
-
 }
-

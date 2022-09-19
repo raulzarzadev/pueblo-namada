@@ -1,22 +1,20 @@
-import { useRouter } from "next/router"
+import { useRouter } from 'next/router'
 import { useUser } from '@comps/context/userContext'
-import { useEffect, useState } from "react"
-import FormPlaceConfig from "../../../../components/FormPlaceConfig"
-import PlaceDetails from "../../../../components/Places/PlaceDetails"
-import { listenPlace } from "../../../../firebase/places"
-import PlaceGuests from "../../../../components/Places/PlaceGuests"
-import Section from "../../../../components/Section"
-import PrivatePage from "../../../../components/HOC/PrivatePage"
+import { useEffect, useState } from 'react'
+import FormPlaceConfig from '../../../../components/FormPlaceConfig'
+import PlaceDetails from '../../../../components/Places/PlaceDetails'
+import { listenPlace } from '../../../../firebase/places'
+import PlaceGuests from '../../../../components/Places/PlaceGuests'
+import Section from '../../../../components/Section'
+import PrivatePage from '../../../../components/HOC/PrivatePage'
 
-export default function dashboard() {
-
+export default function dashboard () {
   const [place, setPlace] = useState(undefined)
   const { query: { id } } = useRouter()
 
   useEffect(() => {
     listenPlace(id, setPlace)
   }, [])
-
 
   return (
     <PrivatePage permissionTo="owner" elementOwner={place?.userId}>
@@ -25,7 +23,7 @@ export default function dashboard() {
 
         {place &&
           <>
-            <Section title={`Detalles del lugar`} subtitle={`${place?.name || ''}`}
+            <Section title={'Detalles del lugar'} subtitle={`${place?.name || ''}`}
               sticky
             >
               <PlaceDetails place={place} />
@@ -37,5 +35,4 @@ export default function dashboard() {
       </div>
     </PrivatePage>
   )
-
 }

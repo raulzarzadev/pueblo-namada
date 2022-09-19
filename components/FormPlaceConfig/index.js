@@ -1,12 +1,11 @@
-import { isEqual } from "date-fns"
-import { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
-import { updatePlace } from "../../firebase/places"
-import Checkbox from "../inputs/checkbox"
+import { isEqual } from 'date-fns'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { updatePlace } from '../../firebase/places'
+import Checkbox from '../inputs/checkbox'
 
 const FormPlaceConfig = ({ place }) => {
-
-  const { register, watch, handleSubmit, formState: { isDirty, } } = useForm({
+  const { register, watch, handleSubmit, formState: { isDirty } } = useForm({
     defaultValues: {
       ...place.config
     }
@@ -18,32 +17,30 @@ const FormPlaceConfig = ({ place }) => {
     3: 'Cancelado'
   }
 
-
-  function deepEqual(x, y) {
-    const isObject = x => typeof x == "object" && x != null;
+  function deepEqual (x, y) {
+    const isObject = x => typeof x === 'object' && x != null
     if (x === y) {
-      return true;
+      return true
     } else if (!isObject(x) || !isObject(y)) {
-      return false;
+      return false
     }
     if (Object.keys(x).length != Object.keys(y).length) {
-      return false;
+      return false
     }
 
-    for (var prop in x) {
+    for (const prop in x) {
       if (!y.hasOwnProperty(prop)) {
-        return false;
+        return false
       }
       if (!deepEqual(x[prop], y[prop])) {
-        return false;
+        return false
       }
     }
-    return true;
+    return true
   }
 
-
   const defaultLabel = 1
-  const [labelSave, setLabelSave] = useState(defaultLabel);
+  const [labelSave, setLabelSave] = useState(defaultLabel)
   useEffect(() => {
     deepEqual(watch(), { ...place.config }) ? setLabelSave(1) : setLabelSave(0)
   }, [watch()])

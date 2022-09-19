@@ -1,19 +1,19 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { newPlace, updatePlace } from "../../firebase/places";
-import { uploadFile } from "../../firebase/uploadImage";
-import File from "../inputs/file";
-import Phone from "../inputs/phone";
-import Text from "../inputs/text";
-import Textarea from "../inputs/textarea";
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { newPlace, updatePlace } from '../../firebase/places'
+import { uploadFile } from '../../firebase/uploadImage'
+import File from '../inputs/file'
+import Phone from '../inputs/phone'
+import Text from '../inputs/text'
+import Textarea from '../inputs/textarea'
 
-export default function FormPlace({ place, editing = false }) {
+export default function FormPlace ({ place, editing = false }) {
   const router = useRouter()
 
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm(
     { defaultValues: { ...place } }
-  );
+  )
 
   const FORM_STATUS = {
     0: 'Guardar',
@@ -23,9 +23,7 @@ export default function FormPlace({ place, editing = false }) {
   }
 
   const defaultLabel = FORM_STATUS[0]
-  const [labelSave, setLabelSave] = useState(defaultLabel);
-
-
+  const [labelSave, setLabelSave] = useState(defaultLabel)
 
   const onSubmit = data => {
     setLabelSave(FORM_STATUS[2])
@@ -42,9 +40,8 @@ export default function FormPlace({ place, editing = false }) {
         setLabelSave(defaultLabel)
         // router.back()
       }, 1000)
-    });
-  };
-
+    })
+  }
 
   const handleUploadFile = async ({ fieldName, file }) => {
     setLabelSave(FORM_STATUS[2])
@@ -53,9 +50,8 @@ export default function FormPlace({ place, editing = false }) {
         setValue(fieldName, downloadURL)
         setLabelSave(FORM_STATUS[0])
       }
-    });
+    })
   }
-
 
   return (
     <div className="p-1 max-w-sm mx-auto">

@@ -1,15 +1,15 @@
-//@ts-check
-import Image from "next/image"
-import { useRouter } from "next/router"
-import { deleteGuest } from "../../../../firebase/guests"
-import SendIcon from "../../../icons/SendIcon"
-import MainModal from "../../../Modal/MainModal"
-import PreviewImage from "../../../PreviewImage"
-import GuestPayments from "../GuestPayments"
+// @ts-check
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { deleteGuest } from '../../../../firebase/guests'
+import SendIcon from '../../../icons/SendIcon'
+import MainModal from '../../../Modal/MainModal'
+import PreviewImage from '../../../PreviewImage'
+import GuestPayments from '../GuestPayments'
 
 export const GuestDetails = ({ guest, place }) => {
   const router = useRouter()
-  const { id, name, plates, phone, email, publicContact, publicImage, imageID, } = guest
+  const { id, name, plates, phone, email, publicContact, publicImage, imageID } = guest
   const DOMAIN = 'https://peace-parking.vercel.app'
   const PLACE_URL = `${DOMAIN}/places/${id}`
 
@@ -17,7 +17,7 @@ export const GuestDetails = ({ guest, place }) => {
   const SUBJECT_INFO = `Bienvenido a ${name}`
   const handleDeleteGuest = (id) => {
     deleteGuest(id).then(res => {
-      console.log('res', res);
+      console.log('res', res)
     })
   }
   const handleEditGuest = (id) => {
@@ -37,7 +37,7 @@ export const GuestDetails = ({ guest, place }) => {
       {phone &&
         <div className="flex">
           <span className="font-bold">Teléfono:</span> {phone}
-          <a className="flex mx-2" target='_blank' href={`https://wa.me/${phone}?text=${CONTENT_INFO}`}>
+          <a className="flex mx-2" target='_blank' href={`https://wa.me/${phone}?text=${CONTENT_INFO}`} rel="noreferrer">
             ws <SendIcon />
           </a>
         </div>
@@ -48,7 +48,7 @@ export const GuestDetails = ({ guest, place }) => {
           <a
             target='_blank'
             className=" "
-            href={`mailto:${email}?subject=${SUBJECT_INFO}&body=${CONTENT_INFO}`}
+            href={`mailto:${email}?subject=${SUBJECT_INFO}&body=${CONTENT_INFO}`} rel="noreferrer"
           >
             <SendIcon />
           </a>
@@ -68,7 +68,6 @@ export const GuestDetails = ({ guest, place }) => {
       </div>
 
       <div className="sm:flex sm:justify-evenly">
-
 
         <PreviewImage label='Public image:' image={publicImage} />
         {/* {publicImage &&

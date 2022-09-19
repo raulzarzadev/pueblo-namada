@@ -1,15 +1,10 @@
-//@ts-check
-import Image from "next/image"
-import MainModal from "../../../Modal/MainModal"
-import { GuestDetails } from "../GuestDetails"
-
+// @ts-check
+import Image from 'next/image'
+import MainModal from '../../../Modal/MainModal'
+import { GuestDetails } from '../GuestDetails'
 
 const GuestCard = ({ guest, place, isOwner }) => {
-
-
   const { publicImage, publicContact } = guest
-
-
 
   return (
     <div className="relative">
@@ -36,6 +31,5 @@ const GuestCard = ({ guest, place, isOwner }) => {
     </div >
   )
 }
-
 
 export default GuestCard

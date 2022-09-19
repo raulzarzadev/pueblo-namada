@@ -1,5 +1,5 @@
 import { INFO } from '../../CONSTANTS/PROJECT'
-export default function Hero() {
+export default function Hero () {
   return (
     <div className="hero min-h-screen" style={{ backgroundImage: 'url(/images/overlander.jpg)' }}>
       <div className="hero-overlay bg-opacity-60"></div>

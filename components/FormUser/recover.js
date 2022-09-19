@@ -1,9 +1,9 @@
-import Link from "next/link";
-import { useForm } from "react-hook-form";
-import Text from "../inputs/text";
+import Link from 'next/link'
+import { useForm } from 'react-hook-form'
+import Text from '../inputs/text'
 
-export default function RecoverPassawordForm({ submitForm }) {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+export default function RecoverPassawordForm ({ submitForm }) {
+  const { register, handleSubmit, watch, formState: { errors } } = useForm()
   const onSubmit = ({ password, email }) => {
     submitForm({ email, password })
   }
@@ -34,7 +34,6 @@ export default function RecoverPassawordForm({ submitForm }) {
           Recuperar
         </button>
       </div>
-
 
     </form>
   )

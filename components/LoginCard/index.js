@@ -1,9 +1,9 @@
-import { useRouter } from "next/router"
-import { signIn, signUp } from "../../firebase/user"
-import FormUser from "../FormUser"
-import RecoverPassawordForm from "../FormUser/recover"
+import { useRouter } from 'next/router'
+import { signIn, signUp } from '../../firebase/user'
+import FormUser from '../FormUser'
+import RecoverPassawordForm from '../FormUser/recover'
 
-export default function LoginCard({ formVariant = 'login', formProps = {} }) {
+export default function LoginCard ({ formVariant = 'login', formProps = {} }) {
   const router = useRouter()
   const loginSumbit = ({ email, password }) => {
     signIn({ email, password }).then(res => {
@@ -26,7 +26,7 @@ export default function LoginCard({ formVariant = 'login', formProps = {} }) {
   const formsOptions = {
     login: {
       formLabel: 'Iniciar sesión',
-      Component: <FormUser submitForm={loginSumbit}  {...formProps} buttonLabel='Ingresar' />
+      Component: <FormUser submitForm={loginSumbit} {...formProps} buttonLabel='Ingresar' />
     },
     recover: {
       formLabel: 'Recuperar contraseña',

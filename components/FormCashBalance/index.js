@@ -1,15 +1,15 @@
 
-import { useState } from "react"
-import { useForm } from "react-hook-form"
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { getPlaceCashBalanceBettweenDates } from '../../firebase/CashBalance/main'
-import { format } from "date-fns"
-import CashBalance from "../CashBalance"
+import { format } from 'date-fns'
+import CashBalance from '../CashBalance'
 
-const FormCashBalance = ({ place, }) => {
+const FormCashBalance = ({ place }) => {
   const { handleSubmit, register, watch } = useForm({
     defaultValues: {
       from: format(new Date(), "yyyy-MM-dd'T'00:00"),
-      to: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
+      to: format(new Date(), "yyyy-MM-dd'T'HH:mm")
     }
   })
 
@@ -20,12 +20,10 @@ const FormCashBalance = ({ place, }) => {
   }
 
   const handleGetCashBalance = async (from, to) => {
-
     getPlaceCashBalanceBettweenDates(place?.id, from, to)
       .then(setCashBalance)
       .catch(err => console.error(err))
   }
-
 
   const outOfService = false
 
@@ -63,6 +61,5 @@ const FormCashBalance = ({ place, }) => {
     </div >
   )
 }
-
 
 export default FormCashBalance

@@ -1,4 +1,4 @@
-export default function Guest() {
+export default function Guest () {
   return (
     <div>
       guest

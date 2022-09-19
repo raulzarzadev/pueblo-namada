@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"
-import { listenPlaceAccomomodations } from "../../../firebase/accomodations"
-import { formatDate } from "../../../utils/dates"
-import SettingsIcon from "../../icons/SettingsIcon"
-import MainModal from "../../Modal/MainModal"
+import { useEffect, useState } from 'react'
+import { listenPlaceAccomomodations } from '../../../firebase/accomodations'
+import { formatDate } from '../../../utils/dates'
+import SettingsIcon from '../../icons/SettingsIcon'
+import MainModal from '../../Modal/MainModal'
 
-export default function PlacePyments({ place }) {
+export default function PlacePyments ({ place }) {
   const [payments, setPayments] = useState(undefined)
   useEffect(() => {
     listenPlaceAccomomodations(place.id, setPayments)

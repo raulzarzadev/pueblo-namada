@@ -1,32 +1,31 @@
-import { useEffect, useState } from "react"
-import { listenPlaceAccommodations } from "../../../firebase/Accommodations/main";
+import { useEffect, useState } from 'react'
+import { listenPlaceAccommodations } from '../../../firebase/Accommodations/main'
 // import { listenPlacePayments } from "../../../firebase/accomodations";
-import { listenPlaceGuests } from "../../../firebase/guests";
-import sortByDate from "../../../utils/sortByDate";
-import { useUser } from "../../context/userContext";
-import { CurrencySpan } from "../../CurrencySpan";
-import FormAccommodation from "../../FormAccommodation";
-import FormCashBalance from "../../FormCashBalance";
-import FormCost from "../../FormCost";
-import FormPlace from "../../FormPlace";
-import GuestCard from "../../Guests/Guest/GuestCard";
-import { GuestDetails } from "../../Guests/Guest/GuestDetails";
-import { PaymentDetails } from "../../Guests/Guest/GuestPayments";
-import Modal from "../../Modal";
-import MainModal from "../../Modal/MainModal";
-import Section from "../../Section";
-import PlaceCosts from "../PlaceCosts";
+import { listenPlaceGuests } from '../../../firebase/guests'
+import sortByDate from '../../../utils/sortByDate'
+import { useUser } from '../../context/userContext'
+import { CurrencySpan } from '../../CurrencySpan'
+import FormAccommodation from '../../FormAccommodation'
+import FormCashBalance from '../../FormCashBalance'
+import FormCost from '../../FormCost'
+import FormPlace from '../../FormPlace'
+import GuestCard from '../../Guests/Guest/GuestCard'
+import { GuestDetails } from '../../Guests/Guest/GuestDetails'
+import { PaymentDetails } from '../../Guests/Guest/GuestPayments'
+import Modal from '../../Modal'
+import MainModal from '../../Modal/MainModal'
+import Section from '../../Section'
+import PlaceCosts from '../PlaceCosts'
 import { Dates } from '../../../firebase/Dates.utils'
-import FormGuest from "../../FormGuest";
+import FormGuest from '../../FormGuest'
 
-
-export default function PlaceGuests({ place,
+export default function PlaceGuests ({
+  place,
   showTable = false,
   showCards = false,
   showPaymentsTable = false,
   showOperatingCosts = false
 }) {
-
   const { user } = useUser()
   const isOwner = place?.userId === user?.uid
 
@@ -57,27 +56,25 @@ export default function PlaceGuests({ place,
 
   if (!showGuest()) return <div>Cannot see the guests</div>
 
-
-
   return (
     <div className="">
       <div>
         <h3 className="text-xl font-bold text-left my-4">Operaciones</h3>
         <div className="grid gap-2 sm:flex justify-evenly">
 
-          <MainModal title={`Nuevo pago`} OpenComponentType='primary' buttonLabel="Nuevo pago">
+          <MainModal title={'Nuevo pago'} OpenComponentType='primary' buttonLabel="Nuevo pago">
             <FormAccommodation place={place} guests={guests} />
           </MainModal>
-          <MainModal title={`Nuevo Huesped`} OpenComponentType='primary' buttonLabel="Nuevo Huesped">
+          <MainModal title={'Nuevo Huesped'} OpenComponentType='primary' buttonLabel="Nuevo Huesped">
             {/* <FormPlace place={place} /> */}
             <FormGuest />
           </MainModal>
           <MainModal title='Nuevo gasto' buttonLabel="Nuevo Gasto" OpenComponentType='primary' >
-            <div  >
+            <div >
               <FormCost place={place} />
             </div>
           </MainModal>
-          <MainModal title={`Nuevo Corte`} OpenComponentType='primary' buttonLabel="Corte">
+          <MainModal title={'Nuevo Corte'} OpenComponentType='primary' buttonLabel="Corte">
             <FormCashBalance place={place} />
           </MainModal>
         </div>
@@ -100,7 +97,6 @@ export default function PlaceGuests({ place,
             <PaymentsTable place={place} guests={guests} payments={placePayments} />
           </Section>}
 
-
         {showOperatingCosts &&
           <Section title='Costos'>
             <PlaceCosts place={place} />
@@ -113,9 +109,8 @@ export default function PlaceGuests({ place,
 }
 
 const PaymentsTable = ({ place, guests, payments }) => {
-
   /*   const [payments, setPayments] = useState(undefined)
-  
+
     useEffect(() => {
       listenPlaceAccommodations(place?.id, setPayments)
     }, []) */
@@ -193,7 +188,6 @@ const PaymentRow = ({ place, payment, guests }) => {
 }
 
 const GuestsTable = ({ guests, payments, place }) => {
-
   return (
     <table className="mx-auto w-full">
       <thead>
@@ -214,7 +208,6 @@ const GuestsTable = ({ guests, payments, place }) => {
   )
 }
 
-
 const GuestRow = ({ place, guest, payments }) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
@@ -224,7 +217,7 @@ const GuestRow = ({ place, guest, payments }) => {
       if (newDate instanceof Date) {
         return newDate?.getTime()
       } else {
-        console.error('invalid date');
+        console.error('invalid date')
       }
     }
     if (toNumber(a?.createdAt) > toNumber(b?.createdAt)) return 1
@@ -251,8 +244,8 @@ const GuestRow = ({ place, guest, payments }) => {
           {payments?.length}
         </Cell>
         <Cell>
-          {lastPay ?
-            <>
+          {lastPay
+            ? <>
               {/*  <div className="text-xs text-right">
                 {lastPay?.createdAt && formatDate(lastPay?.createdAt, 'dd MMM yy')}
               </div> */}

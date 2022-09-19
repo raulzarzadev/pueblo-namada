@@ -1,8 +1,8 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signOut } from "firebase/auth";
-import { auth } from ".";
-import { mapUserFromFirebase } from "./firebase-helpers";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signOut } from 'firebase/auth'
+import { auth } from '.'
+import { mapUserFromFirebase } from './firebase-helpers'
 
-export async function signUp({ email, password }) {
+export async function signUp ({ email, password }) {
   return await createUserWithEmailAndPassword(auth, email, password)
     .then(({ user }) => {
       return { email, password }
@@ -12,7 +12,7 @@ export async function signUp({ email, password }) {
     })
 }
 
-export async function signIn({ email, password }) {
+export async function signIn ({ email, password }) {
   return await signInWithEmailAndPassword(auth, email, password)
     .then(
       (userCredential) => userCredential
@@ -20,7 +20,7 @@ export async function signIn({ email, password }) {
     .catch(err => console.error(err))
 }
 
-export function authStateChanged(...props) {
+export function authStateChanged (...props) {
   const cb = props?.pop()
   return onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -32,29 +32,25 @@ export function authStateChanged(...props) {
       if (cb) {
         console.log(cb)
         cb(null)
-
       } else {
-        return
+
       }
-
-
     }
-  });
+  })
 }
 
-export async function sendRecoverPasswordEmail({ email }) {
-
+export async function sendRecoverPasswordEmail ({ email }) {
   return await sendPasswordResetEmail(auth, email)
     .then(() => {
-      console.log('Email sent.');
+      console.log('Email sent.')
       return true
       // Password reset email sent!
       // ..
     })
     .catch((error) => {
       console.error(error)
-    });
+    })
 }
-export function logout() {
+export function logout () {
   signOut(auth)
-} 
+}

@@ -1,6 +1,6 @@
-import Image from "next/image"
-import { useState } from "react"
-import Modal from "./Modal"
+import Image from 'next/image'
+import { useState } from 'react'
+import Modal from './Modal'
 
 const PreviewImage = ({ label = null, image = null }) => {
   const [openModal, setOpenModal] = useState(false)
@@ -9,8 +9,8 @@ const PreviewImage = ({ label = null, image = null }) => {
   return (
     <div className="flex flex-col">
       {label && <span className="">{label}</span>}
-      {image ?
-        <>
+      {image
+        ? <>
           <div className="relative h-12 aspect-video mx-auto opacity-60 hover:opacity-100 shadow-lg m-1" onClick={handleOpenModal}>
             <Image src={image} layout='fill' objectFit="contain" />
           </div>
@@ -20,12 +20,10 @@ const PreviewImage = ({ label = null, image = null }) => {
             </div>
           </Modal>
         </>
-        :
-        <span className="italic">No image</span>
+        : <span className="italic">No image</span>
       }
     </div>
   )
-
 }
 
 export default PreviewImage

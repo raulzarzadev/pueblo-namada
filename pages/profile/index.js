@@ -1,10 +1,10 @@
-import Link from "next/link"
-import { useEffect, useState } from "react"
-import PlaceCard from "../../components/Places/PlaceCard"
-import { listenUserPlaces } from "../../firebase/places"
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import PlaceCard from '../../components/Places/PlaceCard'
+import { listenUserPlaces } from '../../firebase/places'
 import PrivatePage from '../../components/HOC/PrivatePage'
 
-export default function Profile() {
+export default function Profile () {
   const [places, setPlaces] = useState(undefined)
 
   useEffect(() => {

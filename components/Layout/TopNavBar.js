@@ -1,12 +1,9 @@
 
-import { INFO } from "@/CONSTANTS/PROJECT";
-import { logout } from "@/firebase/user";
-import Link from "next/link";
+import { INFO } from '@/CONSTANTS/PROJECT'
+import { logout } from '@/firebase/user'
+import Link from 'next/link'
 
-
-export default function TopNavBar({ user }) {
-
-
+export default function TopNavBar ({ user }) {
   return <div className="navbar bg-base-100 ">
     <div className="flex-1">
       <Link href="/">

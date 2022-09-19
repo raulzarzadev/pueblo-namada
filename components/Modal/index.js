@@ -1,7 +1,6 @@
 import React from 'react'
 import CrossIcon from '../icons/CrossIcon'
 
-
 const Modal = React.forwardRef(({
   title = 'Modal title',
   open,
@@ -45,7 +44,7 @@ const Modal = React.forwardRef(({
     </div>
   )
 })
-/* 
+/*
   <div
         // className="modal-box py-1 pt-0 bg-base-300 min-h-[10rem] "
         className=" "

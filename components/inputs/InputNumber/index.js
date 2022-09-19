@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 const InputNumber = React.forwardRef(({ label, sideLabel, helperText, smallSize, ...rest }, ref) => {
   return (
