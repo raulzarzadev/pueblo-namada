@@ -8,7 +8,6 @@ export default function Layout ({ children }) {
   const { user } = useUser()
   const { showMobileNav } = useShowNavBar()
 
-
   return (
     <div className="relative bg-base-300 pb-11 min-h-screen">
       <Head />
@@ -16,13 +15,11 @@ export default function Layout ({ children }) {
         <TopNavBar user={user} />
       </header>
       <main>{children}</main>
-      {showMobileNav ?
+      {showMobileNav ? (
         <MobileNav />
-        :
-        <footer className={'relative z-10  '}>
-          Footer
-        </footer>
-      }
+      ) : (
+        <footer className={'relative z-10  '}>Footer</footer>
+      )}
     </div>
   )
 }

@@ -48,6 +48,6 @@
     "**/*.ts",
     "**/*.tsx",
     "components/CurrencySpan.js",
-    "hooks/*.{js,jsx}"
+    "hooks/*.js"
   ]
 }

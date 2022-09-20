@@ -8,6 +8,7 @@ export default function LoginCard ({ formVariant = 'login', formProps = {} }) {
   const loginSumbit = ({ email, password }) => {
     signIn({ email, password }).then((res) => {
       console.log(res)
+      // SET user context whit res.user
       router.push('/profile')
     }).catch((err) =>
       console.error(err)
