@@ -10,7 +10,7 @@ import Loading from '../Loadign'
 
 import { createGuest, updateGuest } from '../../firebase/Gests/main'
 
-export default function FormGuest({ guest }) {
+export default function FormGuest ({ guest, }) {
   useEffect(() => {
     const gestStorage = localStorage.getItem('new-guest-form')
     if (gestStorage) {
@@ -82,9 +82,8 @@ export default function FormGuest({ guest }) {
             className="btn btn-primary my-1"
             disabled={['Guardado', 'Guardando', 'Cancelado'].includes(
               labelSave
-            )}
-          >
-            {labelSave == FORM_STATUS[2] && <Loading />}
+            )}>
+            {labelSave === FORM_STATUS[2] && <Loading />}
             {labelSave}
           </button>
         </div>

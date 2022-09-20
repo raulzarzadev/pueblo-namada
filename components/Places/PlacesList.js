@@ -1,9 +1,8 @@
-import { listenPlaces } from '@/firebase/places'
 import { useEffect, useState } from 'react'
 import PlaceCard from './PlaceCard'
 import { useUser } from 'components/context/userContext'
-
-export default function PlacesList() {
+import { listenPlaces } from '../../firebase/Places/main'
+export default function PlacesList () {
   const [places, setPlaces] = useState([])
 
   useEffect(() => {

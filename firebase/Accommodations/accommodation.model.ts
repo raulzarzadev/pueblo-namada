@@ -16,7 +16,8 @@ export interface Accommodation extends Base {
     nigth: number
     usd: number
   }
+  placeId: string
   useTodal: number
   mxnTotal: number
-  userId: string
+  userId: string,
 }

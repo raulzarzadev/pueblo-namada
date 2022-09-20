@@ -22,7 +22,7 @@ export const listenAllAccommodations = (cb: CallableFunction) =>
 export const listenPlaceAccommodations = (
   placeId: string,
   cb: CallableFunction
-) => AccommodationsCRUD.listenDocs(where('place', '==', placeId), cb)
+) => AccommodationsCRUD.listenDocs([where('place', '==', placeId)], cb)
 
 export const getPlaceAccomodationsBettwenDates = (
   placeId: string,

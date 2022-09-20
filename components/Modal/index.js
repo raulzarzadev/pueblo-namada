@@ -7,7 +7,7 @@ const Modal = React.forwardRef(
 
     return (
       <div
-        className={` top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-black bg-opacity-50 z-10 ${open ? 'fixed' : 'hidden'
+        className={`top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-black bg-opacity-50 z-10 ${open ? 'fixed' : 'hidden'
           } `}
         id={modalId}
         onClick={(e) => {
@@ -19,7 +19,7 @@ const Modal = React.forwardRef(
           e.stopPropagation()
           e.target.id === modalId && handleOpen()
         }}>
-        <div className="bg-base-100 overflow-auto max-h-full rounded-lg w-full max-w-sm  ">
+        <div className="bg-base-100 overflow-auto max-h-[80%] rounded-lg w-full max-w-sm   ">
           <header
             className={
               'flex justify-between sticky top-0 bg-base-100 z-10 px-3 py-1'

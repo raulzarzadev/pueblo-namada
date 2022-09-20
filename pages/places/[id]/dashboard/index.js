@@ -2,12 +2,12 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import FormPlaceConfig from '../../../../components/FormPlaceConfig'
 import PlaceDetails from '../../../../components/Places/PlaceDetails'
-import { listenPlace } from '../../../../firebase/places'
+import { listenPlace } from '../../../../firebase/Places/main'
 import PlaceGuests from '../../../../components/Places/PlaceGuests'
 import Section from '../../../../components/Section'
 import PrivatePage from '../../../../components/HOC/PrivatePage'
 
-export default function dashboard() {
+export default function dashboard () {
   const [place, setPlace] = useState(undefined)
   const {
     query: { id }
@@ -16,6 +16,8 @@ export default function dashboard() {
   useEffect(() => {
     listenPlace(id, setPlace)
   }, [])
+
+  console.log(place)
 
   return (
     <PrivatePage permissionTo="owner" elementOwner={place?.userId}>
@@ -27,8 +29,7 @@ export default function dashboard() {
             <Section
               title={'Detalles del lugar'}
               subtitle={`${place?.name || ''}`}
-              sticky
-            >
+              sticky>
               <PlaceDetails place={place} />
             </Section>
             <FormPlaceConfig place={place} />

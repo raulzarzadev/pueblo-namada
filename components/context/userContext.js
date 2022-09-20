@@ -11,7 +11,7 @@ export function UserProvider ({ children }) {
   useEffect(() => {
     authStateChanged((user) => {
       if (user) {
-        listenUser(user.id, setUser)
+        listenUser(user.id, (user) => setUser({ ...user, uid: user.id }))
       } else {
         console.error('not logged')
         setUser(null)

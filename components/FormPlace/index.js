@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { newPlace, updatePlace } from '../../firebase/places'
+import { createPlace, updatePlace } from '../../firebase/Places/main'
 import { uploadFile } from '../../firebase/uploadImage'
 import File from '../inputs/file'
 import Phone from '../inputs/phone'
 import Text from '../inputs/text'
 import Textarea from '../inputs/textarea'
 
-export default function FormPlace({ place, editing = false }) {
+export default function FormPlace ({ place, editing = false }) {
   const router = useRouter()
 
   const {
@@ -33,20 +33,21 @@ export default function FormPlace({ place, editing = false }) {
     setLabelSave(FORM_STATUS[2])
     editing
       ? updatePlace(place.id, data).then((res) => {
-          console.log(res)
-          setLabelSave(FORM_STATUS[1])
-          setTimeout(() => {
-            setLabelSave(defaultLabel)
-            // router.back()
-          }, 1000)
-        })
-      : newPlace(data).then((res) => {
-          setLabelSave(FORM_STATUS[1])
-          setTimeout(() => {
-            setLabelSave(defaultLabel)
-            // router.back()
-          }, 1000)
-        })
+        console.log(res)
+        setLabelSave(FORM_STATUS[1])
+        setTimeout(() => {
+          setLabelSave(defaultLabel)
+          // router.back()
+        }, 1000)
+      })
+      : createPlace(data).then((res) => {
+        console.log('created place', res)
+        setLabelSave(FORM_STATUS[1])
+        setTimeout(() => {
+          setLabelSave(defaultLabel)
+          // router.back()
+        }, 1000)
+      })
   }
 
   const handleUploadFile = async ({ fieldName, file }) => {
@@ -65,8 +66,7 @@ export default function FormPlace({ place, editing = false }) {
         <div className="sticky top-0 left-0 right-0 flex w-full justify-end bg-base-300 z-10 p-1">
           <button
             className="btn btn-primary"
-            disabled={['Guardado', 'Editado', 'Guardando'].includes(labelSave)}
-          >
+            disabled={['Guardado', 'Editado', 'Guardando'].includes(labelSave)}>
             {labelSave}
           </button>
         </div>

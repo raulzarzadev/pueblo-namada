@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function Section({
+export default function Section ({
   title,
   subtitle = null,
   children,
@@ -16,15 +16,13 @@ export default function Section({
     <section
       className={`
           bg-base-100   text-base-content shadow-lg  rounded-md py-0.5
-        `}
-    >
+        `}>
       <h3
         className={` p-1
-        text-left flex   font-bold  items-center justify-between cursor-pointer z-10
+        text-left flex   font-bold  items-center justify-between cursor-pointer 
         ${sticky && ' sticky top-0 bg-base-100 '}
         `}
-        onClick={() => setShow(!show)}
-      >
+        onClick={() => setShow(!show)}>
         <div className="">
           {title} <span className="font-medium  text-xs mx-2 ">{subtitle}</span>
         </div>
@@ -34,8 +32,7 @@ export default function Section({
             height="24px"
             viewBox="0 0 24 24"
             fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+            xmlns="http://www.w3.org/2000/svg">
             <path
               fillRule="evenodd"
               clipRule="evenodd"
@@ -48,8 +45,7 @@ export default function Section({
             width={24}
             height={24}
             fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+            xmlns="http://www.w3.org/2000/svg">
             <path
               fillRule="evenodd"
               clipRule="evenodd"

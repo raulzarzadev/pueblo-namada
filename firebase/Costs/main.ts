@@ -13,7 +13,7 @@ export const listen = (CostId: string, cb: CallableFunction) =>
   CostsCRUD.listen(CostId, cb)
 export const listenAllCosts = (cb: CallableFunction) => CostsCRUD.listenAll(cb)
 export const listenPlaceCosts = (placeId: string, cb: CallableFunction) =>
-  CostsCRUD.listenDocs(where('placeId', '==', placeId), cb)
+  CostsCRUD.listenDocs([where('placeId', '==', placeId)], cb)
 
 export const getPlaceCostBetteenDates = (
   placeId: unknown,

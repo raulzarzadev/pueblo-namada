@@ -235,9 +235,10 @@ export class FirebaseCRUD {
      * @param filters: where(itemField,'==','value')
      */
 
+    console.log(filters)
     if (!filters) return console.error('Should have filters implentade')
-    const q = query(collection(db, this.collectionName), filters)
-
+    const collectionRef = collection(db, this.collectionName)
+    const q = query(collectionRef, ...filters)
     onSnapshot(q, (querySnapshot) => {
       const res: any[] = []
       querySnapshot.forEach((doc) => {
@@ -254,7 +255,6 @@ export class FirebaseCRUD {
      */
 
     if (!filters) return console.error('Should have filters implentade')
-    console.log(filters)
     const q = query(collection(db, this.collectionName), ...filters)
 
     onSnapshot(q, (querySnapshot) => {

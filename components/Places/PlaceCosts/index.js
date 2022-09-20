@@ -16,8 +16,7 @@ const PlaceCosts = ({ place }) => {
         <MainModal
           title="Nuevo gasto"
           buttonLabel="Nuevo Gasto"
-          OpenComponentType={'primary'}
-        >
+          OpenComponentType={'primary'}>
           <div>
             <h3 className="text-center font-bold text-xl">Nuevo gasto</h3>
             <FormCost place={place} />

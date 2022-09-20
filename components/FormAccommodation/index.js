@@ -11,7 +11,7 @@ import InputDate from '../inputs/date'
 import InputNumber from '../inputs/InputNumber'
 import Text from '../inputs/text'
 
-export default function FormAccommodation({
+export default function FormAccommodation ({
   guest,
   guests = [],
   place,
@@ -75,23 +75,23 @@ export default function FormAccommodation({
 
     payment
       ? updateAccommodation(payment.id, accomodation).then((res) => {
-          console.log('payment updated', { id: payment.id })
-          setLabelSave(FORM_STATUS[5])
-          setTimeout(() => {
-            setLabelSave(FORM_STATUS[4])
-            // router.back()
-            // reset()
-          }, 1000)
-        })
+        console.log('payment updated', { id: payment.id })
+        setLabelSave(FORM_STATUS[5])
+        setTimeout(() => {
+          setLabelSave(FORM_STATUS[4])
+          // router.back()
+          // reset()
+        }, 1000)
+      })
       : createAccommodation(accomodation).then((res) => {
-          console.log('payment created', res)
-          setLabelSave(FORM_STATUS[1])
-          setTimeout(() => {
-            setLabelSave(FORM_STATUS[0])
-            // router.back()
-            reset()
-          }, 1000)
-        })
+        console.log('payment created', res)
+        setLabelSave(FORM_STATUS[1])
+        setTimeout(() => {
+          setLabelSave(FORM_STATUS[0])
+          // router.back()
+          reset()
+        }, 1000)
+      })
   }
 
   const accommodationEnds = (startAt) => {
@@ -124,8 +124,7 @@ export default function FormAccommodation({
               <select
                 defaultValue=""
                 {...register('guest')}
-                className="input select input-bordered my-2"
-              >
+                className="input select input-bordered my-2">
                 <option value="" disabled>
                   Debes seleccionar un huesped
                 </option>
@@ -151,9 +150,8 @@ export default function FormAccommodation({
               <p className="">
                 Precio x noche (usd):
                 <span className="font-bold">
-                  {` $${
-                    parseFloat(place?.price) * parseFloat(place?.usdPrice || 0)
-                  }`}
+                  {` $${parseFloat(place?.price) * parseFloat(place?.usdPrice || 0)
+                    }`}
                 </span>
               </p>
 
@@ -218,8 +216,8 @@ export default function FormAccommodation({
             <button
               type="submit"
               className="btn btn-primary"
-              /* disabled={[FORM_STATUS[1], FORM_STATUS[2], FORM_STATUS[3]].includes(labelSave) || !isDirty} */
-              // onClick={() => onSubmit(watch())}
+            /* disabled={[FORM_STATUS[1], FORM_STATUS[2], FORM_STATUS[3]].includes(labelSave) || !isDirty} */
+            // onClick={() => onSubmit(watch())}
             >
               {labelSave}
             </button>

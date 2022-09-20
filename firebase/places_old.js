@@ -12,13 +12,13 @@ import {
 } from 'firebase/firestore'
 import { mapUserFromFirebase } from './firebase-helpers'
 
-export async function getPlaces(cb) {
+export async function getPlaces (cb) {
   const places = collection(db, 'places')
   const docsSnapshot = await getDocs(places)
   console.log(docsSnapshot)
 }
 
-export function listeUserPlaces(...props) {
+export function listeUserPlaces (...props) {
   const user = auth.currentUser
   if (!user) return console.error('No user logged in')
   const q = query(collection(db, 'places'), where('userId', '==', user.uid))
@@ -30,7 +30,7 @@ export function listeUserPlaces(...props) {
   })
 }
 
-export async function listenPlaces(...props) {
+export async function listenPlaces (...props) {
   const cb = props.pop()
 
   const q = query(collection(db, 'places'))
@@ -43,7 +43,7 @@ export async function listenPlaces(...props) {
   })
 }
 
-export async function updatePlace(id, place) {
+export async function updatePlace (id, place) {
   const placeRef = doc(db, 'places', id)
   return await updateDoc(placeRef, place)
     .then((res) => {
@@ -52,7 +52,7 @@ export async function updatePlace(id, place) {
     .catch((err) => console.error('error', err))
 }
 
-export async function listenPlace(...props) {
+export async function listenPlace (...props) {
   const cb = props.pop()
   const id = props[0]
   const q = query(doc(collection(db, 'places'), id))
@@ -62,14 +62,14 @@ export async function listenPlace(...props) {
   })
 }
 
-export async function deletePlace(...props) {
+export async function deletePlace (...props) {
   const id = props[0]
   return await deleteDoc(doc(db, 'places', id))
     .then((res) => true)
     .catch((err) => console.error(err))
 }
 
-export async function listenUserPlaces(...props) {
+export async function listenUserPlaces (...props) {
   const cb = props.pop()
   let q
   if (!auth.currentUser) return console.error('No user logged in')
@@ -91,7 +91,7 @@ export async function listenUserPlaces(...props) {
   })
 }
 
-export async function newPlace(place) {
+export async function newPlace (place) {
   const user = mapUserFromFirebase(auth.currentUser)
   if (!user) return console.error('No user logged in')
   try {

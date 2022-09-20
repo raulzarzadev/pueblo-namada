@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { listenUserPlaces } from "../../firebase/places";
-import PlaceCard from "../Places/PlaceCard";
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { listenUserPlaces } from '../../firebase/Places/main'
+import PlaceCard from '../Places/PlaceCard'
 
 const HostProfile = () => {
   const [places, setPlaces] = useState(undefined)
@@ -23,7 +23,7 @@ const HostProfile = () => {
         ))}
       </div>
     </div>
-  );
+  )
 }
 
-export default HostProfile;
+export default HostProfile

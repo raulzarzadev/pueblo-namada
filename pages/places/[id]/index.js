@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import PrivatePage from '../../../components/HOC/PrivatePage'
 import PlaceDetails from '../../../components/Places/PlaceDetails'
-import { listenPlace } from '../../../firebase/places'
+import { listenPlace } from '../../../firebase/Places/main'
 
 export default function Place () {
   const {

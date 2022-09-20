@@ -1,7 +1,6 @@
-import { isEqual } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { updatePlace } from '../../firebase/places'
+import { updatePlace } from '../../firebase/Places/main'
 import Checkbox from '../inputs/checkbox'
 
 const FormPlaceConfig = ({ place }) => {
@@ -22,7 +21,7 @@ const FormPlaceConfig = ({ place }) => {
     3: 'Cancelado'
   }
 
-  function deepEqual(x, y) {
+  function deepEqual (x, y) {
     const isObject = (x) => typeof x === 'object' && x != null
     if (x === y) {
       return true
@@ -82,8 +81,7 @@ const FormPlaceConfig = ({ place }) => {
           <div className="flex w-full justify-center mt-2">
             <button
               className="btn btn-sm btn-primary"
-              disabled={[1, 2, 3].includes(labelSave)}
-            >
+              disabled={[1, 2, 3].includes(labelSave)}>
               {FORM_STATUS[labelSave]}
             </button>
           </div>

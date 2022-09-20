@@ -1,12 +1,15 @@
 import Image from 'next/image'
 import { useUser } from '@comps/context/userContext'
-import { deletePlace } from '../../firebase/places'
+import { deletePlace } from '../../firebase/Places/main'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import MainModal from '../Modal/MainModal'
 import Section from '../Section'
+import { useState } from 'react'
+import Modal from '../Modal'
+import FormSelfAccommodation from '../FormSelfAccomodation'
 
-export default function PlaceDetails({ place = {} }) {
+export default function PlaceDetails ({ place = {} }) {
   const { user } = useUser()
   const router = useRouter()
   const isOwner = place?.userId === user?.uid
@@ -26,6 +29,7 @@ export default function PlaceDetails({ place = {} }) {
   const alreadyInDashboard = router.pathname.includes('/dashboard')
   const { image } = place
 
+  const isGuest = user?.profileType?.isGuest
   return (
     <div className=" mx-auto  relative">
       {image && (
@@ -35,6 +39,8 @@ export default function PlaceDetails({ place = {} }) {
       )}
 
       <h1 className="text-2xl font-bold text-center">{place.name}</h1>
+
+      {isGuest && <StayHere place={place} />}
 
       {isOwner && (
         <div className="grid gap-4 sm:grid-flow-col px-2 my-2 max-w-lg mx-auto">
@@ -49,15 +55,13 @@ export default function PlaceDetails({ place = {} }) {
           <MainModal
             buttonLabel="Eliminar"
             title="Eliminar lugar"
-            OpenComponentProps={{ className: 'btn btn-error btn-sm' }}
-          >
+            OpenComponentProps={{ className: 'btn btn-error btn-sm' }}>
             <div className="flex justify-center flex-col items-center">
               <h2>¿Eliminar lugar de forma permanente?</h2>
               <div className="my-4">
                 <button
                   className="btn btn-error btn-sm"
-                  onClick={handleDeletePlace}
-                >
+                  onClick={handleDeletePlace}>
                   Eliminar
                 </button>
               </div>
@@ -88,6 +92,44 @@ export default function PlaceDetails({ place = {} }) {
           </Section>
         )}
       </div>
+    </div>
+  )
+}
+
+const StayHere = ({ place }) => {
+  const {
+    user: { guestProfile, name, email, id }
+  } = useUser()
+  const [openAccomodationForm, setOpenAccomodationForm] = useState(false)
+  const handleOpen = () => {
+    setOpenAccomodationForm(!openAccomodationForm)
+  }
+  const guestInfo = { ...guestProfile, name, email, id }
+  return (
+    <div>
+      <button className="btn btn-primary btn-sm" onClick={() => handleOpen()}>
+        stay here
+      </button>
+      <Modal
+        title="Stay here"
+        open={openAccomodationForm}
+        handleOpen={handleOpen}>
+        <div className="">
+          <DefaultGuestInfo guest={guestInfo} />
+          <FormSelfAccommodation place={place} guest={guestInfo} />
+        </div>
+      </Modal>
+    </div>
+  )
+}
+const DefaultGuestInfo = ({ guest }) => {
+  return (
+    <div className="my-4">
+      <h4 className="font-bold text-lg">Defaul guest info</h4>
+      <div>{guest.name}</div>
+      <div>{guest.email}</div>
+      <div>{guest.phone}</div>
+      <div>{guest.plates}</div>
     </div>
   )
 }
