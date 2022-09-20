@@ -235,7 +235,6 @@ export class FirebaseCRUD {
      * @param filters: where(itemField,'==','value')
      */
 
-    console.log(filters)
     if (!filters) return console.error('Should have filters implentade')
     const collectionRef = collection(db, this.collectionName)
     const q = query(collectionRef, ...filters)
