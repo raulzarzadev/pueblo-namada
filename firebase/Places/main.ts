@@ -27,8 +27,7 @@ export const listenUserPlaces = (cb: CallableFunction) => {
 }
 
 export function requestAccommodation (accommodationRequest: Accommodation) {
-  console.log(accommodationRequest)
-  // return placesCRUD.update(accommodationRequest?.placeId, { requests: arrayUnion(accommodationRequest) })
+  return placesCRUD.update(accommodationRequest?.placeId, { requests: arrayUnion(accommodationRequest) })
 }
 
 

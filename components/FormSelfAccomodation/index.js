@@ -46,7 +46,7 @@ const FormSelfAccommodation = ({ place, guest }) => {
 
   const onSubmit = (data) => {
     setLabelSave(FORM_STATUS.requesting)
-    const accomodation = {
+    const accommodation = {
       ...data,
       place: place?.id,
       placeId: place?.id,
@@ -59,8 +59,10 @@ const FormSelfAccommodation = ({ place, guest }) => {
     }
     // requesst accomodation
     // requests sendende succesfuly , close and show in the main menu
-    console.log(accomodation)
-    requestAccommodation(accomodation)
+    console.log(accommodation)
+    requestAccommodation(accommodation)
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err))
 
     // setLabelSave(FORM_STATUS[3])
 
@@ -104,7 +106,6 @@ const FormSelfAccommodation = ({ place, guest }) => {
     ).toFixed(2)
     return { mxn: parseFloat(mxn), usd: parseFloat(usd) }
   }
-  console.log(watch())
 
   return (
     <div>
@@ -122,8 +123,8 @@ const FormSelfAccommodation = ({ place, guest }) => {
               Precio x noche (usd):
               <span className="font-bold">
                 {` $${(
-                  parseFloat(place?.price) / parseFloat(place?.usdPrice)
-                ).toFixed(2) || 0
+                    parseFloat(place?.price) / parseFloat(place?.usdPrice)
+                  ).toFixed(2) || 0
                   }`}
               </span>
             </p>

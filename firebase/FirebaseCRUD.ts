@@ -180,7 +180,6 @@ export class FirebaseCRUD {
         'number'
       )
     }
-    console.log(newItem)
     return await updateDoc(doc(db, this.collectionName, itemId), newItem)
       .then((res) =>
         FirebaseCRUD.formatResponse(true, `${this.collectionName}_UPDATED`, res)
