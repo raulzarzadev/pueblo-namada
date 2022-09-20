@@ -1,19 +1,19 @@
 import { useRouter } from 'next/router'
 import { signIn, signUp } from '../../firebase/user'
-import FormUser from '../FormUser'
-import RecoverPassawordForm from '../FormUser/recover'
+import FormSingIn from '../FormSingIn'
+
+import RecoverPassawordForm from '../FormSingIn/recover'
 
 export default function LoginCard ({ formVariant = 'login', formProps = {} }) {
   const router = useRouter()
   const loginSumbit = ({ email, password }) => {
-    signIn({ email, password }).then((res) => {
-      console.log(res)
-      // SET user context whit res.user
-      router.push('/profile')
-    }).catch((err) =>
-      console.error(err)
-
-    )
+    signIn({ email, password })
+      .then((res) => {
+        console.log(res)
+        // SET user context whit res.user
+        router.push('/profile')
+      })
+      .catch((err) => console.error(err))
   }
 
   const recoverSubmit = ({ email }) => {
@@ -32,7 +32,7 @@ export default function LoginCard ({ formVariant = 'login', formProps = {} }) {
     login: {
       formLabel: 'Iniciar sesión',
       Component: (
-        <FormUser
+        <FormSingIn
           submitForm={loginSumbit}
           {...formProps}
           buttonLabel="Ingresar"
@@ -52,7 +52,7 @@ export default function LoginCard ({ formVariant = 'login', formProps = {} }) {
     signup: {
       formLabel: 'Registrate',
       Component: (
-        <FormUser
+        <FormSingIn
           submitForm={signupSubmit}
           {...formProps}
           buttonLabel="Registrate"

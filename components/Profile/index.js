@@ -1,10 +1,15 @@
 import HostProfile from './HostProfile'
 import { useUser } from '../../components/context/userContext'
 import Image from 'next/image'
+import Modal from '../Modal'
+import { useState } from 'react'
+import FormUser from '../FormUser'
+import { updateUser } from '../../firebase/Users'
 const UserProfile = () => {
   const {
-    user: { displayName, email, id }
+    user: { name, displayName, email, profileType }
   } = useUser()
+
   return (
     <div className="max-w-lg mx-auto">
       <div className=" ">
@@ -16,16 +21,44 @@ const UserProfile = () => {
         </div>
         <div className="pl-28 h-28 flex justify-between">
           <div>
-            <h2 className="font-bold text-lg">{displayName || email}</h2>
+            <h2 className="font-bold text-lg">
+              {name || displayName || email}
+            </h2>
             <p>{email}</p>
           </div>
-          <div className="pt-2">
-            <button className="btn btn-primary btn-sm">Edit profile</button>
-          </div>
+          <EditUser />
         </div>
       </div>
+      {profileType?.isHost && <HostProfile />}
+    </div>
+  )
+}
 
-      <HostProfile />
+const EditUser = () => {
+  const [openUserForm, setOpenUserForm] = useState(false)
+  const hanldeOpenUserForm = () => {
+    setOpenUserForm(!openUserForm)
+  }
+  const { user } = useUser()
+  const handleEditUser = (user) => {
+    console.log(user)
+    updateUser(user.id, { ...user }).then((res) => console.log(res))
+  }
+  return (
+    <div>
+      <div className="pt-2">
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={() => hanldeOpenUserForm()}>
+          Edit profile
+        </button>
+      </div>
+      <Modal
+        open={openUserForm}
+        handleOpen={hanldeOpenUserForm}
+        title="Edit user info">
+        <FormUser user={user} submitForm={handleEditUser} />
+      </Modal>
     </div>
   )
 }

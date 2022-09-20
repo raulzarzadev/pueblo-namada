@@ -9,12 +9,12 @@ export default function Layout ({ children }) {
   const { showMobileNav } = useShowNavBar()
 
   return (
-    <div className="relative bg-base-300 pb-11 min-h-screen">
+    <div className="relative bg-base-300 pb-11 min-h-screen ">
       <Head />
       <header className="text-4xl bg-blue-100  ">
         <TopNavBar user={user} />
       </header>
-      <main>{children}</main>
+      <main className="min-h-screen">{children}</main>
       {showMobileNav ? (
         <MobileNav />
       ) : (

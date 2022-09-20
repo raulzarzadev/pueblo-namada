@@ -2,14 +2,13 @@ import React from 'react'
 import CrossIcon from '../icons/CrossIcon'
 
 const Modal = React.forwardRef(
-  ({ title = 'Modal title', open, handleOpen = () => {}, children }, ref) => {
+  ({ title = 'Modal title', open, handleOpen = () => { }, children }, ref) => {
     const modalId = `modal-${new Date().getTime()}-${Math.random()}`
 
     return (
       <div
-        className={` top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-black bg-opacity-50 z-10 ${
-          open ? 'fixed' : 'hidden'
-        } `}
+        className={` top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-black bg-opacity-50 z-10 ${open ? 'fixed' : 'hidden'
+          } `}
         id={modalId}
         onClick={(e) => {
           // e.preventDefault()
@@ -19,14 +18,12 @@ const Modal = React.forwardRef(
            */
           e.stopPropagation()
           e.target.id === modalId && handleOpen()
-        }}
-      >
+        }}>
         <div className="bg-base-100 overflow-auto max-h-full rounded-lg w-full max-w-sm  ">
           <header
             className={
               'flex justify-between sticky top-0 bg-base-100 z-10 px-3 py-1'
-            }
-          >
+            }>
             <div className={''}>
               <h5 className="font-bold max-w-[180px] truncate">{title}</h5>
             </div>
@@ -35,8 +32,7 @@ const Modal = React.forwardRef(
               onClick={(e) => {
                 e.preventDefault()
                 handleOpen()
-              }}
-            >
+              }}>
               <CrossIcon />
             </button>
           </header>
@@ -46,24 +42,6 @@ const Modal = React.forwardRef(
     )
   }
 )
-/*
-  <div
-        // className="modal-box py-1 pt-0 bg-base-300 min-h-[10rem] "
-        className=" "
-      >
-        <header className={'flex justify-between sticky top-0 bg-base-300'}>
-          <div className={'w-[80%] text-center'}>
-            <h5>{title}</h5>
-          </div>
-          <button
-            className={''}
-            onClick={(e) => {
-              e.preventDefault()
-              handleOpen()
-            }}
-          >
-            </button>
-            </header>
-            <main className={'pt-5'}>{children}</main>
-          </div> */
+Modal.displayName = 'Modal'
+
 export default Modal

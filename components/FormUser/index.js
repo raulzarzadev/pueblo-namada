@@ -1,39 +1,26 @@
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import Text from '../inputs/text'
+import Toogle from '../inputs/toogle'
 
-export default function FormUser({
-  submitForm = () => {},
-  buttonLabel = 'Ingresar'
-}) {
+export default function FormUser ({ user, submitForm = () => { } }) {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors }
-  } = useForm()
-  const onSubmit = ({ password, email }) => {
-    submitForm({ email, password })
+  } = useForm({
+    defaultValues: { ...user }
+  })
+  const onSubmit = ({ ...form }) => {
+    submitForm({ ...form })
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Text label="email" {...register('email')} />
-      <Text type="password" label="password" {...register('password')} />
-
-      <div className="mt-2 text-center">
-        <Link href="/recover">
-          <a className="link-neutral">¿Olvidaste tu contraseña?</a>
-        </Link>
-      </div>
-      <div className=" text-center">{'o'}</div>
-      <div className="text-center">
-        <Link href="/signup">
-          <a className="link-accent">¿No tienes una cuenta?</a>
-        </Link>
-      </div>
-      <div className="flex justify-end mt-4">
-        <button className="btn btn-primary">{buttonLabel}</button>
-      </div>
+      <Text label="name" {...register('name')} />
+      <Toogle label="Are you a host" {...register('profileType.isHost')} />
+      <button className="btn btn-primary m-2 mx-auto">Editar</button>
     </form>
   )
 }
