@@ -8,6 +8,7 @@ import Section from '../Section'
 import { useState } from 'react'
 import Modal from '../Modal'
 import FormSelfAccommodation from '../FormSelfAccomodation'
+import { format } from 'date-fns'
 
 export default function PlaceDetails ({ place = {} }) {
   const { user } = useUser()
@@ -105,11 +106,19 @@ const StayHere = ({ place }) => {
     setOpenAccomodationForm(!openAccomodationForm)
   }
   const guestInfo = { ...guestProfile, name, email, id }
+  const { requests } = place
+  console.log(requests)
+  const userRequests = requests.filter(({ guestId }) => guestId === id)
+
   return (
     <div>
       <button className="btn btn-primary btn-sm" onClick={() => handleOpen()}>
         stay here
       </button>
+      <div>
+        <h4>My accommodations in this place</h4>
+        <RequestTable requests={userRequests} />
+      </div>
       <Modal
         title="Stay here"
         open={openAccomodationForm}
@@ -130,6 +139,45 @@ const DefaultGuestInfo = ({ guest }) => {
       <div>{guest.email}</div>
       <div>{guest.phone}</div>
       <div>{guest.plates}</div>
+    </div>
+  )
+}
+
+const RequestTable = ({ requests }) => {
+  return (
+    <div>
+      <div className="overflow-x-auto">
+        <table className="table table-compact w-full">
+          {/* <!-- head --> */}
+          <thead>
+            <tr>
+              <th></th>
+              <th>Dates</th>
+              <th>Requested</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* <!-- row 1 --> */}
+            {requests.map(({ createdAt, dates, status }, i) => (
+              <tr key={createdAt} className="hover cursor-pointer">
+                <th>{i + 1}</th>
+                <td>
+                  <span>
+                    {dates?.startsAt && format(dates?.startsAt, 'dd MM yy')}
+                  </span>
+                  <span>{` to `}</span>
+                  <span>
+                    {dates?.endsAt && format(dates?.endsAt, ' dd MM yy ')}
+                  </span>
+                </td>
+                <td>{createdAt && format(createdAt, 'dd MMM yy hh:mm')}</td>
+                <td>{status || 'unknow'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }
