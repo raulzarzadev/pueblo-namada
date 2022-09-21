@@ -1,4 +1,5 @@
 import { Accommodation } from '@firebase/Accommodations/accommodation.model'
+import { Dates } from 'firebase-dates-util'
 import { getAuth } from 'firebase/auth'
 import { arrayUnion, where } from 'firebase/firestore'
 import { FirebaseCRUD } from '../FirebaseCRUD'
@@ -27,7 +28,8 @@ export const listenUserPlaces = (cb: CallableFunction) => {
 }
 
 export function requestAccommodation (accommodationRequest: Accommodation) {
-  return placesCRUD.update(accommodationRequest?.placeId, { requests: arrayUnion(accommodationRequest) })
+  const formatedDates = Dates.deepFormatObjectDates({ ...accommodationRequest, createdAt: new Date() })
+  return placesCRUD.update(accommodationRequest?.placeId, { requests: arrayUnion(formatedDates) })
 }
 
 
