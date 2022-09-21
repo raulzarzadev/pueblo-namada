@@ -4,6 +4,7 @@ import Modal from '../Modal'
 import RequestsTable from './RequestsTable'
 import { useUser } from '../context/userContext'
 import { listenUserPlaceRoomRequests } from '../../firebase/RoomRequests/main'
+import TextInfo from '../TextInfo'
 
 const GuestRoomRequestSection = ({ place }) => {
   const {
@@ -51,7 +52,12 @@ const GuestRoomRequestSection = ({ place }) => {
 const DefaultGuestInfo = ({ guest }) => {
   return (
     <div className="my-4">
-      <h4 className="font-bold text-lg">Defaul guest info</h4>
+      <h4 className="font-bold text-lg">Guest info</h4>
+
+      <TextInfo
+        text={`  This informations will be sent to the host. The host will decide if this
+        information is enough`}
+      />
       <div>{guest.name}</div>
       <div>{guest.email}</div>
       <div>{guest.phone}</div>

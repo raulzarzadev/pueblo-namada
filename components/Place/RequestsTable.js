@@ -44,7 +44,7 @@ const RequestRow = ({ request, i, isPlaceOwner }) => {
     setOpenModal(!openModal)
   }
 
-  const { createdAt, dates, status, id } = request
+  const { createdAt, dates, status, id, guest } = request
   const handleDeleteRequest = (id) => {
     // TODO delete room requests id
     deleteRoomRequest(id)
@@ -62,6 +62,7 @@ const RequestRow = ({ request, i, isPlaceOwner }) => {
       .then((res) => console.log(res))
       .catch((err) => console.error(err))
   }
+  console.log(guest)
 
   return (
     <tr className="hover cursor-pointer" onClick={() => handleOpenModal()}>
@@ -80,6 +81,34 @@ const RequestRow = ({ request, i, isPlaceOwner }) => {
           handleOpen={handleOpenModal}>
           <div className="">
             <div>
+              <h4>Guest information</h4>
+
+              <div>
+                <p>
+                  <span>Name:</span>
+                  {guest?.name}
+                </p>
+                <p>
+                  <span>Email:</span>
+                  {guest?.email}
+                </p>
+                <p>
+                  <span>Phone:</span>
+                  {guest?.phone}
+                </p>
+                <p>
+                  <span>Plates:</span>
+                  {guest?.plates}
+                </p>
+                <p>
+                  <span>Image:</span>
+                  {guest?.image}
+                </p>
+                <p>
+                  <span>Image ID:</span>
+                  {guest?.imageID}
+                </p>
+              </div>
               <h4>Status</h4>
               <div className="flex w-full justify-around">
                 {Object.keys(STATUSES).map((key) => {
