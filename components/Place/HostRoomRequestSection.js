@@ -26,13 +26,17 @@ const HostRoomRequestSection = ({ place }) => {
   const unsolvedRequests = placeRequests.filter(
     ({ status }) => status === 'UNSOLVED'
   ).length
+  console.log({ place, id })
   return (
     <Section
       title={'Room requests'}
       subtitle={`Total: ${totalRequests} Unsolved: ${unsolvedRequests}`}>
       <div>
         <h4>My accommodations in this place</h4>
-        <RequestsTable requests={placeRequests} />
+        <RequestsTable
+          requests={placeRequests}
+          isPlaceOwner={id === place.userId}
+        />
       </div>
     </Section>
   )

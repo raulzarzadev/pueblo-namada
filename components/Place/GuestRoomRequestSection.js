@@ -21,6 +21,8 @@ const GuestRoomRequestSection = ({ place }) => {
   }, [])
 
   // console.log(userRequests)
+  console.log({ place, id })
+
   return (
     <div>
       <button className="btn btn-primary btn-sm" onClick={() => handleOpen()}>
@@ -28,7 +30,10 @@ const GuestRoomRequestSection = ({ place }) => {
       </button>
       <div>
         <h4>My accommodations in this place</h4>
-        <RequestsTable requests={userRequests} />
+        <RequestsTable
+          requests={userRequests}
+          isPlaceOwner={id === place.userId}
+        />
       </div>
       <Modal
         title="Stay here"

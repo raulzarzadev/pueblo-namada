@@ -7,7 +7,7 @@ import {
 import Modal from '../Modal'
 import ModalDelete from '../Modal/ModalDelete'
 
-const RequestsTable = ({ requests = [] }) => {
+const RequestsTable = ({ requests = [], isPlaceOwner }) => {
   return (
     <div>
       <div className="overflow-x-auto">
@@ -24,7 +24,12 @@ const RequestsTable = ({ requests = [] }) => {
           <tbody>
             {/* <!-- row 1 --> */}
             {requests.map((request, i) => (
-              <RequestRow key={request.id} request={request} i={i} />
+              <RequestRow
+                key={request.id}
+                request={request}
+                i={i}
+                isPlaceOwner={isPlaceOwner}
+              />
             ))}
           </tbody>
         </table>
@@ -33,7 +38,7 @@ const RequestsTable = ({ requests = [] }) => {
   )
 }
 
-const RequestRow = ({ request, i }) => {
+const RequestRow = ({ request, i, isPlaceOwner }) => {
   const [openModal, setOpenModal] = useState(false)
   const handleOpenModal = () => {
     setOpenModal(!openModal)
@@ -57,6 +62,7 @@ const RequestRow = ({ request, i }) => {
       .then((res) => console.log(res))
       .catch((err) => console.error(err))
   }
+
   return (
     <tr className="hover cursor-pointer" onClick={() => handleOpenModal()}>
       <th>{i + 1}</th>
@@ -76,16 +82,23 @@ const RequestRow = ({ request, i }) => {
             <div>
               <h4>Status</h4>
               <div className="flex w-full justify-around">
-                {Object.keys(STATUSES).map((key) => (
-                  <button
-                    onClick={() => handleUpdateRequestStatus(STATUSES[key])}
-                    className={`btn btn-sm  ${STATUSES[key] === status && ' btn-success '
-                      }`}
-                    key={key}>
-                    {console.log(key)}
-                    {STATUSES[key]}
-                  </button>
-                ))}
+                {Object.keys(STATUSES).map((key) => {
+                  return (
+                    <button
+                      disabled={!isPlaceOwner}
+                      onClick={() => handleUpdateRequestStatus(STATUSES[key])}
+                      className={`
+                        btn btn-sm 
+                       ${STATUSES[key] === status &&
+                        ' btn-success disabled:bg-success disabled:text-black disabled:bg-opacity-40 '
+                        }
+                       `}
+                      key={key}>
+                      {console.log(key)}
+                      {STATUSES[key]}
+                    </button>
+                  )
+                })}
               </div>
             </div>
             <div className="flex justify-around w-full mt-6">
