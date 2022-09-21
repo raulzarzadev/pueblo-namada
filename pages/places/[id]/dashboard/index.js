@@ -1,11 +1,9 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import FormPlaceConfig from '../../../../components/FormPlaceConfig'
-import PlaceDetails from '../../../../components/Places/PlaceDetails'
+import PlaceDetails from '../../../../components/Place/PlaceDetails'
 import { listenPlace } from '../../../../firebase/Places/main'
 import Section from '../../../../components/Section'
 import PrivatePage from '../../../../components/HOC/PrivatePage'
-import Place from 'components/Place'
 import DashboardPlace from '../../../../components/Place/DashboardPlace'
 import Head from 'next/head'
 

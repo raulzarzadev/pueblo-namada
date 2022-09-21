@@ -7,7 +7,7 @@ import { RoomRequest } from './roomRequest.model'
 const roomRequestsCRUD = new FirebaseCRUD('roomRequests')
 
 export const createRoomRequest = (RoomRequest: RoomRequest) =>
-  roomRequestsCRUD.create(RoomRequest)
+  roomRequestsCRUD.create({ ...RoomRequest, status: 'UNSOLVED' })
 
 export const updateRoomRequest = (
   roomRequestId: string,

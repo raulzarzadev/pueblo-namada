@@ -15,6 +15,8 @@ import RequestsTable from './RequestsTable'
 import GuestsTable from './GuestsTable'
 import { useUser } from '../context/userContext'
 import FormPlaceConfig from '../FormPlaceConfig'
+import GuestRoomRequestSection from './GuestRoomRequestSection'
+import HostRoomRequestSection from './HostRoomRequestSection'
 
 export default function DashboardPlace ({
   place,
@@ -127,15 +129,9 @@ export default function DashboardPlace ({
           </Section>
         )}
         {showPlaceRquests && (
-          <Section
-            title="Requests"
-            subtitle={
-              place.requests.filter(
-                ({ status }) => !status || status === 'SOLVED'
-              ).length
-            }>
-            <RequestsTable requests={place?.requests} />
-          </Section>
+
+          <HostRoomRequestSection place={place} />
+
         )}
       </div>
     </div>

@@ -1,6 +1,9 @@
 import { format } from 'date-fns'
 import { useState } from 'react'
-import { deleteRoomRequest } from '../../firebase/RoomRequests/main'
+import {
+  deleteRoomRequest,
+  updateRoomRequest
+} from '../../firebase/RoomRequests/main'
 import Modal from '../Modal'
 import ModalDelete from '../Modal/ModalDelete'
 
@@ -16,7 +19,6 @@ const RequestsTable = ({ requests = [] }) => {
               <th>Dates</th>
               <th>Requested</th>
               <th>Status</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -44,6 +46,17 @@ const RequestRow = ({ request, i }) => {
     console.log({ id })
   }
   const [deletedSuccessfully, setDeletedSuccessfully] = useState(false)
+  const STATUSES = {
+    unsolved: 'UNSOLVED',
+    accepted: 'ACCEPTED',
+    rejected: 'REJECTED'
+  }
+  console.log(status)
+  const handleUpdateRequestStatus = (newStatus) => {
+    updateRoomRequest(id, { status: newStatus })
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err))
+  }
   return (
     <tr className="hover cursor-pointer" onClick={() => handleOpenModal()}>
       <th>{i + 1}</th>
@@ -53,23 +66,39 @@ const RequestRow = ({ request, i }) => {
         <span>{dates?.endsAt && format(dates?.endsAt, ' dd MM yy ')}</span>
       </td>
       <td>{createdAt && format(createdAt, 'dd MMM yy hh:mm')}</td>
-      <td>{status || 'unknow'}</td>
       <td>
-        <button>...</button>
+        {status || 'unknow'}
         <Modal
           title="Request accommodation"
           open={openModal}
           handleOpen={handleOpenModal}>
           <div className="">
-            <ModalDelete
-              modalTitle="Delete request"
-              itemLabel="Requests accomodation"
-              deleteText={'Are you sure that you want delete this resquest'}
-              handleDelete={handleDeleteRequest}
-              deleteSuccessful={() => setDeletedSuccessfully(true)}
-              itemId={id}
-              buttonType="btn"
-            />
+            <div>
+              <h4>Status</h4>
+              <div className="flex w-full justify-around">
+                {Object.keys(STATUSES).map((key) => (
+                  <button
+                    onClick={() => handleUpdateRequestStatus(STATUSES[key])}
+                    className={`btn btn-sm  ${STATUSES[key] === status && ' btn-success '
+                      }`}
+                    key={key}>
+                    {console.log(key)}
+                    {STATUSES[key]}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="flex justify-around w-full mt-6">
+              <ModalDelete
+                modalTitle="Delete request"
+                itemLabel="Requests accomodation"
+                deleteText={'Are you sure that you want delete this resquest'}
+                handleDelete={handleDeleteRequest}
+                deleteSuccessful={() => setDeletedSuccessfully(true)}
+                itemId={id}
+                buttonType="btn"
+              />
+            </div>
           </div>
         </Modal>
       </td>

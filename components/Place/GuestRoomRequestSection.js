@@ -4,7 +4,8 @@ import Modal from '../Modal'
 import RequestsTable from './RequestsTable'
 import { useUser } from '../context/userContext'
 import { listenUserPlaceRoomRequests } from '../../firebase/RoomRequests/main'
-const RoomRequestsSection = ({ place }) => {
+
+const GuestRoomRequestSection = ({ place }) => {
   const {
     user: { guestProfile, name, email, id }
   } = useUser()
@@ -54,4 +55,4 @@ const DefaultGuestInfo = ({ guest }) => {
   )
 }
 
-export default RoomRequestsSection
+export default GuestRoomRequestSection

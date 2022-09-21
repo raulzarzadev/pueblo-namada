@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import MainModal from '../Modal/MainModal'
 import Section from '../Section'
-import RoomRequestsSection from './RoomRequestSection'
+import GuestRoomRequestSection from './GuestRoomRequestSection'
 
 export default function PlaceDetails ({ place = {} }) {
   const { user } = useUser()
@@ -39,7 +39,7 @@ export default function PlaceDetails ({ place = {} }) {
 
       <h1 className="text-2xl font-bold text-center">{place.name}</h1>
 
-      {isGuest && <RoomRequestsSection place={place} />}
+      {isGuest && <GuestRoomRequestSection place={place} />}
 
       {isOwner && isHost && (
         <div className="grid gap-4 sm:grid-flow-col px-2 my-2 max-w-lg mx-auto">
