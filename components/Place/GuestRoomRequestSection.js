@@ -42,6 +42,12 @@ const GuestRoomRequestSection = ({ place }) => {
         handleOpen={handleOpen}>
         <div className="">
           <DefaultGuestInfo guest={guestInfo} />
+          <h4 className="font-bold text-lg">Choose dates</h4>
+
+          <TextInfo
+            text={` Choose the start date, and then the numbers of days. `}
+          />
+
           <FormSelfAccommodation place={place} guest={guestInfo} />
         </div>
       </Modal>
@@ -53,15 +59,18 @@ const DefaultGuestInfo = ({ guest }) => {
   return (
     <div className="my-4">
       <h4 className="font-bold text-lg">Guest info</h4>
-
-      <TextInfo
-        text={`  This informations will be sent to the host. The host will decide if this
+      <span>
+        <TextInfo
+          text={`  This informations will be sent to the host. The host will decide if this
         information is enough`}
-      />
-      <div>{guest.name}</div>
-      <div>{guest.email}</div>
-      <div>{guest.phone}</div>
-      <div>{guest.plates}</div>
+        />
+      </span>
+      <div>Name:{guest.name}</div>
+      <div>Email:{guest.email}</div>
+      <div>Phone:{guest.phone}</div>
+      <div>Plates:{guest.plates}</div>
+      <div>Image:{guest.image}</div>
+      <div>ID Image:{guest.imageID}</div>
     </div>
   )
 }

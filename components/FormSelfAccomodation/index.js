@@ -5,6 +5,7 @@ import InputDate from '../inputs/date'
 import InputNumber from '../inputs/InputNumber'
 import { formatDate } from '../../utils/dates'
 import { createRoomRequest } from '@firebase/RoomRequests/main'
+import TextInfo from '../TextInfo'
 
 const FormSelfAccommodation = ({ place, guest }) => {
   const defaultValues = {
@@ -197,6 +198,9 @@ const FormSelfAccommodation = ({ place, guest }) => {
               <span className="font-bold text-xl">{`$${totals?.usd}`}</span>
             </p>
           </div>
+          <TextInfo
+            text={` You can see the status of your request in your profile or in the place profile `}
+          />
           <button
             type="submit"
             className="btn btn-primary"
