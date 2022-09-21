@@ -7,7 +7,7 @@ const Modal = React.forwardRef(
 
     return (
       <div
-        className={`top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-black bg-opacity-50 z-10 ${open ? 'fixed' : 'hidden'
+        className={`top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-black bg-opacity-50 z-20 ${open ? 'fixed' : 'hidden'
           } `}
         id={modalId}
         onClick={(e) => {

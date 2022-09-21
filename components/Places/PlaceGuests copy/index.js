@@ -146,7 +146,6 @@ export default function PlaceGuests ({
 }
 
 const RequestsTable = ({ requests = [] }) => {
-
   return (
     <div>
       <div className="overflow-x-auto">
@@ -162,8 +161,8 @@ const RequestsTable = ({ requests = [] }) => {
           </thead>
           <tbody>
             {/* <!-- row 1 --> */}
-            {requests?.map(({ createdAt, dates, status }, i) => (
-              <tr key={createdAt} className="hover cursor-pointer">
+            {requests?.map(({ createdAt, dates, status, id }, i) => (
+              <tr key={id} className="hover cursor-pointer">
                 <th>{i + 1}</th>
                 <td>
                   <span>

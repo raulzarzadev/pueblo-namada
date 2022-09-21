@@ -17,21 +17,20 @@ const FormSelfAccommodation = ({ place, guest }) => {
     }
   }
 
-  const { register, handleSubmit, watch, setValue, reset, formState } = useForm(
-    {
-      defaultValues
-    }
-  )
+  const { register, handleSubmit, watch, setValue } = useForm({
+    defaultValues
+  })
 
   const FORM_STATUS = {
-    request: 'Solicitar',
-    requested: 'Solicitado',
-    requesting: 'Solicitando',
-    payed: 'Pagado',
-    canceled: 'Cancelado',
-    saved: 'Guardando',
-    edit: 'Editar',
-    edited: 'Editado'
+    request: 'Request a room',
+    requested: 'Room requested',
+    requesting: 'Requesting room',
+    payed: 'payed',
+    canceled: 'Canceled',
+    saved: 'Saved',
+    edit: 'Edit',
+    edited: 'Edited',
+    requestAgain: 'Request again'
   }
 
   const defaultLabel = FORM_STATUS.request
@@ -39,9 +38,11 @@ const FormSelfAccommodation = ({ place, guest }) => {
 
   const startsAt = watch('dates.startsAt')
   const nights = watch('nights')
+
   useEffect(() => {
     setValue('dates.endsAt', accommodationEnds(startsAt))
     setTotals(getTotals())
+    setLabelSave(FORM_STATUS.requestAgain)
   }, [startsAt, nights])
 
   const onSubmit = (data) => {
@@ -61,7 +62,16 @@ const FormSelfAccommodation = ({ place, guest }) => {
     // requests sendende succesfuly , close and show in the main menu
     console.log(accommodation)
     // TODO change to room request collection
-    createRoomRequest()
+
+    createRoomRequest(accommodation)
+      .then((res) => {
+        setLabelSave(FORM_STATUS.requested)
+      })
+      .catch((err) => {
+        console.error(err)
+        setLabelSave(FORM_STATUS.request)
+      })
+
     // setLabelSave(FORM_STATUS[3])
 
     // payment
@@ -121,8 +131,8 @@ const FormSelfAccommodation = ({ place, guest }) => {
               Precio x noche (usd):
               <span className="font-bold">
                 {` $${(
-                  parseFloat(place?.price) / parseFloat(place?.usdPrice)
-                ).toFixed(2) || 0
+                    parseFloat(place?.price) / parseFloat(place?.usdPrice)
+                  ).toFixed(2) || 0
                   }`}
               </span>
             </p>
@@ -190,7 +200,9 @@ const FormSelfAccommodation = ({ place, guest }) => {
           <button
             type="submit"
             className="btn btn-primary"
-            disabled={[FORM_STATUS.requested].includes(labelSave)}
+            disabled={[FORM_STATUS.requested, FORM_STATUS.requesting].includes(
+              labelSave
+            )}
           /* disabled={[FORM_STATUS[1], FORM_STATUS[2], FORM_STATUS[3]].includes(labelSave) || !isDirty} */
           // onClick={() => onSubmit(watch())}
           >

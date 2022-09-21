@@ -5,10 +5,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import MainModal from '../Modal/MainModal'
 import Section from '../Section'
-import { useState } from 'react'
-import Modal from '../Modal'
-import FormSelfAccommodation from '../FormSelfAccomodation'
-import { format } from 'date-fns'
+import RoomRequestsSection from './RoomRequestSection'
 
 export default function PlaceDetails ({ place = {} }) {
   const { user } = useUser()
@@ -42,7 +39,7 @@ export default function PlaceDetails ({ place = {} }) {
 
       <h1 className="text-2xl font-bold text-center">{place.name}</h1>
 
-      {isGuest && <StayHere place={place} />}
+      {isGuest && <RoomRequestsSection place={place} />}
 
       {isOwner && isHost && (
         <div className="grid gap-4 sm:grid-flow-col px-2 my-2 max-w-lg mx-auto">
@@ -93,90 +90,6 @@ export default function PlaceDetails ({ place = {} }) {
             <p className="p-1 whitespace-pre-line">{place.recomendations}</p>
           </Section>
         )}
-      </div>
-    </div>
-  )
-}
-
-const StayHere = ({ place }) => {
-  const {
-    user: { guestProfile, name, email, id }
-  } = useUser()
-  const [openAccomodationForm, setOpenAccomodationForm] = useState(false)
-  const handleOpen = () => {
-    setOpenAccomodationForm(!openAccomodationForm)
-  }
-  const guestInfo = { ...guestProfile, name, email, id }
-  const { requests } = place
-  const userRequests = requests.filter(({ guestId }) => guestId === id)
-  console.log(userRequests)
-  return (
-    <div>
-      <button className="btn btn-primary btn-sm" onClick={() => handleOpen()}>
-        stay here
-      </button>
-      <div>
-        <h4>My accommodations in this place</h4>
-        <RequestTable requests={userRequests} />
-      </div>
-      <Modal
-        title="Stay here"
-        open={openAccomodationForm}
-        handleOpen={handleOpen}>
-        <div className="">
-          <DefaultGuestInfo guest={guestInfo} />
-          <FormSelfAccommodation place={place} guest={guestInfo} />
-        </div>
-      </Modal>
-    </div>
-  )
-}
-const DefaultGuestInfo = ({ guest }) => {
-  return (
-    <div className="my-4">
-      <h4 className="font-bold text-lg">Defaul guest info</h4>
-      <div>{guest.name}</div>
-      <div>{guest.email}</div>
-      <div>{guest.phone}</div>
-      <div>{guest.plates}</div>
-    </div>
-  )
-}
-
-const RequestTable = ({ requests }) => {
-  return (
-    <div>
-      <div className="overflow-x-auto">
-        <table className="table table-compact w-full">
-          {/* <!-- head --> */}
-          <thead>
-            <tr>
-              <th></th>
-              <th>Dates</th>
-              <th>Requested</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* <!-- row 1 --> */}
-            {requests.map(({ createdAt, dates, status }, i) => (
-              <tr key={createdAt} className="hover cursor-pointer">
-                <th>{i + 1}</th>
-                <td>
-                  <span>
-                    {dates?.startsAt && format(dates?.startsAt, 'dd MM yy')}
-                  </span>
-                  <span>{` to `}</span>
-                  <span>
-                    {dates?.endsAt && format(dates?.endsAt, ' dd MM yy ')}
-                  </span>
-                </td>
-                <td>{createdAt && format(createdAt, 'dd MMM yy hh:mm')}</td>
-                <td>{status || 'unknow'}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
     </div>
   )
