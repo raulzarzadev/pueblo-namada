@@ -3175,10 +3175,10 @@ find-up@^5.0.0:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
 
-firebase-dates-util@^0.4.8:
-  version "0.4.8"
-  resolved "https://registry.yarnpkg.com/firebase-dates-util/-/firebase-dates-util-0.4.8.tgz#7753850a8cc2265e0c5bcbd7ef0dd61e939814cd"
-  integrity sha512-/bMPdV8qKseM4vV7OUZF5kAWTgCAn4rr7vdHvTqPKYycnyx7zi+MOsw3XJYl9+Q4ZS4FkT2tPRF0/m/MYTuT6Q==
+firebase-dates-util@^0.4.9:
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/firebase-dates-util/-/firebase-dates-util-0.4.9.tgz#28ea295168c1f4fe15167011879d9e9506fe2fbf"
+  integrity sha512-QZFMAmOiCuh85bBO2l2qGQ5FlT07jqXuMtNGEQJWcraDXmAYRBK9hfUQ91gaai7hpXkZ+wfJD+mLEgtNMhFNdQ==
   dependencies:
     date-fns "^2.28.0"
     dotenv "^16.0.1"
