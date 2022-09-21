@@ -27,13 +27,4 @@ export const listenUserPlaces = (cb: CallableFunction) => {
   return placesCRUD.listenDocs([where('userId', '==', userId)], cb)
 }
 
-export function requestAccommodation (accommodationRequest: Accommodation) {
-  const formatedDates = Dates.deepFormatObjectDates({ ...accommodationRequest, createdAt: new Date() })
-  return placesCRUD.update(accommodationRequest?.placeId, { requests: arrayUnion(formatedDates) })
-}
-
-export function deleteRequestAccommodation (accommodationRequest: Accommodation) {
-  const formatedDates = Dates.deepFormatObjectDates({ ...accommodationRequest, createdAt: new Date() })
-  return placesCRUD.update(accommodationRequest?.placeId, { requests: arrayRemove(formatedDates) })
-}
 

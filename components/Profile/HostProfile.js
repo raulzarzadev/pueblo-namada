@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { listenUserPlaces } from '../../firebase/Places/main'
-import PlaceCard from '../Places/PlaceCard'
+import PlaceCard from '../Place/PlaceCard'
 
 const HostProfile = () => {
   const [places, setPlaces] = useState(undefined)

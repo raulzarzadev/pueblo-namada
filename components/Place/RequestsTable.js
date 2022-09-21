@@ -1,6 +1,5 @@
 import { format } from 'date-fns'
 import { useState } from 'react'
-import { deleteRequestAccommodation } from '../../firebase/Places/main'
 import Modal from '../Modal'
 import ModalDelete from '../Modal/ModalDelete'
 
@@ -37,10 +36,9 @@ const RequestRow = ({ request, i }) => {
   }
   const { createdAt, dates, status } = request
   const handleDeleteRequest = (id) => {
+    // TODO delete room requests id
+
     console.log({ id })
-    deleteRequestAccommodation(request)
-      .then((res) => console.log(res))
-      .catch((err) => console.error(err))
   }
   const [deletedSuccessfully, setDeletedSuccessfully] = useState(false)
   return (

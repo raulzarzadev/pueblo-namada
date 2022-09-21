@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import InputDate from '../inputs/date'
 import InputNumber from '../inputs/InputNumber'
 import { formatDate } from '../../utils/dates'
-import { requestAccommodation } from '../../firebase/Places/main'
+import { createRoomRequest } from '@firebase/RoomRequests/main'
 
 const FormSelfAccommodation = ({ place, guest }) => {
   const defaultValues = {
@@ -60,10 +60,8 @@ const FormSelfAccommodation = ({ place, guest }) => {
     // requesst accomodation
     // requests sendende succesfuly , close and show in the main menu
     console.log(accommodation)
-    requestAccommodation(accommodation)
-      .then((res) => console.log(res))
-      .catch((err) => console.error(err))
-
+    // TODO change to room request collection
+    createRoomRequest()
     // setLabelSave(FORM_STATUS[3])
 
     // payment
@@ -123,8 +121,8 @@ const FormSelfAccommodation = ({ place, guest }) => {
               Precio x noche (usd):
               <span className="font-bold">
                 {` $${(
-                    parseFloat(place?.price) / parseFloat(place?.usdPrice)
-                  ).toFixed(2) || 0
+                  parseFloat(place?.price) / parseFloat(place?.usdPrice)
+                ).toFixed(2) || 0
                   }`}
               </span>
             </p>

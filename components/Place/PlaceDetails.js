@@ -31,6 +31,7 @@ export default function PlaceDetails ({ place = {} }) {
   const { image } = place
 
   const isGuest = user?.profileType?.isGuest
+  const isHost = user?.profileType?.isHost
   return (
     <div className=" mx-auto  relative">
       {image && (
@@ -43,7 +44,7 @@ export default function PlaceDetails ({ place = {} }) {
 
       {isGuest && <StayHere place={place} />}
 
-      {isOwner && (
+      {isOwner && isHost && (
         <div className="grid gap-4 sm:grid-flow-col px-2 my-2 max-w-lg mx-auto">
           {!alreadyInDashboard && (
             <Link href={`/places/${place.id}/dashboard`}>
@@ -107,9 +108,8 @@ const StayHere = ({ place }) => {
   }
   const guestInfo = { ...guestProfile, name, email, id }
   const { requests } = place
-  console.log(requests)
   const userRequests = requests.filter(({ guestId }) => guestId === id)
-
+  console.log(userRequests)
   return (
     <div>
       <button className="btn btn-primary btn-sm" onClick={() => handleOpen()}>
