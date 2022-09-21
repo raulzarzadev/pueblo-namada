@@ -5,6 +5,7 @@ import Modal from '../Modal'
 import { useState } from 'react'
 import FormUser from '../FormUser'
 import { updateUser } from '../../firebase/Users'
+import GuestProfile from './GuestProfile'
 const UserProfile = () => {
   const {
     user: { name, displayName, email, profileType }
@@ -30,6 +31,7 @@ const UserProfile = () => {
         </div>
       </div>
       {profileType?.isHost && <HostProfile />}
+      {profileType?.isGuest && <GuestProfile />}
     </div>
   )
 }

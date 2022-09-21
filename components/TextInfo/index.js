@@ -6,7 +6,7 @@ const TextInfo = ({ text = 'Text info' }) => {
       <span className="text-xl p-1">
         <InfoIcon />
       </span>
-      <p className="">{text}</p>
+      <p className="whitespace-pre-line">{text}</p>
     </div>
   )
 }

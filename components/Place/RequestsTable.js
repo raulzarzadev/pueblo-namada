@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import Link from 'next/link'
 import { useState } from 'react'
 import {
   deleteRoomRequest,
@@ -6,6 +7,7 @@ import {
 } from '../../firebase/RoomRequests/main'
 import Modal from '../Modal'
 import ModalDelete from '../Modal/ModalDelete'
+import TextInfo from '../TextInfo'
 
 const RequestsTable = ({ requests = [], isPlaceOwner }) => {
   return (
@@ -44,7 +46,6 @@ const RequestRow = ({ request, i, isPlaceOwner }) => {
     setOpenModal(!openModal)
   }
 
-  const { createdAt, dates, status, id, guest } = request
   const handleDeleteRequest = (id) => {
     // TODO delete room requests id
     deleteRoomRequest(id)
@@ -62,7 +63,8 @@ const RequestRow = ({ request, i, isPlaceOwner }) => {
       .then((res) => console.log(res))
       .catch((err) => console.error(err))
   }
-  console.log(guest)
+  const { createdAt, dates, status, id, guest, placeId, placeInfo } = request
+  console.log(request)
 
   return (
     <tr className="hover cursor-pointer" onClick={() => handleOpenModal()}>
@@ -81,8 +83,7 @@ const RequestRow = ({ request, i, isPlaceOwner }) => {
           handleOpen={handleOpenModal}>
           <div className="">
             <div>
-              <h4>Guest information</h4>
-
+              <h4 className="font-bold text-lg">Guest information</h4>
               <div>
                 <p>
                   <span>Name:</span>
@@ -109,8 +110,43 @@ const RequestRow = ({ request, i, isPlaceOwner }) => {
                   {guest?.imageID}
                 </p>
               </div>
-              <h4>Status</h4>
+              <h4 className="font-bold text-lg">Place information</h4>
               <div className="flex w-full justify-around">
+                <p>
+                  Place name: <span>{placeInfo?.name}</span>
+                </p>
+                <Link href={`/places/${placeId}`} className="">
+                  <button className="btn btn-sm btn-outline">Visit</button>
+                </Link>
+              </div>
+
+              <h4 className="font-bold text-lg">Room Request Info</h4>
+              <div>
+                <div className="flex w-full justify-around">
+                  <span>
+                    Form:
+                    {dates.startsAt && format(dates.startsAt, 'dd/MM/yy')}
+                  </span>
+
+                  <span>
+                    To:
+                    {dates.endsAt && format(dates.endsAt, 'dd/MM/yy')}
+                  </span>
+                </div>
+                <div>
+                  <span>
+                    Nights:
+                    {request.nights}
+                  </span>
+                </div>
+                <p>Total:</p>
+                <p className="grid">
+                  <span>Total: ${request.mxnTotal} mxn</span>
+                  <span>Total: ${request.usdTotal} usd </span>
+                </p>
+              </div>
+              <h4 className="font-bold text-lg">Request Status</h4>
+              <div className="flex w-full justify-around mb-4">
                 {Object.keys(STATUSES).map((key) => {
                   return (
                     <button
@@ -129,9 +165,13 @@ const RequestRow = ({ request, i, isPlaceOwner }) => {
                   )
                 })}
               </div>
+              <TextInfo
+                text={`Just the admin of the place can edit the status of your requests. If you have any question contact him`}
+              />
             </div>
             <div className="flex justify-around w-full mt-6">
               <ModalDelete
+                disabled={status === 'ACCEPTED'}
                 modalTitle="Delete request"
                 itemLabel="Requests accomodation"
                 deleteText={'Are you sure that you want delete this resquest'}
@@ -141,6 +181,7 @@ const RequestRow = ({ request, i, isPlaceOwner }) => {
                 buttonType="btn"
               />
             </div>
+            <TextInfo text="You can not delete if request is accepted" />
           </div>
         </Modal>
       </td>

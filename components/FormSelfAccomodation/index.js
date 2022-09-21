@@ -51,6 +51,10 @@ const FormSelfAccommodation = ({ place, guest }) => {
     const accommodation = {
       ...data,
       place: place?.id,
+      placeInfo: {
+        name: place.name,
+        id: place.id
+      },
       placeId: place?.id,
       mxnTotal: totals?.mxn,
       usdTotal: totals?.usd,

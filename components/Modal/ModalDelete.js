@@ -9,7 +9,8 @@ export default function ModalDelete ({
   itemId = '',
   deleteText = null,
   modalTitle = 'Eliminar elemento',
-  buttonType = 'icon' // icon | btn
+  buttonType = 'icon', // icon | btn
+  disabled
 }) {
   const [open, setOpen] = useState()
   const handleOpen = () => {
@@ -46,11 +47,14 @@ export default function ModalDelete ({
   return (
     <div>
       {buttonType === 'icon' ? (
-        <button onClick={handleOpen} className="text-error">
+        <button disabled={disabled} onClick={handleOpen} className="text-error">
           <DeleteIcon />
         </button>
       ) : (
-        <button onClick={handleOpen} className="text-error btn btn-sm">
+        <button
+          disabled={disabled}
+          onClick={handleOpen}
+          className="text-error btn btn-sm">
           <span className="mx-1">Delete</span> <DeleteIcon />
         </button>
       )}

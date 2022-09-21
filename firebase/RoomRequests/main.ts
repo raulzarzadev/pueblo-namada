@@ -35,3 +35,8 @@ export const listenUserPlaceRoomRequests = (placeId: string, cb: CallableFunctio
   const currentUserId = getAuth().currentUser?.uid
   return roomRequestsCRUD.listenDocs([where('place', '==', placeId), where('userId', '==', currentUserId)], cb)
 }
+
+export const listenUserRequests = (cb: CallableFunction) => {
+  const currentUserId = getAuth().currentUser?.uid
+  return roomRequestsCRUD.listenDocs([where('userId', '==', currentUserId)], cb)
+}
