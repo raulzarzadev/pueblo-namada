@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 import FormPlaceConfig from '../../../../components/FormPlaceConfig'
 import PlaceDetails from '../../../../components/Places/PlaceDetails'
 import { listenPlace } from '../../../../firebase/Places/main'
-import PlaceGuests from '../../../../components/Places/PlaceGuests'
 import Section from '../../../../components/Section'
 import PrivatePage from '../../../../components/HOC/PrivatePage'
+import Place from 'components/Place'
 
 export default function dashboard () {
   const [place, setPlace] = useState(undefined)
@@ -33,7 +33,7 @@ export default function dashboard () {
               <PlaceDetails place={place} />
             </Section>
             <FormPlaceConfig place={place} />
-            <PlaceGuests
+            <Place
               place={place}
               showTable
               showPaymentsTable
