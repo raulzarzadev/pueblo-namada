@@ -2,13 +2,14 @@ import { useState } from 'react'
 import Modal from '.'
 import DeleteIcon from '../icons/DeleteIcon'
 
-export default function ModalDelete({
+export default function ModalDelete ({
   handleDelete = null,
-  deleteSuccessful = () => {},
+  deleteSuccessful = () => { },
   itemLabel = 'elemento',
   itemId = '',
   deleteText = null,
-  modalTitle = 'Eliminar elemento'
+  modalTitle = 'Eliminar elemento',
+  buttonType = 'icon' // icon | btn
 }) {
   const [open, setOpen] = useState()
   const handleOpen = () => {
@@ -44,17 +45,15 @@ export default function ModalDelete({
   }
   return (
     <div>
-      <button
-        onClick={handleOpen}
-        className="text-error"
-        /*  iconName={'trash'}
-       size={buttonSize}
-       label={buttonLabel}
-       variant={buttonVariant}
-       className="btn-error" */
-      >
-        <DeleteIcon />
-      </button>
+      {buttonType === 'icon' ? (
+        <button onClick={handleOpen} className="text-error">
+          <DeleteIcon />
+        </button>
+      ) : (
+        <button onClick={handleOpen} className="text-error btn btn-sm">
+          <span className="mx-1">Delete</span> <DeleteIcon />
+        </button>
+      )}
       <Modal title={modalTitle} open={open} handleOpen={handleOpen}>
         <div className="text-center whitespace-pre-line">
           {deleteText ||
@@ -67,8 +66,7 @@ export default function ModalDelete({
               className={'btn-outline btn btn-sm'}
               onClick={() => {
                 handleOpen()
-              }}
-            >
+              }}>
               Cancelar
             </button>
             <button
@@ -77,8 +75,7 @@ export default function ModalDelete({
                 e.preventDefault()
                 e.stopPropagation()
                 functionDelete()
-              }}
-            >
+              }}>
               {buttonLabelModal}
             </button>
           </div>

@@ -1,7 +1,7 @@
 import { Accommodation } from '@firebase/Accommodations/accommodation.model'
 import { Dates } from 'firebase-dates-util'
 import { getAuth } from 'firebase/auth'
-import { arrayUnion, where } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, where } from 'firebase/firestore'
 import { FirebaseCRUD } from '../FirebaseCRUD'
 import { Place } from './place.model'
 
@@ -32,4 +32,8 @@ export function requestAccommodation (accommodationRequest: Accommodation) {
   return placesCRUD.update(accommodationRequest?.placeId, { requests: arrayUnion(formatedDates) })
 }
 
+export function deleteRequestAccommodation (accommodationRequest: Accommodation) {
+  const formatedDates = Dates.deepFormatObjectDates({ ...accommodationRequest, createdAt: new Date() })
+  return placesCRUD.update(accommodationRequest?.placeId, { requests: arrayRemove(formatedDates) })
+}
 
