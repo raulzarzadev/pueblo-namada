@@ -1,29 +1,54 @@
+import useSortByField from '@/hooks/useSortByField'
+import sortByField from '@/utils/sortByField'
+import { format } from 'date-fns'
 import { useState } from 'react'
 import { CurrencySpan } from '../CurrencySpan'
 import { GuestDetails } from '../Guests/Guest/GuestDetails'
 import Modal from '../Modal'
 
 const GuestsTable = ({ guests, payments = [], place }) => {
+  const { arraySorted: sortedGuests, handleSortBy } =
+    useSortByField(guests)
+
   return (
-    <table className='mx-auto w-full'>
+    <table className='mx-auto w-full table-compact table'>
       <thead>
         <tr>
-          <th>Nombre</th>
-          <th>Placas</th>
-          <th>Pagos</th>
-          <th>Ultimo</th>
+          <th>
+            <button onClick={() => handleSortBy('name')}>
+              Name
+            </button>
+          </th>
+          <th>
+            <button onClick={() => handleSortBy('plates')}>
+              Plates
+            </button>
+          </th>
+          <th>
+            <button
+              onClick={() => handleSortBy('paymentsLength')}
+            >
+              Payments
+            </button>
+          </th>
+          <th>
+            <button
+              onClick={() =>
+                handleSortBy('lastPaymentDate')
+              }
+            >
+              Last Payment
+            </button>
+          </th>
         </tr>
       </thead>
 
       <tbody>
-        {guests?.map((guest, i) => (
+        {sortedGuests?.map((guest, i) => (
           <GuestRow
             guest={guest}
             place={place}
             key={guest + i}
-            payments={payments?.filter(
-              (pay) => pay.guest === guest.id
-            )}
           />
         ))}
       </tbody>
@@ -31,26 +56,10 @@ const GuestsTable = ({ guests, payments = [], place }) => {
   )
 }
 
-const GuestRow = ({ place, guest, payments }) => {
+const GuestRow = ({ place, guest }) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
-  const sortedPayments = payments.sort((a, b) => {
-    const toNumber = (date) => {
-      const newDate = new Date(date)
-      if (newDate instanceof Date) {
-        return newDate?.getTime()
-      } else {
-        console.error('invalid date')
-      }
-    }
-    if (toNumber(a?.createdAt) > toNumber(b?.createdAt))
-      return 1
-    if (toNumber(a?.createdAt) < toNumber(b?.createdAt))
-      return -1
-    return 0
-  })
-
-  const lastPay = sortedPayments[0]
+  console.log(guest?.lastPaymentDate)
   return (
     <>
       <tr
@@ -68,15 +77,24 @@ const GuestRow = ({ place, guest, payments }) => {
           </Modal>
         </Cell>
         <Cell>{guest?.plates}</Cell>
-        <Cell>{payments?.length}</Cell>
+        <Cell>{guest?.payments?.length}</Cell>
         <Cell>
-          {lastPay ? (
+          {guest?.lastPayment ? (
             <>
               {/*  <div className="text-xs text-right">
                 {lastPay?.createdAt && formatDate(lastPay?.createdAt, 'dd MMM yy')}
               </div> */}
+              <div>
+                {guest.lastPaymentDate &&
+                  format(
+                    guest?.lastPaymentDate,
+                    'dd/MMM/yy'
+                  )}
+              </div>
               <div className=''>
-                <CurrencySpan value={lastPay?.mxnTotal} />
+                <CurrencySpan
+                  value={guest.lastPayment?.mxnTotal}
+                />
               </div>
             </>
           ) : (

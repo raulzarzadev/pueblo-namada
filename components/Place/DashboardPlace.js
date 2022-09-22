@@ -49,16 +49,53 @@ export default function DashboardPlace({
 
     return res
   }
-  const [guests, setGuests] = useState(undefined)
-  const [placePayments, setPlacePayments] =
-    useState(undefined)
-
+  const [guests, setGuests] = useState([])
+  const [placePayments, setPlacePayments] = useState([])
+  const [formatedGuest, setFormatedGuest] = useState([])
   useEffect(() => {
     listenPlaceAccommodations(place.id, setPlacePayments)
   }, [])
   useEffect(() => {
     listenPlaceGuests(place.id, setGuests)
   }, [])
+
+  useEffect(() => {
+    const newGuestsList = [...guests].map((guest) => {
+      const guestPayments = placePayments?.filter(
+        (pay) => pay?.guest === guest?.id
+      )
+      const sortedPaymentsByDate = [...guestPayments]?.sort(
+        (a, b) => {
+          const toNumber = (date) => {
+            const newDate = new Date(date)
+            if (newDate instanceof Date) {
+              return newDate?.getTime()
+            } else {
+              console.error('invalid date')
+            }
+          }
+          if (
+            toNumber(a?.createdAt) > toNumber(b?.createdAt)
+          )
+            return 1
+          if (
+            toNumber(a?.createdAt) < toNumber(b?.createdAt)
+          )
+            return -1
+          return 0
+        }
+      )
+      return {
+        ...guest,
+        payments: sortedPaymentsByDate,
+        lastPayment: sortedPaymentsByDate?.[0],
+        lastPaymentDate:
+          sortedPaymentsByDate?.[0]?.createdAt,
+        paymentsLength: sortedPaymentsByDate.length
+      }
+    })
+    setFormatedGuest(newGuestsList)
+  }, [guests.length, placePayments.length])
 
   if (!showGuest()) return <div>Cannot see the guests</div>
 
@@ -77,7 +114,7 @@ export default function DashboardPlace({
           >
             <FormAccommodation
               place={place}
-              guests={guests}
+              guests={formatedGuest}
             />
           </MainModal>
           <MainModal
@@ -109,7 +146,7 @@ export default function DashboardPlace({
 
       <div className='grid gap-4 py-4 mt-4'>
         {showCards &&
-          guests?.map((guest, i) => (
+          formatedGuest?.map((guest, i) => (
             <GuestCard
               key={`${guest.id}-${i}`}
               guest={guest}
@@ -121,7 +158,7 @@ export default function DashboardPlace({
         {showTable && (
           <Section title='Guests'>
             <GuestsTable
-              guests={guests}
+              guests={formatedGuest}
               payments={placePayments}
               place={place}
             />
@@ -132,7 +169,7 @@ export default function DashboardPlace({
           <Section title='Payments'>
             <PaymentsTable
               place={place}
-              guests={guests}
+              guests={formatedGuest}
               payments={placePayments}
             />
           </Section>
