@@ -8,8 +8,8 @@ module.exports = {
     'standard',
     'eslint:recommended',
     'plugin:react/recommended',
-    'plugin:jsx-a11y/recommended',
-    'plugin:prettier/recommended'
+    'plugin:jsx-a11y/recommended'
+    //  'plugin:prettier/recommended'
   ],
   overrides: [],
   parserOptions: {
@@ -20,7 +20,12 @@ module.exports = {
   rules: {
     'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Use our .prettierrc file as source
     'react/jsx-uses-react': 'off',
-    'react/react-in-jsx-scope': 'off',
-    'react/prop-types': 0
+    'react/react-in-jsx-scope': 'on',
+    'react/prop-types': 0,
+    "jsx-quotes": [
+      1,
+      "prefer-single"
+    ],
+    "react/jsx-max-props-per-line": [2, { "maximum": 1, "when": "always" }]
   }
 }

@@ -10,6 +10,10 @@ export default function PlacePyments({ place }) {
     listenPlaceAccomomodations(place.id, setPayments)
   }, [])
 
+  const fun = (foo) => {
+    return { foo }
+  }
+
   return (
     <div>
       <h1 className="text-center font-bold text-lg">Pagos</h1>

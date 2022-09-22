@@ -13,7 +13,8 @@ import Section from '../Section'
 import { formatDate } from '../../utils/dates'
 import { useRouter } from 'next/router'
 import SendIcon from '../icons/SendIcon'
-export default function GuestsHistory({ place }) {
+
+export default function GuestsHistory ({ place }) {
   const { user } = useUser()
   const isOwner = place?.userId === user?.uid
 
