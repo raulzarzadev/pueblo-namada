@@ -7,6 +7,7 @@ import {
 } from 'firebase/auth'
 import { auth } from '.'
 import { mapUserFromFirebase } from './firebase-helpers'
+import { createUser, getUser, setUser } from './Users'
 
 export async function signUp({ email, password }) {
   return await createUserWithEmailAndPassword(
@@ -34,15 +35,21 @@ export async function signIn({ email, password }) {
 
 export function authStateChanged(...props) {
   const cb = props?.pop()
-  return onAuthStateChanged(auth, (user) => {
+  return onAuthStateChanged(auth, async (user) => {
     if (user) {
-      cb(mapUserFromFirebase(user))
+      // get user
+      const dbuser = await getUser(user?.uid).catch((err) =>
+        console.error(err)
+      )
+      cb(dbuser)
+      // console.log(user)
+      // cb(mapUserFromFirebase(user))
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
       // ...
     } else {
       if (cb) {
-        console.log(cb)
+        // console.log(cb)
         cb(null)
       } else {
         console.log('err auth state change')

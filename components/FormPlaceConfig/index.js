@@ -1,7 +1,6 @@
-import { isEqual } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { updatePlace } from '../../firebase/places'
+import { updatePlace } from '../../firebase/Places/main'
 import Checkbox from '../inputs/checkbox'
 
 const FormPlaceConfig = ({ place }) => {

@@ -8,7 +8,9 @@ export default function ModalDelete({
   itemLabel = 'elemento',
   itemId = '',
   deleteText = null,
-  modalTitle = 'Eliminar elemento'
+  modalTitle = 'Eliminar elemento',
+  buttonType = 'icon', // icon | btn
+  disabled
 }) {
   const [open, setOpen] = useState()
   const handleOpen = () => {

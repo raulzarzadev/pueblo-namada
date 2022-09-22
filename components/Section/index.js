@@ -20,7 +20,7 @@ export default function Section({
     >
       <h3
         className={` p-1
-        text-left flex   font-bold  items-center justify-between cursor-pointer z-10
+        text-left flex   font-bold  items-center justify-between cursor-pointer 
         ${sticky && ' sticky top-0 bg-base-100 '}
         `}
         onClick={() => setShow(!show)}

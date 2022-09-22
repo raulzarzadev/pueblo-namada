@@ -1,10 +1,11 @@
 import Image from 'next/image'
 import { useUser } from '@comps/context/userContext'
-import { deletePlace } from '../../firebase/places'
+import { deletePlace } from '../../firebase/Places/main'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import MainModal from '../Modal/MainModal'
 import Section from '../Section'
+import GuestRoomRequestSection from './GuestRoomRequestSection'
 
 export default function PlaceDetails({ place = {} }) {
   const { user } = useUser()
@@ -27,6 +28,8 @@ export default function PlaceDetails({ place = {} }) {
     router.pathname.includes('/dashboard')
   const { image } = place
 
+  const isGuest = user?.profileType?.isGuest
+  const isHost = user?.profileType?.isHost
   return (
     <div className=' mx-auto  relative'>
       {image && (

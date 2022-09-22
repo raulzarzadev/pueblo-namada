@@ -15,7 +15,7 @@ import { PaymentDetails } from '../../Guests/Guest/GuestPayments'
 import Modal from '../../Modal'
 import MainModal from '../../Modal/MainModal'
 import Section from '../../Section'
-import PlaceCosts from '../PlaceCosts'
+import PlaceCosts from '../../Place/PlaceCosts'
 import { Dates } from '../../../firebase/Dates.utils'
 import FormGuest from '../../FormGuest'
 import { format } from 'date-fns'
@@ -25,7 +25,8 @@ export default function PlaceGuests({
   showTable = false,
   showCards = false,
   showPaymentsTable = false,
-  showOperatingCosts = false
+  showOperatingCosts = false,
+  showPlaceRquests = true
 }) {
   const { user } = useUser()
   const isOwner = place?.userId === user?.uid
@@ -67,13 +68,13 @@ export default function PlaceGuests({
     <div className=''>
       <div>
         <h3 className='text-xl font-bold text-left my-4'>
-          Operaciones
+          Options
         </h3>
         <div className='grid gap-2 sm:flex justify-evenly'>
           <MainModal
-            title={'Nuevo pago'}
+            title={'New Payment'}
             OpenComponentType='primary'
-            buttonLabel='Nuevo pago'
+            buttonLabel='New Payment'
           >
             <FormAccommodation
               place={place}
@@ -81,16 +82,16 @@ export default function PlaceGuests({
             />
           </MainModal>
           <MainModal
-            title={'Nuevo Huesped'}
+            title={'New Guest'}
             OpenComponentType='primary'
-            buttonLabel='Nuevo Huesped'
+            buttonLabel='New Guest'
           >
             {/* <FormPlace place={place} /> */}
             <FormGuest />
           </MainModal>
           <MainModal
-            title='Nuevo gasto'
-            buttonLabel='Nuevo Gasto'
+            title='New cost'
+            buttonLabel='New cost'
             OpenComponentType='primary'
           >
             <div>
@@ -98,9 +99,9 @@ export default function PlaceGuests({
             </div>
           </MainModal>
           <MainModal
-            title={'Nuevo Corte'}
+            title={'Cash Balance'}
             OpenComponentType='primary'
-            buttonLabel='Corte'
+            buttonLabel='Cash Balance'
           >
             <FormCashBalance place={place} />
           </MainModal>
@@ -119,7 +120,7 @@ export default function PlaceGuests({
           ))}
 
         {showTable && (
-          <Section title='Huespedes'>
+          <Section title='Guests'>
             <GuestsTable
               guests={guests}
               payments={placePayments}
@@ -129,7 +130,7 @@ export default function PlaceGuests({
         )}
 
         {showPaymentsTable && (
-          <Section title='Pagos'>
+          <Section title='Payments'>
             <PaymentsTable
               place={place}
               guests={guests}
@@ -139,10 +140,72 @@ export default function PlaceGuests({
         )}
 
         {showOperatingCosts && (
-          <Section title='Costos'>
+          <Section title='Costs'>
             <PlaceCosts place={place} />
           </Section>
         )}
+        {showPlaceRquests && (
+          <Section
+            title='Requests'
+            subtitle={
+              place.requests.filter(
+                ({ status }) =>
+                  !status || status === 'SOLVED'
+              ).length
+            }
+          >
+            <RequestsTable requests={place?.requests} />
+          </Section>
+        )}
+      </div>
+    </div>
+  )
+}
+
+const RequestsTable = ({ requests = [] }) => {
+  return (
+    <div>
+      <div className='overflow-x-auto'>
+        <table className='table table-compact w-full'>
+          {/* <!-- head --> */}
+          <thead>
+            <tr>
+              <th></th>
+              <th>Dates</th>
+              <th>Requested</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* <!-- row 1 --> */}
+            {requests?.map(
+              ({ createdAt, dates, status, id }, i) => (
+                <tr
+                  key={id}
+                  className='hover cursor-pointer'
+                >
+                  <th>{i + 1}</th>
+                  <td>
+                    <span>
+                      {dates?.startsAt &&
+                        format(dates?.startsAt, 'dd MM yy')}
+                    </span>
+                    <span>{` to `}</span>
+                    <span>
+                      {dates?.endsAt &&
+                        format(dates?.endsAt, ' dd MM yy ')}
+                    </span>
+                  </td>
+                  <td>
+                    {createdAt &&
+                      format(createdAt, 'dd MMM yy hh:mm')}
+                  </td>
+                  <td>{status || 'unknow'}</td>
+                </tr>
+              )
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   )

@@ -46,7 +46,8 @@ export default function FormPlace({
             // router.back()
           }, 1000)
         })
-      : newPlace(data).then((res) => {
+      : createPlace(data).then((res) => {
+          console.log('created place', res)
           setLabelSave(FORM_STATUS[1])
           setTimeout(() => {
             setLabelSave(defaultLabel)

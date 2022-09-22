@@ -6,18 +6,25 @@ import {
 } from 'react'
 import { useRouter } from 'next/router'
 import { authStateChanged } from '../../firebase/user'
+import { listenUser } from '@firebase/Users'
 const UserContext = createContext()
 
-export function UserProvider({ children }) {
+export function UserProvider ({ children }) {
   const [user, setUser] = useState(undefined)
   const router = useRouter()
   const { redirectTo } = router?.query
   useEffect(() => {
-    authStateChanged(setUser)
+    authStateChanged((user) => {
+      if (user) {
+        listenUser(user.id, (user) => setUser({ ...user, uid: user.id }))
+      } else {
+        console.error('not logged')
+        setUser(null)
+      }
+    })
   }, [])
 
   if (user === undefined) return <div>loading ...</div>
-
   return (
     <UserContext.Provider value={{ user }}>
       {children}

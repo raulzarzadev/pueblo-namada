@@ -15,7 +15,7 @@ const Modal = React.forwardRef(
 
     return (
       <div
-        className={` top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-black bg-opacity-50 z-10 ${
+        className={`top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-black bg-opacity-50 z-20 ${
           open ? 'fixed' : 'hidden'
         } `}
         id={modalId}
@@ -56,24 +56,6 @@ const Modal = React.forwardRef(
     )
   }
 )
-/*
-  <div
-        // className="modal-box py-1 pt-0 bg-base-300 min-h-[10rem] "
-        className=" "
-      >
-        <header className={'flex justify-between sticky top-0 bg-base-300'}>
-          <div className={'w-[80%] text-center'}>
-            <h5>{title}</h5>
-          </div>
-          <button
-            className={''}
-            onClick={(e) => {
-              e.preventDefault()
-              handleOpen()
-            }}
-          >
-            </button>
-            </header>
-            <main className={'pt-5'}>{children}</main>
-          </div> */
+Modal.displayName = 'Modal'
+
 export default Modal
