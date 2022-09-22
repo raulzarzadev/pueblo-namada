@@ -1,5 +1,3 @@
-// @ts-check
-
 import { useEffect, useState } from 'react'
 import {
   deleteAccommodation,
@@ -26,8 +24,7 @@ const GuestPayments = ({ place, guest }) => {
         <MainModal
           title={`Nuevo pago de ${guest?.name}`}
           OpenComponentType="primary"
-          buttonLabel="Nuevo pago"
-        >
+          buttonLabel="Nuevo pago">
           <h1 className="text-xl ">{guest?.name}</h1>
           <FormAccommodation place={place} guest={guest} />
         </MainModal>
@@ -38,10 +35,9 @@ const GuestPayments = ({ place, guest }) => {
         <Section
           key={payment?.id}
           title={`$${parseFloat(payment.mxnTotal).toFixed(2)}`}
-          subtitle={`${Dates.format(payment?.dates?.starts)} - ${Dates.format(
-            payment?.dates?.ends
-          )}`}
-        >
+          subtitle={`${Dates.format(payment?.dates?.startsAt)} - ${Dates.format(
+            payment?.dates?.endsAt
+          )}`}>
           <PaymentDetails payment={payment} key={payment.id} place={place} />
         </Section>
       ))}
@@ -137,8 +133,7 @@ export const PaymentDetails = ({ payment, place }) => {
           <MainModal
             title={'Editar pago'}
             buttonLabel="Editar"
-            OpenComponentType="info"
-          >
+            OpenComponentType="info">
             <FormAccommodation
               place={place}
               guest={payment.guest}
@@ -148,16 +143,14 @@ export const PaymentDetails = ({ payment, place }) => {
           <MainModal
             title="Eliminar pago"
             buttonLabel="Eliminar"
-            OpenComponentType="delete"
-          >
+            OpenComponentType="delete">
             <div className="flex flex-col items-center flex-center">
               <p className="text-center">
                 ¿Seguro de que deseas eliminar este hospedaje?
               </p>
               <button
                 className="btn btn-error btn-sm m-4"
-                onClick={() => handleDeleteAccommodation(payment.id)}
-              >
+                onClick={() => handleDeleteAccommodation(payment.id)}>
                 Eliminar
               </button>
             </div>

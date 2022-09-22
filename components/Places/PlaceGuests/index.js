@@ -18,8 +18,9 @@ import Section from '../../Section'
 import PlaceCosts from '../PlaceCosts'
 import { Dates } from '../../../firebase/Dates.utils'
 import FormGuest from '../../FormGuest'
+import { format } from 'date-fns'
 
-export default function PlaceGuests({
+export default function PlaceGuests ({
   place,
   showTable = false,
   showCards = false,
@@ -64,23 +65,20 @@ export default function PlaceGuests({
           <MainModal
             title={'Nuevo pago'}
             OpenComponentType="primary"
-            buttonLabel="Nuevo pago"
-          >
+            buttonLabel="Nuevo pago">
             <FormAccommodation place={place} guests={guests} />
           </MainModal>
           <MainModal
             title={'Nuevo Huesped'}
             OpenComponentType="primary"
-            buttonLabel="Nuevo Huesped"
-          >
+            buttonLabel="Nuevo Huesped">
             {/* <FormPlace place={place} /> */}
             <FormGuest />
           </MainModal>
           <MainModal
             title="Nuevo gasto"
             buttonLabel="Nuevo Gasto"
-            OpenComponentType="primary"
-          >
+            OpenComponentType="primary">
             <div>
               <FormCost place={place} />
             </div>
@@ -88,8 +86,7 @@ export default function PlaceGuests({
           <MainModal
             title={'Nuevo Corte'}
             OpenComponentType="primary"
-            buttonLabel="Corte"
-          >
+            buttonLabel="Corte">
             <FormCashBalance place={place} />
           </MainModal>
         </div>
@@ -180,16 +177,14 @@ const PaymentRow = ({ place, payment, guests }) => {
   return (
     <tr
       className=" cursor-pointer hover:bg-base-200"
-      onClick={() => handleOpen()}
-    >
+      onClick={() => handleOpen()}>
       <Cell className="max-w-[75px] truncate">
         {guest?.name}
         {payment && (
           <Modal
             title={`Pago de ${guest?.name}`}
             open={open}
-            handleOpen={handleOpen}
-          >
+            handleOpen={handleOpen}>
             <h2 className="font-bold">{guest?.name}</h2>
             <PaymentDetails payment={payment} place={place} />
             {/* <GuestDetails place={place} guest={guest} /> */}
@@ -214,23 +209,48 @@ const PaymentRow = ({ place, payment, guests }) => {
 }
 
 const GuestsTable = ({ guests, payments, place }) => {
+  const [sortedGuests, setSortedGuest] = useState(guests)
+  const handleSortBy = (fieldName) => {
+    console.log(fieldName)
+    const guestTSort = [...guests]
+    setSortedGuest(
+      guestTSort.sort((a, b) => {
+        if (a[fieldName] < b[fieldName]) return -1
+        if (a[fieldName] > b[fieldName]) return 1
+        return 0
+      })
+    )
+  }
   return (
     <table className="mx-auto w-full">
       <thead>
         <tr>
-          <th>Nombre</th>
-          <th>Placas</th>
-          <th>Pagos</th>
-          <th>Ultimo</th>
+          <th>
+            <button onClick={() => handleSortBy('name')}>Nombre</button>
+          </th>
+          <th>
+            <button onClick={() => handleSortBy('plates')}>Placas</button>
+          </th>
+          <th>
+            <button onClick={() => handleSortBy('payments')}>Pagos</button>
+          </th>
+          <th>
+            <button onClick={() => handleSortBy('createdAt')}>Cantidad</button>
+          </th>
+          <th>
+            <button onClick={() => handleSortBy('updatedAt')}>
+              Actualizado
+            </button>
+          </th>
         </tr>
       </thead>
 
       <tbody>
-        {guests?.map((guest, i) => (
+        {sortedGuests?.map((guest, i) => (
           <GuestRow
             guest={guest}
             place={place}
-            key={guest + i}
+            key={guest.id}
             payments={payments.filter((pay) => pay.guest === guest.id)}
           />
         ))}
@@ -261,15 +281,13 @@ const GuestRow = ({ place, guest, payments }) => {
     <>
       <tr
         className="cursor-pointer hover:bg-base-200"
-        onClick={() => handleOpen()}
-      >
+        onClick={() => handleOpen()}>
         <Cell className=" truncate max-w-[75px]   ">
           <span className="">{guest?.name}</span>
           <Modal
             title={`Información de ${guest?.name} `}
             open={open}
-            handleOpen={handleOpen}
-          >
+            handleOpen={handleOpen}>
             <GuestDetails place={place} guest={guest} />
           </Modal>
         </Cell>
@@ -294,6 +312,10 @@ const GuestRow = ({ place, guest, payments }) => {
             if (toNumber(a.createdAt) < toNumber(b.createdAt)) return -1
             return 0
           })} */}
+        </Cell>
+        <Cell>
+          {console.log(guest.updatedAt)}
+          {guest.updatedAt && format(new Date(guest.updatedAt), 'dd MM yy')}
         </Cell>
       </tr>
     </>

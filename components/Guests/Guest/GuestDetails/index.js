@@ -1,5 +1,5 @@
 // @ts-check
-import Image from 'next/image'
+import React from 'react'
 import { useRouter } from 'next/router'
 import { deleteGuest } from '../../../../firebase/guests'
 import SendIcon from '../../../icons/SendIcon'
@@ -50,8 +50,7 @@ export const GuestDetails = ({ guest, place }) => {
             className="flex mx-2"
             target="_blank"
             href={`https://wa.me/${phone}?text=${CONTENT_INFO}`}
-            rel="noreferrer"
-          >
+            rel="noreferrer">
             ws <SendIcon />
           </a>
         </div>
@@ -63,8 +62,7 @@ export const GuestDetails = ({ guest, place }) => {
             target="_blank"
             className=" "
             href={`mailto:${email}?subject=${SUBJECT_INFO}&body=${CONTENT_INFO}`}
-            rel="noreferrer"
-          >
+            rel="noreferrer">
             <SendIcon />
           </a>
         </div>
@@ -74,22 +72,19 @@ export const GuestDetails = ({ guest, place }) => {
         <MainModal
           title="Eliminar huesped"
           buttonLabel="Eliminar"
-          OpenComponentType={'delete'}
-        >
+          OpenComponentType={'delete'}>
           <div className="flex flex-col items-center">
             <p>¿Estás seguro de que deseas eliminar este huesped?</p>
             <button
               className="btn btn-error btn-sm my-4"
-              onClick={() => handleDeleteGuest(guest.id)}
-            >
+              onClick={() => handleDeleteGuest(guest.id)}>
               Eliminar
             </button>
           </div>
         </MainModal>
         <button
           className="btn btn-info btn-sm"
-          onClick={() => handleEditGuest(guest.id)}
-        >
+          onClick={() => handleEditGuest(guest.id)}>
           Editar
         </button>
       </div>

@@ -7,7 +7,7 @@ import PlaceGuests from '../../../../components/Places/PlaceGuests'
 import Section from '../../../../components/Section'
 import PrivatePage from '../../../../components/HOC/PrivatePage'
 
-export default function dashboard() {
+export default function dashboard () {
   const [place, setPlace] = useState(undefined)
   const {
     query: { id }
@@ -27,8 +27,7 @@ export default function dashboard() {
             <Section
               title={'Detalles del lugar'}
               subtitle={`${place?.name || ''}`}
-              sticky
-            >
+              sticky>
               <PlaceDetails place={place} />
             </Section>
             <FormPlaceConfig place={place} />
