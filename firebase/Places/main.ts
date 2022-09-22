@@ -30,12 +30,10 @@ export const listenPlace = (
   cb: CallableFunction
 ) => placesCRUD.listen(placeId, cb)
 
-export const listenPlacePlaces = (
-  placeId: string,
+export const listenPlaces = (
   cb: CallableFunction
 ) =>
-  placesCRUD.listenDocs(
-    [where('placeId', '==', placeId)],
+  placesCRUD.listenAll(
     cb
   )
 
