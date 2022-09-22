@@ -11,8 +11,8 @@ const PaymentsTable = ({ place, guests, payments }) => {
 
   return (
     <div>
-      <h2 className="font-bold text-center">Pagos</h2>
-      <table className="mx-auto w-full">
+      <h2 className='font-bold text-center'>Pagos</h2>
+      <table className='mx-auto w-full'>
         <thead>
           <tr>
             <th>Huesped</th>
@@ -23,14 +23,16 @@ const PaymentsTable = ({ place, guests, payments }) => {
           </tr>
         </thead>
         <tbody>
-          {sortByDate(payments, 'createdAt', 'dec')?.map((payment) => (
-            <PaymentRow
-              key={payment.id}
-              place={place}
-              payment={payment}
-              guests={guests}
-            />
-          ))}
+          {sortByDate(payments, 'createdAt', 'dec')?.map(
+            (payment) => (
+              <PaymentRow
+                key={payment.id}
+                place={place}
+                payment={payment}
+                guests={guests}
+              />
+            )
+          )}
         </tbody>
       </table>
     </div>
@@ -40,33 +42,48 @@ const PaymentsTable = ({ place, guests, payments }) => {
 const PaymentRow = ({ place, payment, guests }) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
-  const guest = guests?.find(({ id }) => id === payment?.guest)
+  const guest = guests?.find(
+    ({ id }) => id === payment?.guest
+  )
   const { dates } = payment
 
   return (
     <tr
-      className=" cursor-pointer hover:bg-base-200"
-      onClick={() => handleOpen()}>
-      <Cell className="max-w-[75px] truncate">
+      className=' cursor-pointer hover:bg-base-200'
+      onClick={() => handleOpen()}
+    >
+      <Cell className='max-w-[75px] truncate'>
         {guest?.name}
         {payment && (
           <Modal
             title={`Pago de ${guest?.name}`}
             open={open}
-            handleOpen={handleOpen}>
-            <h2 className="font-bold">{guest?.name}</h2>
-            <PaymentDetails payment={payment} place={place} />
+            handleOpen={handleOpen}
+          >
+            <h2 className='font-bold'>{guest?.name}</h2>
+            <PaymentDetails
+              payment={payment}
+              place={place}
+            />
             {/* <GuestDetails place={place} guest={guest} /> */}
           </Modal>
         )}
       </Cell>
-      <Cell className="text-xs">
-        {dates && Dates.format(dates?.startsAt || dates?.starts, 'dd MMM yy')}
+      <Cell className='text-xs'>
+        {dates &&
+          Dates.format(
+            dates?.startsAt || dates?.starts,
+            'dd MMM yy'
+          )}
       </Cell>
-      <Cell className="text-xs">
-        {dates && Dates.format(dates?.endsAt || dates?.ends, 'dd MMM yy')}
+      <Cell className='text-xs'>
+        {dates &&
+          Dates.format(
+            dates?.endsAt || dates?.ends,
+            'dd MMM yy'
+          )}
       </Cell>
-      <Cell className="text-xs">
+      <Cell className='text-xs'>
         {Dates.fromNow(payment?.createdAt)}
         {/* {formatDistance(new Date(payment?.createdAt), new Date(), { addSuffix: true })} */}
       </Cell>
@@ -78,7 +95,9 @@ const PaymentRow = ({ place, payment, guests }) => {
 }
 const Cell = ({ children, className = '' }) => {
   return (
-    <td className={`${className} px-2 py-1 text-center items-center relative`}>
+    <td
+      className={`${className} px-2 py-1 text-center items-center relative`}
+    >
       {children}
     </td>
   )

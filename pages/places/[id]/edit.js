@@ -4,7 +4,7 @@ import FormPlace from '../../../components/FormPlace'
 import PrivatePage from '../../../components/HOC/PrivatePage'
 import { listenPlace } from '../../../firebase/Places/main'
 
-export default function EditPlace () {
+export default function EditPlace() {
   const [place, setPlace] = useState(undefined)
   const {
     query: { id: placeId }

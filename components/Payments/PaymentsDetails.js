@@ -25,15 +25,21 @@ export const PaymentDetails = ({ payment, place }) => {
     <>
       <div>
         <div>
-          <div className="flex justify-between text-right mb-4">
+          <div className='flex justify-between text-right mb-4'>
             <div>
               <div>
                 <span>Precios </span>
                 <div>
-                  Noche: <span className="font-bold">${prices?.night}</span>
+                  Noche:{' '}
+                  <span className='font-bold'>
+                    ${prices?.night}
+                  </span>
                 </div>
                 <div>
-                  USD: <span className="font-bold">${prices?.usd}</span>
+                  USD:{' '}
+                  <span className='font-bold'>
+                    ${prices?.usd}
+                  </span>
                 </div>
               </div>
             </div>
@@ -41,57 +47,70 @@ export const PaymentDetails = ({ payment, place }) => {
               <span>Fechas </span>
               <div>
                 Desde:
-                <span className="font-bold">
+                <span className='font-bold'>
                   {dates &&
-                    Dates.format(dates?.startsAt || dates?.starts, 'dd MMM yy')}
+                    Dates.format(
+                      dates?.startsAt || dates?.starts,
+                      'dd MMM yy'
+                    )}
                 </span>
               </div>
               <div>
                 Hasta:
-                <span className="font-bold">
+                <span className='font-bold'>
                   {dates &&
-                    Dates.format(dates?.endsAt || dates?.ends, 'dd MMM yy')}
+                    Dates.format(
+                      dates?.endsAt || dates?.ends,
+                      'dd MMM yy'
+                    )}
                 </span>
               </div>
               <div>
                 Creado :
-                <span className="font-bold">
+                <span className='font-bold'>
                   {(createdAt &&
-                    Dates.format(new Date(createdAt), 'dd/MM/yy HH:mm')) ||
+                    Dates.format(
+                      new Date(createdAt),
+                      'dd/MM/yy HH:mm'
+                    )) ||
                     'n/d'}
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="text-right">
+          <div className='text-right'>
             <div>
-              <span>Noches:</span> <span className="font-bold">{nights}</span>
+              <span>Noches:</span>{' '}
+              <span className='font-bold'>{nights}</span>
             </div>
             <div>
               <span>Descuento(noches):</span>{' '}
-              <span className="font-bold">{discountedNights || 0}</span>
+              <span className='font-bold'>
+                {discountedNights || 0}
+              </span>
             </div>
             <div>
               <span>Total (mxn):</span>{' '}
-              <span className="font-bold">
+              <span className='font-bold'>
                 ${parseFloat(mxnTotal).toFixed(2)}
               </span>
             </div>
             <div>
               <span>Total (usd):</span>{' '}
-              <span className="font-bold">
+              <span className='font-bold'>
                 ${parseFloat(usdTotal).toFixed(2)}
               </span>
             </div>
           </div>
         </div>
 
-        <div className="flex justify-center my-4">
+        <div className='flex justify-center my-4'>
           <MainModal
             title={'Editar pago'}
-            buttonLabel="Editar"
-            OpenComponentType="info">
+            buttonLabel='Editar'
+            OpenComponentType='info'
+          >
             <FormAccommodation
               place={place}
               guest={payment.guest}
@@ -99,16 +118,21 @@ export const PaymentDetails = ({ payment, place }) => {
             />
           </MainModal>
           <MainModal
-            title="Eliminar pago"
-            buttonLabel="Eliminar"
-            OpenComponentType="delete">
-            <div className="flex flex-col items-center flex-center">
-              <p className="text-center">
-                ¿Seguro de que deseas eliminar este hospedaje?
+            title='Eliminar pago'
+            buttonLabel='Eliminar'
+            OpenComponentType='delete'
+          >
+            <div className='flex flex-col items-center flex-center'>
+              <p className='text-center'>
+                ¿Seguro de que deseas eliminar este
+                hospedaje?
               </p>
               <button
-                className="btn btn-error btn-sm m-4"
-                onClick={() => handleDeleteAccommodation(payment.id)}>
+                className='btn btn-error btn-sm m-4'
+                onClick={() =>
+                  handleDeleteAccommodation(payment.id)
+                }
+              >
                 Eliminar
               </button>
             </div>

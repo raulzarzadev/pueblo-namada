@@ -15,7 +15,7 @@ import RequestsTable from './RequestsTable'
 import GuestsTable from './GuestsTable'
 import { useUser } from '../context/userContext'
 
-export default function Place ({
+export default function Place({
   place,
   showTable = false,
   showCards = false,
@@ -30,10 +30,15 @@ export default function Place ({
     let res = false
     // console.log(place)
     // visible si es propietario
-    if (!!isOwner && place?.config?.guestsVisiblesFor?.admin) res = true
+    if (
+      !!isOwner &&
+      place?.config?.guestsVisiblesFor?.admin
+    )
+      res = true
 
     // visible si esta registrado
-    if (!!user && place?.config?.guestsVisiblesFor?.all) res = true
+    if (!!user && place?.config?.guestsVisiblesFor?.all)
+      res = true
 
     // TODO visible si es huesped
 
@@ -42,7 +47,8 @@ export default function Place ({
     return res
   }
   const [guests, setGuests] = useState(undefined)
-  const [placePayments, setPlacePayments] = useState(undefined)
+  const [placePayments, setPlacePayments] =
+    useState(undefined)
 
   useEffect(() => {
     listenPlaceAccommodations(place.id, setPlacePayments)
@@ -54,41 +60,50 @@ export default function Place ({
   if (!showGuest()) return <div>Cannot see the guests</div>
 
   return (
-    <div className="">
+    <div className=''>
       <div>
-        <h3 className="text-xl font-bold text-left my-4">Options</h3>
-        <div className="grid gap-2 sm:flex justify-evenly">
+        <h3 className='text-xl font-bold text-left my-4'>
+          Options
+        </h3>
+        <div className='grid gap-2 sm:flex justify-evenly'>
           <MainModal
             title={'New Payment'}
-            OpenComponentType="primary"
-            buttonLabel="New Payment">
-            <FormAccommodation place={place} guests={guests} />
+            OpenComponentType='primary'
+            buttonLabel='New Payment'
+          >
+            <FormAccommodation
+              place={place}
+              guests={guests}
+            />
           </MainModal>
           <MainModal
             title={'New Guest'}
-            OpenComponentType="primary"
-            buttonLabel="New Guest">
+            OpenComponentType='primary'
+            buttonLabel='New Guest'
+          >
             {/* <FormPlace place={place} /> */}
             <FormGuest />
           </MainModal>
           <MainModal
-            title="New cost"
-            buttonLabel="New cost"
-            OpenComponentType="primary">
+            title='New cost'
+            buttonLabel='New cost'
+            OpenComponentType='primary'
+          >
             <div>
               <FormCost place={place} />
             </div>
           </MainModal>
           <MainModal
             title={'Cash Balance'}
-            OpenComponentType="primary"
-            buttonLabel="Cash Balance">
+            OpenComponentType='primary'
+            buttonLabel='Cash Balance'
+          >
             <FormCashBalance place={place} />
           </MainModal>
         </div>
       </div>
 
-      <div className="grid gap-4 py-4 mt-4">
+      <div className='grid gap-4 py-4 mt-4'>
         {showCards &&
           guests?.map((guest, i) => (
             <GuestCard
@@ -100,7 +115,7 @@ export default function Place ({
           ))}
 
         {showTable && (
-          <Section title="Guests">
+          <Section title='Guests'>
             <GuestsTable
               guests={guests}
               payments={placePayments}
@@ -110,7 +125,7 @@ export default function Place ({
         )}
 
         {showPaymentsTable && (
-          <Section title="Payments">
+          <Section title='Payments'>
             <PaymentsTable
               place={place}
               guests={guests}
@@ -120,18 +135,20 @@ export default function Place ({
         )}
 
         {showOperatingCosts && (
-          <Section title="Costs">
+          <Section title='Costs'>
             <PlaceCosts place={place} />
           </Section>
         )}
         {showPlaceRquests && (
           <Section
-            title="Requests"
+            title='Requests'
             subtitle={
               place.requests.filter(
-                ({ status }) => !status || status === 'SOLVED'
+                ({ status }) =>
+                  !status || status === 'SOLVED'
               ).length
-            }>
+            }
+          >
             <RequestsTable requests={place?.requests} />
           </Section>
         )}

@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -20,32 +16,16 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "inputs/*": [
-        "components/inputs/*"
-      ],
-      "comps/*": [
-        "components/*"
-      ],
-      "@firebase/*": [
-        "firebase/*"
-      ],
-      "@comps/*": [
-        "components/*"
-      ],
-      "@/*": [
-        "./*"
-      ],
-      "@hooks": [
-        "hooks/*"
-      ],
-      "context/*": [
-        "components/context/*"
-      ]
+      "inputs/*": ["components/inputs/*"],
+      "comps/*": ["components/*"],
+      "@firebase/*": ["firebase/*"],
+      "@comps/*": ["components/*"],
+      "@/*": ["./*"],
+      "@hooks": ["hooks/*"],
+      "context/*": ["components/context/*"]
     }
   },
-  "exclude": [
-    "node_modules"
-  ],
+  "exclude": ["node_modules"],
   "include": [
     "next-env.d.ts",
     "**/*.ts",

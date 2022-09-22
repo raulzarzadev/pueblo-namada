@@ -10,7 +10,8 @@ const HostRoomRequestSection = ({ place }) => {
   const {
     user: { guestProfile, name, email, id }
   } = useUser()
-  const [openAccomodationForm, setOpenAccomodationForm] = useState(false)
+  const [openAccomodationForm, setOpenAccomodationForm] =
+    useState(false)
   const handleOpen = () => {
     setOpenAccomodationForm(!openAccomodationForm)
   }
@@ -30,7 +31,8 @@ const HostRoomRequestSection = ({ place }) => {
   return (
     <Section
       title={'Room requests'}
-      subtitle={`Total: ${totalRequests} Unsolved: ${unsolvedRequests}`}>
+      subtitle={`Total: ${totalRequests} Unsolved: ${unsolvedRequests}`}
+    >
       <div>
         <h4>My accommodations in this place</h4>
         <RequestsTable

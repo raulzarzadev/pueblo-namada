@@ -1,4 +1,4 @@
-import { Base } from "@firebase/Base.model";
+import { Base } from '@firebase/Base.model'
 
 export interface User extends Base {
   name: string

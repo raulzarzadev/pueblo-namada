@@ -12,17 +12,21 @@ const UserProfile = () => {
   } = useUser()
 
   return (
-    <div className="max-w-lg mx-auto">
-      <div className=" ">
-        <div className="relative ">
-          <CoverPhoto src={'https://placeimg.com/192/192/city'} />
-          <div className="absolute -bottom-12 left-5">
-            <Avatar src={'https://placeimg.com/192/192/people'} />
+    <div className='max-w-lg mx-auto'>
+      <div className=' '>
+        <div className='relative '>
+          <CoverPhoto
+            src={'https://placeimg.com/192/192/city'}
+          />
+          <div className='absolute -bottom-12 left-5'>
+            <Avatar
+              src={'https://placeimg.com/192/192/people'}
+            />
           </div>
         </div>
-        <div className="pl-28 h-28 flex justify-between">
+        <div className='pl-28 h-28 flex justify-between'>
           <div>
-            <h2 className="font-bold text-lg">
+            <h2 className='font-bold text-lg'>
               {name || displayName || email}
             </h2>
             <p>{email}</p>
@@ -44,21 +48,25 @@ const EditUser = () => {
   const { user } = useUser()
   const handleEditUser = (user) => {
     console.log(user)
-    updateUser(user.id, { ...user }).then((res) => console.log(res))
+    updateUser(user.id, { ...user }).then((res) =>
+      console.log(res)
+    )
   }
   return (
     <div>
-      <div className="pt-2">
+      <div className='pt-2'>
         <button
-          className="btn btn-primary btn-sm"
-          onClick={() => hanldeOpenUserForm()}>
+          className='btn btn-primary btn-sm'
+          onClick={() => hanldeOpenUserForm()}
+        >
           Edit profile
         </button>
       </div>
       <Modal
         open={openUserForm}
         handleOpen={hanldeOpenUserForm}
-        title="Edit user info">
+        title='Edit user info'
+      >
         <FormUser user={user} submitForm={handleEditUser} />
       </Modal>
     </div>
@@ -67,26 +75,26 @@ const EditUser = () => {
 
 export const CoverPhoto = ({ src }) => (
   <div>
-    <div className="relative h-36 w-full ">
+    <div className='relative h-36 w-full '>
       <Image
-        className="md:rounded-b-lg"
-        layout="fill"
-        objectFit="cover"
+        className='md:rounded-b-lg'
+        layout='fill'
+        objectFit='cover'
         src={src}
-        alt="user avatar"
+        alt='user avatar'
       />
     </div>
   </div>
 )
 export const Avatar = ({ src }) => (
-  <div className="avatar">
-    <div className="relative w-20 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+  <div className='avatar'>
+    <div className='relative w-20 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
       <Image
-        className=""
-        layout="fill"
-        objectFit="contain"
+        className=''
+        layout='fill'
+        objectFit='contain'
         src={src}
-        alt="user avatar"
+        alt='user avatar'
       />
     </div>
   </div>

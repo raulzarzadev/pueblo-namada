@@ -1,7 +1,11 @@
 import { Accommodation } from '@firebase/Accommodations/accommodation.model'
 import { Dates } from 'firebase-dates-util'
 import { getAuth } from 'firebase/auth'
-import { arrayRemove, arrayUnion, where } from 'firebase/firestore'
+import {
+  arrayRemove,
+  arrayUnion,
+  where
+} from 'firebase/firestore'
 import { FirebaseCRUD } from '../FirebaseCRUD'
 import { Place } from './place.model'
 

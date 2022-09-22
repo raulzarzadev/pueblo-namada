@@ -2,10 +2,9 @@ import { Base } from '../Base.model'
 
 export interface RoomRequest extends Base {
   placeId: string
-  place: object,
+  place: object
   dates: {
     startsAt: number
     endsAt: number
   }
-
 }

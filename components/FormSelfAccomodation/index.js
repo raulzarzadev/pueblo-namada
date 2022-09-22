@@ -18,9 +18,10 @@ const FormSelfAccommodation = ({ place, guest }) => {
     }
   }
 
-  const { register, handleSubmit, watch, setValue } = useForm({
-    defaultValues
-  })
+  const { register, handleSubmit, watch, setValue } =
+    useForm({
+      defaultValues
+    })
 
   const FORM_STATUS = {
     request: 'Request a room',
@@ -111,11 +112,17 @@ const FormSelfAccommodation = ({ place, guest }) => {
   const getTotals = () => {
     const price = parseFloat(place?.price || 0)
     const usdPrice = parseFloat(place?.usdPrice || 0)
-    const discountedNights = parseInt(watch('discountedNights') || 0)
+    const discountedNights = parseInt(
+      watch('discountedNights') || 0
+    )
     const nights = parseInt(watch('nights') || 0)
-    const mxn = (price * nights - discountedNights * price).toFixed(2)
+    const mxn = (
+      price * nights -
+      discountedNights * price
+    ).toFixed(2)
     const usd = (
-      usdPrice && (price * nights - discountedNights * price) / usdPrice
+      usdPrice &&
+      (price * nights - discountedNights * price) / usdPrice
     ).toFixed(2)
     return { mxn: parseFloat(mxn), usd: parseFloat(usd) }
   }
@@ -123,56 +130,64 @@ const FormSelfAccommodation = ({ place, guest }) => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid gap-1 place-content-stretch ">
+        <div className='grid gap-1 place-content-stretch '>
           <div>
-            <p className="">
+            <p className=''>
               Precio x noche (mxn):
-              <span className="font-bold">
+              <span className='font-bold'>
                 {` $${parseFloat(place?.price).toFixed(2)}`}
               </span>
             </p>
 
-            <p className="">
+            <p className=''>
               Precio x noche (usd):
-              <span className="font-bold">
-                {` $${(
-                    parseFloat(place?.price) / parseFloat(place?.usdPrice)
+              <span className='font-bold'>
+                {` $${
+                  (
+                    parseFloat(place?.price) /
+                    parseFloat(place?.usdPrice)
                   ).toFixed(2) || 0
-                  }`}
+                }`}
               </span>
             </p>
 
-            <p className="">
+            <p className=''>
               Precio x USD:
-              <span className="font-bold">
-                {` $${parseFloat(place?.usdPrice).toFixed(2)}mxn`}
+              <span className='font-bold'>
+                {` $${parseFloat(place?.usdPrice).toFixed(
+                  2
+                )}mxn`}
               </span>
             </p>
           </div>
-          <div className="sm:flex justify-center text-center">
+          <div className='sm:flex justify-center text-center'>
             <InputDate
-              type="date"
-              label="Desde"
+              type='date'
+              label='Desde'
               {...register('dates.startsAt', {
                 value: format(
-                  new Date(watch('dates.startsAt') || new Date()),
+                  new Date(
+                    watch('dates.startsAt') || new Date()
+                  ),
                   'yyyy-MM-dd'
                 )
               })}
             />
             <InputDate
-              type="date"
-              label="Hasta"
+              type='date'
+              label='Hasta'
               disabled
               {...register('dates.endsAt', {
                 value: accommodationEnds(startsAt)
               })}
             />
           </div>
-          <div className="flex justify-end flex-col items-end">
+          <div className='flex justify-end flex-col items-end'>
             <InputNumber
-              type="number"
-              {...register('nights', { valueAsNumber: true })}
+              type='number'
+              {...register('nights', {
+                valueAsNumber: true
+              })}
               label={'Noches'}
               smallSize
               sideLabel
@@ -191,28 +206,29 @@ const FormSelfAccommodation = ({ place, guest }) => {
               max={99}
             /> */}
           </div>
-          <div className="text-center">
-            <p className="">
+          <div className='text-center'>
+            <p className=''>
               Total (mxn):
-              <span className="font-bold text-xl">{`$${totals?.mxn}`}</span>
+              <span className='font-bold text-xl'>{`$${totals?.mxn}`}</span>
             </p>
 
-            <p className="">
+            <p className=''>
               Total (usd) :
-              <span className="font-bold text-xl">{`$${totals?.usd}`}</span>
+              <span className='font-bold text-xl'>{`$${totals?.usd}`}</span>
             </p>
           </div>
           <TextInfo
             text={` You can see the status of your request in your profile or in the place profile `}
           />
           <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={[FORM_STATUS.requested, FORM_STATUS.requesting].includes(
-              labelSave
-            )}
-          /* disabled={[FORM_STATUS[1], FORM_STATUS[2], FORM_STATUS[3]].includes(labelSave) || !isDirty} */
-          // onClick={() => onSubmit(watch())}
+            type='submit'
+            className='btn btn-primary'
+            disabled={[
+              FORM_STATUS.requested,
+              FORM_STATUS.requesting
+            ].includes(labelSave)}
+            /* disabled={[FORM_STATUS[1], FORM_STATUS[2], FORM_STATUS[3]].includes(labelSave) || !isDirty} */
+            // onClick={() => onSubmit(watch())}
           >
             {labelSave}
           </button>

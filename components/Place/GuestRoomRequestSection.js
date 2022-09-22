@@ -10,7 +10,8 @@ const GuestRoomRequestSection = ({ place }) => {
   const {
     user: { guestProfile, name, email, id }
   } = useUser()
-  const [openAccomodationForm, setOpenAccomodationForm] = useState(false)
+  const [openAccomodationForm, setOpenAccomodationForm] =
+    useState(false)
   const handleOpen = () => {
     setOpenAccomodationForm(!openAccomodationForm)
   }
@@ -26,7 +27,10 @@ const GuestRoomRequestSection = ({ place }) => {
 
   return (
     <div>
-      <button className="btn btn-primary btn-sm" onClick={() => handleOpen()}>
+      <button
+        className='btn btn-primary btn-sm'
+        onClick={() => handleOpen()}
+      >
         stay here
       </button>
       <div>
@@ -37,18 +41,24 @@ const GuestRoomRequestSection = ({ place }) => {
         />
       </div>
       <Modal
-        title="Stay here"
+        title='Stay here'
         open={openAccomodationForm}
-        handleOpen={handleOpen}>
-        <div className="">
+        handleOpen={handleOpen}
+      >
+        <div className=''>
           <DefaultGuestInfo guest={guestInfo} />
-          <h4 className="font-bold text-lg">Choose dates</h4>
+          <h4 className='font-bold text-lg'>
+            Choose dates
+          </h4>
 
           <TextInfo
             text={` Choose the start date, and then the numbers of days. `}
           />
 
-          <FormSelfAccommodation place={place} guest={guestInfo} />
+          <FormSelfAccommodation
+            place={place}
+            guest={guestInfo}
+          />
         </div>
       </Modal>
     </div>
@@ -57,8 +67,8 @@ const GuestRoomRequestSection = ({ place }) => {
 
 const DefaultGuestInfo = ({ guest }) => {
   return (
-    <div className="my-4">
-      <h4 className="font-bold text-lg">Guest info</h4>
+    <div className='my-4'>
+      <h4 className='font-bold text-lg'>Guest info</h4>
       <span>
         <TextInfo
           text={`  This informations will be sent to the host. The host will decide if this
