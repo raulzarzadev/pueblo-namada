@@ -3,9 +3,9 @@ import { CurrencySpan } from '../CurrencySpan'
 import { GuestDetails } from '../Guests/Guest/GuestDetails'
 import Modal from '../Modal'
 
-const GuestsTable = ({ guests, payments, place }) => {
+const GuestsTable = ({ guests, payments = [], place }) => {
   return (
-    <table className="mx-auto w-full">
+    <table className='mx-auto w-full'>
       <thead>
         <tr>
           <th>Nombre</th>
@@ -21,7 +21,9 @@ const GuestsTable = ({ guests, payments, place }) => {
             guest={guest}
             place={place}
             key={guest + i}
-            payments={payments.filter((pay) => pay.guest === guest.id)}
+            payments={payments?.filter(
+              (pay) => pay.guest === guest.id
+            )}
           />
         ))}
       </tbody>
@@ -41,8 +43,10 @@ const GuestRow = ({ place, guest, payments }) => {
         console.error('invalid date')
       }
     }
-    if (toNumber(a?.createdAt) > toNumber(b?.createdAt)) return 1
-    if (toNumber(a?.createdAt) < toNumber(b?.createdAt)) return -1
+    if (toNumber(a?.createdAt) > toNumber(b?.createdAt))
+      return 1
+    if (toNumber(a?.createdAt) < toNumber(b?.createdAt))
+      return -1
     return 0
   })
 
@@ -50,14 +54,16 @@ const GuestRow = ({ place, guest, payments }) => {
   return (
     <>
       <tr
-        className="cursor-pointer hover:bg-base-200"
-        onClick={() => handleOpen()}>
-        <Cell className=" truncate max-w-[75px]   ">
-          <span className="">{guest?.name}</span>
+        className='cursor-pointer hover:bg-base-200'
+        onClick={() => handleOpen()}
+      >
+        <Cell className=' truncate max-w-[75px]   '>
+          <span className=''>{guest?.name}</span>
           <Modal
             title={`Información de ${guest?.name} `}
             open={open}
-            handleOpen={handleOpen}>
+            handleOpen={handleOpen}
+          >
             <GuestDetails place={place} guest={guest} />
           </Modal>
         </Cell>
@@ -69,12 +75,12 @@ const GuestRow = ({ place, guest, payments }) => {
               {/*  <div className="text-xs text-right">
                 {lastPay?.createdAt && formatDate(lastPay?.createdAt, 'dd MMM yy')}
               </div> */}
-              <div className="">
+              <div className=''>
                 <CurrencySpan value={lastPay?.mxnTotal} />
               </div>
             </>
           ) : (
-            <span className="text-xs">Sin pagos aún</span>
+            <span className='text-xs'>Sin pagos aún</span>
           )}
           {/*   {payments.sort((a, b) => {
             const toNumber = date => date.getTime()
@@ -89,7 +95,9 @@ const GuestRow = ({ place, guest, payments }) => {
 }
 const Cell = ({ children, className = '' }) => {
   return (
-    <td className={`${className} px-2 py-1 text-center items-center relative`}>
+    <td
+      className={`${className} px-2 py-1 text-center items-center relative`}
+    >
       {children}
     </td>
   )

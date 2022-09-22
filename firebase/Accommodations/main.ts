@@ -35,7 +35,7 @@ export const listenPlaceAccommodations = (
   cb: CallableFunction
 ) =>
   AccommodationsCRUD.listenDocs(
-    where('place', '==', placeId),
+    [where('place', '==', placeId)],
     cb
   )
 

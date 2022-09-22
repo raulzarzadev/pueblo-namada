@@ -281,12 +281,12 @@ export class FirebaseCRUD {
      * listen all documents in a collection implmementing filters
      * @param filters: where(itemField,'==','value')
      */
-
+    if (!Array.isArray(filters)) return console.error('filter is not an array', { collectionName: this.collectionName })
     if (!filters)
       return console.error('Should have filters implentade')
     const q = query(
       collection(db, this.collectionName),
-      filters
+      ...filters
     )
 
     onSnapshot(q, (querySnapshot) => {
