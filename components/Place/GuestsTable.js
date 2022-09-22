@@ -6,7 +6,7 @@ import { CurrencySpan } from '../CurrencySpan'
 import { GuestDetails } from '../Guests/Guest/GuestDetails'
 import Modal from '../Modal'
 
-const GuestsTable = ({ guests, payments = [], place }) => {
+const GuestsTable = ({ guests, place }) => {
   const { arraySorted: sortedGuests, handleSortBy } =
     useSortByField(guests)
 

@@ -165,15 +165,11 @@ export default function DashboardPlace({
           </Section>
         )}
 
-        {showPaymentsTable && (
+        {/* {showPaymentsTable && (
           <Section title='Payments'>
-            <PaymentsTable
-              place={place}
-              guests={formatedGuest}
-              payments={placePayments}
-            />
+            <PaymentsTable payments={placePayments} />
           </Section>
-        )}
+        )} */}
 
         {showOperatingCosts && (
           <Section title='Costs'>

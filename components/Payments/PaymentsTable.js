@@ -1,3 +1,4 @@
+import useSortByField from '@/hooks/useSortByField'
 import { Dates } from 'firebase-dates-util'
 import { useState } from 'react'
 import sortByDate from '../../utils/sortByDate'
@@ -5,49 +6,60 @@ import { CurrencySpan } from '../CurrencySpan'
 import { PaymentDetails } from '../Guests/Guest/GuestPayments'
 import Modal from '../Modal'
 
-const PaymentsTable = ({ place, guests, payments }) => {
-  /*   const [payments, setPayments] = useState(undefined)
-
-    useEffect(() => {
-      listenPlaceAccommodations(place?.id, setPayments)
-    }, []) */
-
+const PaymentsTable = ({ payments }) => {
+  const { arraySorted: sortedPayments, handleSortBy } =
+    useSortByField(payments)
+  console.log(sortedPayments)
   return (
     <div>
       <h2 className='font-bold text-center'>Pagos</h2>
       <table className='mx-auto w-full'>
         <thead>
           <tr>
-            <th>Huesped</th>
-            <th>Entrada</th>
-            <th>Salida</th>
-            <th>Creado</th>
-            <th>Pago</th>
+            <th>
+              <button onClick={() => handleSortBy('name')}>
+                Guest
+              </button>
+            </th>
+            <th>
+              <button onClick={() => handleSortBy('name')}>
+                Check-in
+              </button>
+            </th>
+            <th>
+              <button onClick={() => handleSortBy('name')}>
+                Check-out
+              </button>
+            </th>
+            <th>
+              <button onClick={() => handleSortBy('name')}>
+                Creted at
+              </button>
+            </th>
+            <th>
+              <button onClick={() => handleSortBy('name')}>
+                Payment
+              </button>
+            </th>
           </tr>
         </thead>
         <tbody>
-          {sortByDate(payments, 'createdAt', 'dec')?.map(
-            (payment) => (
-              <PaymentRow
-                key={payment.id}
-                place={place}
-                payment={payment}
-                guests={guests}
-              />
-            )
-          )}
+          {sortedPayments.map((payment) => (
+            <PaymentRow
+              key={payment.id}
+              payment={payment}
+            />
+          ))}
         </tbody>
       </table>
     </div>
   )
 }
 
-const PaymentRow = ({ place, payment, guests }) => {
+const PaymentRow = ({ payment }) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
-  const guest = guests?.find(
-    ({ id }) => id === payment?.guest
-  )
+
   const { dates } = payment
 
   return (
@@ -66,7 +78,7 @@ const PaymentRow = ({ place, payment, guests }) => {
             <h2 className='font-bold'>{guest?.name}</h2>
             <PaymentDetails
               payment={payment}
-              place={place}
+              place={payment?.place}
             />
             {/* <GuestDetails place={place} guest={guest} /> */}
           </Modal>

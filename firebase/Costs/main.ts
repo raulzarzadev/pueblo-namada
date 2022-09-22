@@ -22,7 +22,7 @@ export const listenPlaceCosts = (
   placeId: string,
   cb: CallableFunction
 ) =>
-  CostsCRUD.listenDocs(where('placeId', '==', placeId), cb)
+  CostsCRUD.listenDocs([where('placeId', '==', placeId)], cb)
 
 export const getPlaceCostBetteenDates = (
   placeId: unknown,
