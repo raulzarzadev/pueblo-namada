@@ -3,16 +3,18 @@ import { signIn, signUp } from '../../firebase/user'
 import FormUser from '../FormUser'
 import RecoverPassawordForm from '../FormUser/recover'
 
-export default function LoginCard ({ formVariant = 'login', formProps = {} }) {
+export default function LoginCard({
+  formVariant = 'login',
+  formProps = {}
+}) {
   const router = useRouter()
   const loginSumbit = ({ email, password }) => {
-    signIn({ email, password }).then((res) => {
-      console.log(res)
-      router.push('/profile')
-    }).catch((err) =>
-      console.error(err)
-
-    )
+    signIn({ email, password })
+      .then((res) => {
+        console.log(res)
+        router.push('/profile')
+      })
+      .catch((err) => console.error(err))
   }
 
   const recoverSubmit = ({ email }) => {
@@ -34,7 +36,7 @@ export default function LoginCard ({ formVariant = 'login', formProps = {} }) {
         <FormUser
           submitForm={loginSumbit}
           {...formProps}
-          buttonLabel="Ingresar"
+          buttonLabel='Ingresar'
         />
       )
     },
@@ -44,7 +46,7 @@ export default function LoginCard ({ formVariant = 'login', formProps = {} }) {
         <RecoverPassawordForm
           submitForm={recoverSubmit}
           {...formProps}
-          buttonLabel="Enviar email"
+          buttonLabel='Enviar email'
         />
       )
     },
@@ -54,16 +56,16 @@ export default function LoginCard ({ formVariant = 'login', formProps = {} }) {
         <FormUser
           submitForm={signupSubmit}
           {...formProps}
-          buttonLabel="Registrate"
+          buttonLabel='Registrate'
         />
       )
     }
   }
 
   return (
-    <div className="flex justify-center items-center my-10 ">
-      <div className="card w-auto bg-base-100 shadow-xl p-10">
-        <h1 className="text-3xl font-bold text-center">
+    <div className='flex justify-center items-center my-10 '>
+      <div className='card w-auto bg-base-100 shadow-xl p-10'>
+        <h1 className='text-3xl font-bold text-center'>
           {formsOptions[formVariant]?.formLabel}
         </h1>
         {formsOptions[formVariant]?.Component}

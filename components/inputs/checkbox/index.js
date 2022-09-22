@@ -10,10 +10,10 @@ const Checkbox = React.forwardRef(
       xl: 'checkbox-xl'
     }
     return (
-      <label className="flex flex-col text-center justify-center items-center text-xs">
+      <label className='flex flex-col text-center justify-center items-center text-xs'>
         {label}
         <input
-          type="checkbox"
+          type='checkbox'
           className={`checkbox ${SIZES[size]}`}
           ref={ref}
           {...rest}

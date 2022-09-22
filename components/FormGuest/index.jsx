@@ -8,15 +8,12 @@ import Text from '../inputs/text'
 import Checkbox from '../inputs/checkbox'
 import Loading from '../Loadign'
 
-import { createGuest, updateGuest } from '../../firebase/Gests/main'
+import {
+  createGuest,
+  updateGuest
+} from '../../firebase/Gests/main'
 
 export default function FormGuest({ guest }) {
-  useEffect(() => {
-    const gestStorage = localStorage.getItem('new-guest-form')
-    if (gestStorage) {
-    }
-  }, [])
-
   const {
     register,
     handleSubmit,
@@ -53,72 +50,87 @@ export default function FormGuest({ guest }) {
         }
       })
     } else {
-      createGuest({ ...data, placeId }).then(({ document }) => {
-        if (document?.id) {
-          setLabelSave(FORM_STATUS[1])
-          console.log('saved')
-          back()
+      createGuest({ ...data, placeId }).then(
+        ({ document }) => {
+          if (document?.id) {
+            setLabelSave(FORM_STATUS[1])
+            console.log('saved')
+            back()
+          }
         }
-      })
+      )
     }
   }
 
   const handleUploadFile = async ({ fieldName, file }) => {
     setLabelSave(FORM_STATUS[2])
 
-    uploadFile(file, `gests/${fieldName}s/`, (progress, downloadURL) => {
-      if (downloadURL) {
-        setValue(fieldName, downloadURL)
-        setLabelSave(FORM_STATUS[0])
+    uploadFile(
+      file,
+      `gests/${fieldName}s/`,
+      (progress, downloadURL) => {
+        if (downloadURL) {
+          setValue(fieldName, downloadURL)
+          setLabelSave(FORM_STATUS[0])
+        }
       }
-    })
+    )
   }
 
   return (
-    <div className="max-w-sm mx-auto">
+    <div className='max-w-sm mx-auto'>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex justify-end sticky top-8 bg-base-100 pb-1  ">
+        <div className='flex justify-end sticky top-8 bg-base-100 pb-1  '>
           <button
-            className="btn btn-primary my-1"
-            disabled={['Guardado', 'Guardando', 'Cancelado'].includes(
-              labelSave
-            )}
+            className='btn btn-primary my-1'
+            disabled={[
+              'Guardado',
+              'Guardando',
+              'Cancelado'
+            ].includes(labelSave)}
           >
-            {labelSave == FORM_STATUS[2] && <Loading />}
+            {labelSave === FORM_STATUS[2] && <Loading />}
             {labelSave}
           </button>
         </div>
-        <div className="grid gap-2 place-content-center p-1  ">
-          <div className="my-5">
-            <span className="mx-2 flex justify-center ">
+        <div className='grid gap-2 place-content-center p-1  '>
+          <div className='my-5'>
+            <span className='mx-2 flex justify-center '>
               ¿Huesped público?
-              <span className="mx-2">
-                <Checkbox size="xl" {...register('publicGuest')} />
+              <span className='mx-2'>
+                <Checkbox
+                  size='xl'
+                  {...register('publicGuest')}
+                />
               </span>
             </span>
-            <span className="text-xs">
-              Otros huespedes podran ver tu "contacto publico" y podras ver el
-              de otros huespedes
+            <span className='text-xs'>
+              {` Otros huespedes podran ver tu "contacto publico" y podras ver el
+              de otros huespedes`}
             </span>
           </div>
           <Text
             {...register('name')}
-            label="Nombre"
-            placeholder="Nombre del conductor"
+            label='Nombre'
+            placeholder='Nombre del conductor'
           />
           <Text
             {...register('plates')}
-            label="Placas"
-            placeholder="Placas del auto"
+            label='Placas'
+            placeholder='Placas del auto'
           />
           <Text
             {...register('publicContact')}
-            label="Public Contact"
-            placeholder="instagram - facebook - pagina web"
+            label='Public Contact'
+            placeholder='instagram - facebook - pagina web'
           />
-          <Text {...register('email')} label="Email" placeholder="Email " />
+          <Text
+            {...register('email')}
+            label='Email'
+            placeholder='Email '
+          />
           <Phone
-            label="Teléfono (whatsapp)"
+            label='Teléfono (whatsapp)'
             onChange={(value) => {
               setValue('phone', value)
             }}
@@ -127,16 +139,22 @@ export default function FormGuest({ guest }) {
           <File
             preview={watch('imageID')}
             onChange={({ target: { files } }) =>
-              handleUploadFile({ fieldName: 'imageID', file: files[0] })
+              handleUploadFile({
+                fieldName: 'imageID',
+                file: files[0]
+              })
             }
-            label="Imagen ID"
+            label='Imagen ID'
           />
           <File
             preview={watch('publicImage')}
             onChange={({ target: { files } }) =>
-              handleUploadFile({ fieldName: 'publicImage', file: files[0] })
+              handleUploadFile({
+                fieldName: 'publicImage',
+                file: files[0]
+              })
             }
-            label="Imagen pública "
+            label='Imagen pública '
           />
         </div>
       </form>

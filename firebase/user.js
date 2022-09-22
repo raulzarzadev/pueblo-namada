@@ -9,7 +9,11 @@ import { auth } from '.'
 import { mapUserFromFirebase } from './firebase-helpers'
 
 export async function signUp({ email, password }) {
-  return await createUserWithEmailAndPassword(auth, email, password)
+  return await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password
+  )
     .then(({ user }) => {
       return { email, password }
     })
@@ -19,7 +23,11 @@ export async function signUp({ email, password }) {
 }
 
 export async function signIn({ email, password }) {
-  return await signInWithEmailAndPassword(auth, email, password)
+  return await signInWithEmailAndPassword(
+    auth,
+    email,
+    password
+  )
     .then((userCredential) => userCredential)
     .catch((err) => console.error(err))
 }

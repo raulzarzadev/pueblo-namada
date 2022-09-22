@@ -14,9 +14,17 @@ const DATE_FIELDS = [
   'publishStart',
   'lastUpdate'
 ]
-const TARGETS = ['firebase', 'milliseconds', 'date', 'fieldDate']
+const TARGETS = [
+  'firebase',
+  'milliseconds',
+  'date',
+  'fieldDate'
+]
 
-export function deepFormatFirebaseDates(object, target = 'firebase') {
+export function deepFormatFirebaseDates(
+  object,
+  target = 'firebase'
+) {
   if (!TARGETS.includes(target)) {
     return console.error('target must be one of:', TARGETS)
   }
@@ -67,7 +75,9 @@ export function deepFormatFirebaseDates(object, target = 'firebase') {
       deepFormatFirebaseDates(objProperty, target)
       // if is an array
     } else if (Array.isArray(objProperty)) {
-      objProperty.map((item) => deepFormatFirebaseDates(item, target))
+      objProperty.map((item) =>
+        deepFormatFirebaseDates(item, target)
+      )
     }
   })
 

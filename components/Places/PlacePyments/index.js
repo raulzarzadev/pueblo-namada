@@ -16,8 +16,10 @@ export default function PlacePyments({ place }) {
 
   return (
     <div>
-      <h1 className="text-center font-bold text-lg">Pagos</h1>
-      <table className="mx-auto">
+      <h1 className='text-center font-bold text-lg'>
+        Pagos
+      </h1>
+      <table className='mx-auto'>
         <tr>
           <th>id</th>
           <th>Huesped</th>
@@ -37,8 +39,8 @@ const PaymentRow = ({ payment }) => {
   const { id, dates, price, guest } = payment
   return (
     <tr>
-      <td className="max-w-[100px] truncate">{guest}</td>
-      <td className="max-w-[100px] truncate">{id}</td>
+      <td className='max-w-[100px] truncate'>{guest}</td>
+      <td className='max-w-[100px] truncate'>{id}</td>
       <td>{formatDate(dates?.starts, 'dd MMM yy')}</td>
       <td>{formatDate(dates?.ends, 'dd MMM yy')}</td>
       <td>

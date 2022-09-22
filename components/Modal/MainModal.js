@@ -23,14 +23,17 @@ export default function MainModal({
   return (
     <>
       {OpenComponent ? (
-        <OpenComponent onClick={handleOpenModal} {...OpenComponentProps} />
+        <OpenComponent
+          onClick={handleOpenModal}
+          {...OpenComponentProps}
+        />
       ) : (
         <button
           onClick={() => handleOpenModal()}
           {...OpenComponentProps}
-          className={`${OpenComponentProps?.className || ''} ${
-            OPEN_COMPONENT_STYLE[OpenComponentType]
-          }`}
+          className={`${
+            OpenComponentProps?.className || ''
+          } ${OPEN_COMPONENT_STYLE[OpenComponentType]}`}
         >
           {buttonLabel}
         </button>

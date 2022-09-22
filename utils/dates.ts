@@ -18,7 +18,8 @@ export const format = (
     return fnsFormat(
       new Date(
         objectDate.setMinutes(
-          objectDate.getMinutes() + objectDate.getTimezoneOffset()
+          objectDate.getMinutes() +
+            objectDate.getTimezoneOffset()
         )
       ),
       stringFormat

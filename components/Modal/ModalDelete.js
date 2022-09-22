@@ -15,7 +15,8 @@ export default function ModalDelete({
     setOpen(!open)
   }
   const [loading, setLoading] = useState(false)
-  const [buttonLabelModal, setButtonLabelModal] = useState('Eliminar')
+  const [buttonLabelModal, setButtonLabelModal] =
+    useState('Eliminar')
 
   const functionDelete = async () => {
     setLoading(true)
@@ -46,7 +47,7 @@ export default function ModalDelete({
     <div>
       <button
         onClick={handleOpen}
-        className="text-error"
+        className='text-error'
         /*  iconName={'trash'}
        size={buttonSize}
        label={buttonLabel}
@@ -55,14 +56,18 @@ export default function ModalDelete({
       >
         <DeleteIcon />
       </button>
-      <Modal title={modalTitle} open={open} handleOpen={handleOpen}>
-        <div className="text-center whitespace-pre-line">
+      <Modal
+        title={modalTitle}
+        open={open}
+        handleOpen={handleOpen}
+      >
+        <div className='text-center whitespace-pre-line'>
           {deleteText ||
             `¿Seguro que desea eliminar 
            ${itemLabel.toUpperCase()} 
            de forma permanente?`}
 
-          <div className="w-full justify-evenly flex my-4 ">
+          <div className='w-full justify-evenly flex my-4 '>
             <button
               className={'btn-outline btn btn-sm'}
               onClick={() => {

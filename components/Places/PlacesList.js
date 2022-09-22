@@ -13,9 +13,11 @@ export default function PlacesList() {
   const { user } = useUser()
 
   return (
-    <div className="">
-      <h1 className="text-xl font-bold text-center my-4">Lugares</h1>
-      <div className="grid place-content-center gap-4">
+    <div className=''>
+      <h1 className='text-xl font-bold text-center my-4'>
+        Lugares
+      </h1>
+      <div className='grid place-content-center gap-4'>
         {places.map((place) => (
           <PlaceCard
             key={place?.id}

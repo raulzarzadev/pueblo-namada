@@ -16,7 +16,9 @@ export class Dates {
       return 'NaD'
     }
     const objectDate = new Date(date)
-    function isValidDate(d: string | number | Date): boolean {
+    function isValidDate(
+      d: string | number | Date
+    ): boolean {
       return d instanceof Date && !isNaN(d as any)
     }
 
@@ -24,7 +26,8 @@ export class Dates {
       return fnsFormat(
         new Date(
           objectDate.setMinutes(
-            objectDate.getMinutes() + objectDate.getTimezoneOffset()
+            objectDate.getMinutes() +
+              objectDate.getTimezoneOffset()
           )
         ),
         stringFormat,
@@ -36,9 +39,13 @@ export class Dates {
     }
   }
 
-  static fromNow = (date: string | number | Date): string => {
+  static fromNow = (
+    date: string | number | Date
+  ): string => {
     const objectDate = new Date(date)
-    function isValidDate(d: string | number | Date): boolean {
+    function isValidDate(
+      d: string | number | Date
+    ): boolean {
       return d instanceof Date && !isNaN(d as any)
     }
 

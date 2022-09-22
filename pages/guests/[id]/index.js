@@ -16,7 +16,9 @@ export default function Guest() {
   if (!guest) return <div>Cargando...</div>
   return (
     <div>
-      <h1 className="text-center font-bold border">Huesped</h1>
+      <h1 className='text-center font-bold border'>
+        Huesped
+      </h1>
       <FormGuest guest={guest} />
     </div>
   )

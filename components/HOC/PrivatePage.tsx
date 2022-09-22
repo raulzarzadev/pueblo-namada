@@ -19,37 +19,56 @@ const PrivatePage = ({
   const AUTH_PAGES = {
     public: () => <>{children}</>,
     private: () =>
-      user ? <>{children}</> : <NoUserPage permissionTo={permissionTo} />,
+      user ? (
+        <>{children}</>
+      ) : (
+        <NoUserPage permissionTo={permissionTo} />
+      ),
     admin: () =>
       user?.admin ? (
         <>{children}</>
       ) : (
         <NoUserPage permissionTo={permissionTo} />
       ),
-    owner: ({ elementOwner }: { elementOwner: string | null }) =>
+    owner: ({
+      elementOwner
+    }: {
+      elementOwner: string | null
+    }) =>
       user?.uid === elementOwner ? (
         <>{children}</>
       ) : (
         <NoUserPage permissionTo={permissionTo} />
       )
   }
-  const Component = AUTH_PAGES[permissionTo] as React.ElementType
+  const Component = AUTH_PAGES[
+    permissionTo
+  ] as React.ElementType
 
   return <Component elementOwner={elementOwner} />
 }
 
-const NoUserPage = ({ permissionTo }: { permissionTo: PermissionTo }) => {
+const NoUserPage = ({
+  permissionTo
+}: {
+  permissionTo: PermissionTo
+}) => {
   const { back } = useRouter()
   return (
-    <div className="h-screen flex justify-center items-center flex-col">
-      <h1 className="text-3xl ">No tienes autorización</h1>
+    <div className='h-screen flex justify-center items-center flex-col'>
+      <h1 className='text-3xl '>No tienes autorización</h1>
       <p>({permissionTo})</p>
-      <div className="flex  w-full justify-evenly ">
-        <button className="btn btn-outline" onClick={() => back()}>
+      <div className='flex  w-full justify-evenly '>
+        <button
+          className='btn btn-outline'
+          onClick={() => back()}
+        >
           Regresa
         </button>
         <Link href={'/login'}>
-          <button className="btn btn-primary">Inicia sesión</button>
+          <button className='btn btn-primary'>
+            Inicia sesión
+          </button>
         </Link>
       </div>
     </div>

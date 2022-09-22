@@ -15,7 +15,9 @@ import { async } from '@firebase/util'
 export async function getAccommodations(cb) {
   const accommodations = collection(db, 'accommodations')
   const docsSnapshot = await getDocs(accommodations)
-  const accommodationsList = docsSnapshot.docs.map((doc) => doc.data())
+  const accommodationsList = docsSnapshot.docs.map((doc) =>
+    doc.data()
+  )
   console.log(docsSnapshot)
 }
 
@@ -31,7 +33,10 @@ export async function listenAccommodations(...props) {
   })
 }
 
-export async function updateAccommodations(id, accommodations) {
+export async function updateAccommodations(
+  id,
+  accommodations
+) {
   const accommodationsRef = doc(db, 'accommodations', id)
   return await updateDoc(accommodationsRef, accommodations)
     .then((res) => {
@@ -46,7 +51,9 @@ export async function listenAccommodation(...props) {
   const q = query(doc(collection(db, 'accommodations'), id))
   onSnapshot(q, (querySnapshot) => {
     const accommodations = querySnapshot.data()
-    accommodations ? cb({ ...accommodations, id }) : cb(null)
+    accommodations
+      ? cb({ ...accommodations, id })
+      : cb(null)
   })
 }
 
@@ -78,7 +85,9 @@ export async function listenUserAccommodations(...props) {
   })
 }
 
-export async function listenAccommodationPayments(...props) {
+export async function listenAccommodationPayments(
+  ...props
+) {
   const cb = props.pop()
   const { guestId, placeId } = props[0]
   const q = query(
@@ -99,11 +108,14 @@ export async function newAccommodation(accommodation) {
   const user = mapUserFromFirebase(auth.currentUser)
   if (!user) return console.error('No user logged in')
   try {
-    const docRef = await addDoc(collection(db, 'accommodations'), {
-      ...accommodation,
-      userId: user.uid,
-      createdAt: new Date().toISOString()
-    })
+    const docRef = await addDoc(
+      collection(db, 'accommodations'),
+      {
+        ...accommodation,
+        userId: user.uid,
+        createdAt: new Date().toISOString()
+      }
+    )
     return {
       message: `Document written with ID: ${docRef.id}`,
       document: accommodation

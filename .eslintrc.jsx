@@ -16,16 +16,20 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module'
   },
-  plugins: ['react'],
+  plugins: ['react', 'prettier'],
   rules: {
-    'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Use our .prettierrc file as source
+    'prettier/prettier': [
+      'error',
+      {},
+      { usePrettierrc: true }
+    ], // Use our .prettierrc file as source
     'react/jsx-uses-react': 'off',
-    'react/react-in-jsx-scope': 'on',
+    'react/react-in-jsx-scope': 0,
     'react/prop-types': 0,
-    "jsx-quotes": [
-      1,
-      "prefer-single"
-    ],
-    "react/jsx-max-props-per-line": [2, { "maximum": 1, "when": "always" }]
+    'jsx-quotes': [1, 'prefer-single'],
+    'react/jsx-max-props-per-line': [
+      2,
+      { maximum: 1, when: 'always' }
+    ]
   }
 }

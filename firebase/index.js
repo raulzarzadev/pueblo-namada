@@ -4,7 +4,8 @@ import { getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
 // const { initializeAppCheck, ReCaptchaV3Provider } = require("firebase/app-check");
 
-const firebaseConfig = process.env.NEXT_PUBLIC_FIREBASE_CONFIG
+const firebaseConfig =
+  process.env.NEXT_PUBLIC_FIREBASE_CONFIG
 
 const app = initializeApp(JSON.parse(firebaseConfig))
 export const db = getFirestore(app)

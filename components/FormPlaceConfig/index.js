@@ -23,7 +23,8 @@ const FormPlaceConfig = ({ place }) => {
   }
 
   function deepEqual(x, y) {
-    const isObject = (x) => typeof x === 'object' && x != null
+    const isObject = (x) =>
+      typeof x === 'object' && x != null
     if (x === y) {
       return true
     } else if (!isObject(x) || !isObject(y)) {
@@ -47,7 +48,9 @@ const FormPlaceConfig = ({ place }) => {
   const defaultLabel = 1
   const [labelSave, setLabelSave] = useState(defaultLabel)
   useEffect(() => {
-    deepEqual(watch(), { ...place.config }) ? setLabelSave(1) : setLabelSave(0)
+    deepEqual(watch(), { ...place.config })
+      ? setLabelSave(1)
+      : setLabelSave(0)
   }, [watch()])
 
   const onSubmit = (data) => {
@@ -61,34 +64,39 @@ const FormPlaceConfig = ({ place }) => {
 
   return (
     <div>
-      <h2 className="text-center font-bold text-xl">Configuración</h2>
-      <div className="grid max-w-sm  mx-auto mb-6">
-        <div className="divider" />
+      <h2 className='text-center font-bold text-xl'>
+        Configuración
+      </h2>
+      <div className='grid max-w-sm  mx-auto mb-6'>
+        <div className='divider' />
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex items-center justify-evenly ">
-            <span className="label-text whitespace-nowrap">
+          <div className='flex items-center justify-evenly '>
+            <span className='label-text whitespace-nowrap'>
               Huespedes visibles para :{' '}
             </span>
-            <div className="flex items-center justify-evenly w-full">
+            <div className='flex items-center justify-evenly w-full'>
               <Checkbox
                 {...register('guestsVisiblesFor.admin')}
-                label="Admin"
+                label='Admin'
               />
               {/*   <Checkbox {...register('guestsVisiblesFor.guests')} label='Huespedes' /> */}
-              <Checkbox {...register('guestsVisiblesFor.all')} label="Todos" />
+              <Checkbox
+                {...register('guestsVisiblesFor.all')}
+                label='Todos'
+              />
             </div>
           </div>
 
-          <div className="flex w-full justify-center mt-2">
+          <div className='flex w-full justify-center mt-2'>
             <button
-              className="btn btn-sm btn-primary"
+              className='btn btn-sm btn-primary'
               disabled={[1, 2, 3].includes(labelSave)}
             >
               {FORM_STATUS[labelSave]}
             </button>
           </div>
         </form>
-        <div className="divider" />
+        <div className='divider' />
       </div>
     </div>
   )

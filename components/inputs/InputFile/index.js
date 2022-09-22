@@ -13,32 +13,34 @@ const InputFile = React.forwardRef(
     ref
   ) => {
     return (
-      <div className="form-control w-full max-w-sm">
-        <label className="label">
-          {label && <span className="label-text">{label}</span>}
+      <div className='form-control w-full max-w-sm'>
+        <label className='label'>
+          {label && (
+            <span className='label-text'>{label}</span>
+          )}
         </label>
         {preview && (
-          <figure className="relative h-36">
+          <figure className='relative h-36'>
             <Image
               src={preview}
-              objectFit="contain"
-              layout="fill"
-              blurDataURL="/images/overlander.jpg"
-              placeholder="blur"
+              objectFit='contain'
+              layout='fill'
+              blurDataURL='/images/overlander.jpg'
+              placeholder='blur'
             />
           </figure>
         )}
         <input
           ref={ref}
-          className="
+          className='
           input
           input-bordered w-full
           file:btn
           file:rounded-r-none
           p-0
-          "
-          type="file"
-          id="formFileMultiple"
+          '
+          type='file'
+          id='formFileMultiple'
           onChange={({ target: { files } }) =>
             onUpload({ fieldName: name, file: files[0] })
           }

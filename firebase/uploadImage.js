@@ -1,4 +1,8 @@
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL
+} from 'firebase/storage'
 import { storage } from '.'
 import { v4 as uidGenerator } from 'uuid'
 
@@ -18,7 +22,9 @@ export const uploadFile = (
     (snapshot) => {
       // Observe state change events such as progress, pause, and resume
       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      const progress =
+        (snapshot.bytesTransferred / snapshot.totalBytes) *
+        100
       console.log('Upload is ' + progress + '% done')
       cb(progress, null)
       switch (snapshot.state) {
@@ -38,11 +44,13 @@ export const uploadFile = (
     () => {
       // Handle successful uploads on complete
       // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log('File available at', downloadURL)
-        // eslint-disable-next-line n/no-callback-literal
-        cb(100, downloadURL)
-      })
+      getDownloadURL(uploadTask.snapshot.ref).then(
+        (downloadURL) => {
+          console.log('File available at', downloadURL)
+          // eslint-disable-next-line n/no-callback-literal
+          cb(100, downloadURL)
+        }
+      )
     }
   )
   /*   uploadBytes(storageRef(storagePath), file).then((snapshot) => {

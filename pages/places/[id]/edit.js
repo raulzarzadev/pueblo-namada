@@ -17,9 +17,11 @@ export default function EditPlace() {
   if (place === undefined) return <div>Cargando ...</div>
 
   return (
-    <PrivatePage permissionTo="public">
+    <PrivatePage permissionTo='public'>
       <div>
-        <h1 className="text-2xl font-bold text-center my-2">Editar Lugar</h1>
+        <h1 className='text-2xl font-bold text-center my-2'>
+          Editar Lugar
+        </h1>
         <FormPlace place={place} editing />
       </div>
     </PrivatePage>

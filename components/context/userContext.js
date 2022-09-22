@@ -1,4 +1,9 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState
+} from 'react'
 import { useRouter } from 'next/router'
 import { authStateChanged } from '../../firebase/user'
 const UserContext = createContext()
@@ -14,7 +19,9 @@ export function UserProvider({ children }) {
   if (user === undefined) return <div>loading ...</div>
 
   return (
-    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ user }}>
+      {children}
+    </UserContext.Provider>
   )
 }
 

@@ -31,72 +31,89 @@ export const GuestDetails = ({ guest, place }) => {
   }
   const handleEditGuest = (id) => {
     router.push(`/guests/${id}`)
-    localStorage.setItem('guest-edit', JSON.stringify(guest))
+    localStorage.setItem(
+      'guest-edit',
+      JSON.stringify(guest)
+    )
   }
   return (
-    <div className="max-w-sm mx-auto">
+    <div className='max-w-sm mx-auto'>
       <p>
-        <span className="font-bold">Nombre:</span> {guest?.name}
+        <span className='font-bold'>Nombre:</span>{' '}
+        {guest?.name}
       </p>
       {plates && (
         <p>
-          <span className="font-bold ">Placas:</span> {plates}
+          <span className='font-bold '>Placas:</span>{' '}
+          {plates}
         </p>
       )}
       {phone && (
-        <div className="flex">
-          <span className="font-bold">Teléfono:</span> {phone}
+        <div className='flex'>
+          <span className='font-bold'>Teléfono:</span>{' '}
+          {phone}
           <a
-            className="flex mx-2"
-            target="_blank"
+            className='flex mx-2'
+            target='_blank'
             href={`https://wa.me/${phone}?text=${CONTENT_INFO}`}
-            rel="noreferrer">
+            rel='noreferrer'
+          >
             ws <SendIcon />
           </a>
         </div>
       )}
       {email && (
-        <div className="flex">
-          <span className="font-bold">Email:</span> {email}
+        <div className='flex'>
+          <span className='font-bold'>Email:</span> {email}
           <a
-            target="_blank"
-            className=" "
+            target='_blank'
+            className=' '
             href={`mailto:${email}?subject=${SUBJECT_INFO}&body=${CONTENT_INFO}`}
-            rel="noreferrer">
+            rel='noreferrer'
+          >
             <SendIcon />
           </a>
         </div>
       )}
 
-      <div className="flex justify-around py-3 ">
+      <div className='flex justify-around py-3 '>
         <MainModal
-          title="Eliminar huesped"
-          buttonLabel="Eliminar"
-          OpenComponentType={'delete'}>
-          <div className="flex flex-col items-center">
-            <p>¿Estás seguro de que deseas eliminar este huesped?</p>
+          title='Eliminar huesped'
+          buttonLabel='Eliminar'
+          OpenComponentType={'delete'}
+        >
+          <div className='flex flex-col items-center'>
+            <p>
+              ¿Estás seguro de que deseas eliminar este
+              huesped?
+            </p>
             <button
-              className="btn btn-error btn-sm my-4"
-              onClick={() => handleDeleteGuest(guest.id)}>
+              className='btn btn-error btn-sm my-4'
+              onClick={() => handleDeleteGuest(guest.id)}
+            >
               Eliminar
             </button>
           </div>
         </MainModal>
         <button
-          className="btn btn-info btn-sm"
-          onClick={() => handleEditGuest(guest.id)}>
+          className='btn btn-info btn-sm'
+          onClick={() => handleEditGuest(guest.id)}
+        >
           Editar
         </button>
       </div>
 
-      <div className="sm:flex sm:justify-evenly">
-        <PreviewImage label="Public image:" image={publicImage} />
+      <div className='sm:flex sm:justify-evenly'>
+        <PreviewImage
+          label='Public image:'
+          image={publicImage}
+        />
         {/* {publicImage &&
           <figure className="relative mx-auto h-40 sm:w-1/2">
           <Image src={publicImage} objectFit='cover' layout="fill" />
           </figure>
         } */}
-        <PreviewImage label="ID image" image={imageID} />
+        <PreviewImage label='ID image' image={imageID} />
 
         {/* {imageID &&
           <figure className="relative mx-auto h-40 sm:w-1/2">

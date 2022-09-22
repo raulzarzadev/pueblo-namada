@@ -1,7 +1,8 @@
 export const testPlace = {
   name: 'Peace Center',
   contact: '+56 9 9999 9999',
-  resume: 'Lugar cerca del centro, junto a la cilcovia a 2min del la playa',
+  resume:
+    'Lugar cerca del centro, junto a la cilcovia a 2min del la playa',
   address: 'Calle falsa 123. La Paz BCS Mexico',
   rules: `Lorem et tempor adipisicing veniam occaecat Lorem elit dolore reprehenderit aliqua duis tempor. Cupidatat esse ea 
   adipisicing nostrud incididunt proident. Eu consectetur labore commodo incididunt dolor irure et commodo ullamco commodo commodo 

@@ -38,7 +38,9 @@ if (!self.define) {
       }).then(() => {
         const promise = registry[uri]
         if (!promise) {
-          throw new Error(`Module ${uri} didn’t register its module`)
+          throw new Error(
+            `Module ${uri} didn’t register its module`
+          )
         }
         return promise
       })
@@ -48,7 +50,9 @@ if (!self.define) {
   self.define = (depsNames, factory) => {
     const uri =
       nextDefineUri ||
-      ('document' in self ? document.currentScript.src : '') ||
+      ('document' in self
+        ? document.currentScript.src
+        : '') ||
       location.href
     if (registry[uri]) {
       // Module is already loading or loaded.
@@ -62,7 +66,10 @@ if (!self.define) {
       require
     }
     registry[uri] = Promise.all(
-      depsNames.map((depName) => specialDeps[depName] || require(depName))
+      depsNames.map(
+        (depName) =>
+          specialDeps[depName] || require(depName)
+      )
     ).then((deps) => {
       factory(...deps)
       return exports
@@ -95,8 +102,16 @@ define(['./workbox-74d02f44'], function (workbox) {
       cacheName: 'start-url',
       plugins: [
         {
-          cacheWillUpdate: async ({ request, response, event, state }) => {
-            if (response && response.type === 'opaqueredirect') {
+          cacheWillUpdate: async ({
+            request,
+            response,
+            event,
+            state
+          }) => {
+            if (
+              response &&
+              response.type === 'opaqueredirect'
+            ) {
               return new Response(response.body, {
                 status: 200,
                 statusText: 'OK',

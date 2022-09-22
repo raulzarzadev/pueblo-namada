@@ -1,7 +1,10 @@
 // @ts-check
 import { format } from 'date-fns'
 
-export const formatDate = (date, stringFormat = 'dd/MM/yy') => {
+export const formatDate = (
+  date,
+  stringFormat = 'dd/MM/yy'
+) => {
   if (!date) return console.error('no date')
   const objectDate = new Date(date)
   function isValidDate(d) {
@@ -12,7 +15,8 @@ export const formatDate = (date, stringFormat = 'dd/MM/yy') => {
     return format(
       new Date(
         objectDate.setMinutes(
-          objectDate.getMinutes() + objectDate.getTimezoneOffset()
+          objectDate.getMinutes() +
+            objectDate.getTimezoneOffset()
         )
       ),
       stringFormat

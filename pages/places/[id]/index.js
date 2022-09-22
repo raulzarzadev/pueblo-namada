@@ -4,7 +4,7 @@ import PrivatePage from '../../../components/HOC/PrivatePage'
 import PlaceDetails from '../../../components/Places/PlaceDetails'
 import { listenPlace } from '../../../firebase/places'
 
-export default function Place () {
+export default function Place() {
   const {
     query: { id },
     back
@@ -18,13 +18,14 @@ export default function Place () {
   if (place === null) {
     return (
       <div>
-        No existe el lugar <button onClick={() => back()}>Regresar</button>
+        No existe el lugar{' '}
+        <button onClick={() => back()}>Regresar</button>
       </div>
     )
   }
   return (
-    <PrivatePage permissionTo="public">
-      <div className="max-w-md mx-auto">
+    <PrivatePage permissionTo='public'>
+      <div className='max-w-md mx-auto'>
         <PlaceDetails place={place} />
       </div>
     </PrivatePage>

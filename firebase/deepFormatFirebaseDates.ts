@@ -14,7 +14,12 @@ const DATE_FIELDS = [
   'publishStart',
   'lastUpdate'
 ]
-const TARGETS = ['firebase', 'milliseconds', 'date', 'fieldDate']
+const TARGETS = [
+  'firebase',
+  'milliseconds',
+  'date',
+  'fieldDate'
+]
 
 export function deepFormatFirebaseDates(
   object: any,
@@ -27,7 +32,9 @@ export function deepFormatFirebaseDates(
   // target is date transofrm to Date
   // target is fieldDate transform to yyyy-mm-dd
 
-  const transformAnyToDate = (date: unknown): Date | null => {
+  const transformAnyToDate = (
+    date: unknown
+  ): Date | null => {
     if (!date) return null
     if (date instanceof Timestamp) {
       return date.toDate()
@@ -49,10 +56,12 @@ export function deepFormatFirebaseDates(
   }
 
   const objective = {
-    firebase: (date: Date): Timestamp => Timestamp.fromDate(date),
+    firebase: (date: Date): Timestamp =>
+      Timestamp.fromDate(date),
     milliseconds: (date: Date): number => date.getTime(),
     date: (date: Date): Date => date,
-    fieldDate: (date: Date): string => format(date, 'yyyy-MM-dd')
+    fieldDate: (date: Date): string =>
+      format(date, 'yyyy-MM-dd')
   }
 
   let aux_obj = { ...object }
@@ -72,7 +81,9 @@ export function deepFormatFirebaseDates(
       deepFormatFirebaseDates(objProperty, target)
       // if is an array
     } else if (Array.isArray(objProperty)) {
-      objProperty.map((item) => deepFormatFirebaseDates(item, target))
+      objProperty.map((item) =>
+        deepFormatFirebaseDates(item, target)
+      )
     }
   })
 

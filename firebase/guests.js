@@ -34,7 +34,9 @@ export async function newPlaceGuest(guest) {
 export async function getGuests(cb) {
   const guests = collection(db, 'guests')
   const docsSnapshot = await getDocs(guests)
-  const guestsList = docsSnapshot.docs.map((doc) => doc.data())
+  const guestsList = docsSnapshot.docs.map((doc) =>
+    doc.data()
+  )
   console.log(docsSnapshot)
 }
 
@@ -55,7 +57,10 @@ export async function updateGuest(...props) {
 export async function listenPlaceGuests(...props) {
   const cb = props.pop()
   const placeId = props[0]
-  const q = query(collection(db, 'guests'), where('placeId', '==', placeId))
+  const q = query(
+    collection(db, 'guests'),
+    where('placeId', '==', placeId)
+  )
   onSnapshot(q, (querySnapshot) => {
     const guests = []
     querySnapshot.docs.forEach((doc) => {

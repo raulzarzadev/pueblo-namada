@@ -1,4 +1,8 @@
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL
+} from 'firebase/storage'
 import { getAuth } from 'firebase/auth'
 import { format as fnsFormat } from 'date-fns'
 import { v4 as uidGenerator } from 'uuid'
@@ -20,7 +24,11 @@ import { db, storage } from '.'
 import { Dates } from 'firebase-dates-util'
 import { es } from 'date-fns/locale'
 
-type Target = 'firebase' | 'milliseconds' | 'date' | 'fieldDate'
+type Target =
+  | 'firebase'
+  | 'milliseconds'
+  | 'date'
+  | 'fieldDate'
 export class FirebaseCRUD {
   constructor(private collectionName: string = '') {}
 
@@ -33,7 +41,9 @@ export class FirebaseCRUD {
       return 'NaD'
     }
     const objectDate = new Date(date)
-    function isValidDate(d: string | number | Date): boolean {
+    function isValidDate(
+      d: string | number | Date
+    ): boolean {
       return d instanceof Date && !isNaN(d as any)
     }
 
@@ -41,7 +51,8 @@ export class FirebaseCRUD {
       return fnsFormat(
         new Date(
           objectDate.setMinutes(
-            objectDate.getMinutes() + objectDate.getTimezoneOffset()
+            objectDate.getMinutes() +
+              objectDate.getTimezoneOffset()
           )
         ),
         stringFormat,
@@ -54,7 +65,8 @@ export class FirebaseCRUD {
   }
 
   static dateToFirebase(date: string): Timestamp | null {
-    const dateFormated = FirebaseCRUD.transformAnyToDate(date)
+    const dateFormated =
+      FirebaseCRUD.transformAnyToDate(date)
     if (!dateFormated) return null
     return Timestamp.fromDate(dateFormated)
   }
@@ -69,7 +81,10 @@ export class FirebaseCRUD {
   static uploadFile = (
     file: Blob | Uint8Array | ArrayBuffer,
     fieldName = '',
-    cb = (progress: number = 0, downloadURL: string | null = null): void => {}
+    cb = (
+      progress: number = 0,
+      downloadURL: string | null = null
+    ): void => {}
   ) => {
     const storageRef = (path = '') => ref(storage, path)
     const uuid = uidGenerator()
@@ -81,7 +96,10 @@ export class FirebaseCRUD {
       (snapshot) => {
         // Observe state change events such as progress, pause, and resume
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        const progress =
+          (snapshot.bytesTransferred /
+            snapshot.totalBytes) *
+          100
         console.log('Upload is ' + progress + '% done')
         cb(progress, null)
         switch (snapshot.state) {
@@ -99,10 +117,12 @@ export class FirebaseCRUD {
       () => {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log('File available at', downloadURL)
-          cb(100, downloadURL)
-        })
+        getDownloadURL(uploadTask.snapshot.ref).then(
+          (downloadURL) => {
+            console.log('File available at', downloadURL)
+            cb(100, downloadURL)
+          }
+        )
       }
     )
     /*   uploadBytes(storageRef(storagePath), file).then((snapshot) => {
@@ -118,7 +138,10 @@ export class FirebaseCRUD {
     const data = doc.data()
     const id = doc.id
 
-    const res = FirebaseCRUD.deepFormatFirebaseDates(data, 'number')
+    const res = FirebaseCRUD.deepFormatFirebaseDates(
+      data,
+      'number'
+    )
 
     return {
       id,
@@ -126,7 +149,11 @@ export class FirebaseCRUD {
     }
   }
 
-  static formatResponse = (ok: boolean, type: string, res: any) => {
+  static formatResponse = (
+    ok: boolean,
+    type: string,
+    res: any
+  ) => {
     if (!ok) throw new Error(type)
     const formatedType = type.toUpperCase()
     return { type: formatedType, ok, res }
@@ -142,10 +169,11 @@ export class FirebaseCRUD {
       ...item
     }
 
-    const itemDatesToFirebaseTimestamp = FirebaseCRUD.deepFormatFirebaseDates(
-      newItem,
-      'number'
-    )
+    const itemDatesToFirebaseTimestamp =
+      FirebaseCRUD.deepFormatFirebaseDates(
+        newItem,
+        'number'
+      )
     console.log(itemDatesToFirebaseTimestamp)
 
     return await addDoc(
@@ -153,7 +181,11 @@ export class FirebaseCRUD {
       itemDatesToFirebaseTimestamp
     )
       .then((res) =>
-        FirebaseCRUD.formatResponse(true, `${this.collectionName}_CREATED`, res)
+        FirebaseCRUD.formatResponse(
+          true,
+          `${this.collectionName}_CREATED`,
+          res
+        )
       )
       .catch((err) => console.error(err))
   }
@@ -166,17 +198,30 @@ export class FirebaseCRUD {
       )
     }
     console.log(newItem)
-    return await updateDoc(doc(db, this.collectionName, itemId), newItem)
+    return await updateDoc(
+      doc(db, this.collectionName, itemId),
+      newItem
+    )
       .then((res) =>
-        FirebaseCRUD.formatResponse(true, `${this.collectionName}_UPDATED`, res)
+        FirebaseCRUD.formatResponse(
+          true,
+          `${this.collectionName}_UPDATED`,
+          res
+        )
       )
       .catch((err) => console.error(err))
   }
 
   async delete(itemId: string) {
-    return await deleteDoc(doc(db, this.collectionName, itemId))
+    return await deleteDoc(
+      doc(db, this.collectionName, itemId)
+    )
       .then((res) =>
-        FirebaseCRUD.formatResponse(true, `${this.collectionName}_DELETED`, res)
+        FirebaseCRUD.formatResponse(
+          true,
+          `${this.collectionName}_DELETED`,
+          res
+        )
       )
       .catch((err) => console.error(err))
   }
@@ -195,7 +240,10 @@ export class FirebaseCRUD {
      * * get all documents in a collection implmementing filters
      * @param filters: where(itemField,'==','value')
      */
-    const q = query(collection(db, this.collectionName), ...filters)
+    const q = query(
+      collection(db, this.collectionName),
+      ...filters
+    )
 
     const querySnapshot = await getDocs(q)
     const res: ({ id: any } | null)[] = []
@@ -220,8 +268,12 @@ export class FirebaseCRUD {
      * @param filters: where(itemField,'==','value')
      */
 
-    if (!filters) return console.error('Should have filters implentade')
-    const q = query(collection(db, this.collectionName), filters)
+    if (!filters)
+      return console.error('Should have filters implentade')
+    const q = query(
+      collection(db, this.collectionName),
+      filters
+    )
 
     onSnapshot(q, (querySnapshot) => {
       const res: any[] = []
@@ -232,15 +284,22 @@ export class FirebaseCRUD {
     })
   }
 
-  async listenDocsByFilters(filters: any, cb: CallableFunction) {
+  async listenDocsByFilters(
+    filters: any,
+    cb: CallableFunction
+  ) {
     /**
      * listen all documents in a collection implmementing filters
      * @param filters[]: where(itemField,'==','value')
      */
 
-    if (!filters) return console.error('Should have filters implentade')
+    if (!filters)
+      return console.error('Should have filters implentade')
     console.log(filters)
-    const q = query(collection(db, this.collectionName), ...filters)
+    const q = query(
+      collection(db, this.collectionName),
+      ...filters
+    )
 
     onSnapshot(q, (querySnapshot) => {
       const res: any[] = []
@@ -267,7 +326,9 @@ export class FirebaseCRUD {
     })
   }
 
-  static transformAnyToDate = (date: unknown): Date | null => {
+  static transformAnyToDate = (
+    date: unknown
+  ): Date | null => {
     if (!date) return null
     if (date instanceof Timestamp) {
       return date.toDate()

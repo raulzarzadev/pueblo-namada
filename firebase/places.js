@@ -21,7 +21,10 @@ export async function getPlaces(cb) {
 export function listeUserPlaces(...props) {
   const user = auth.currentUser
   if (!user) return console.error('No user logged in')
-  const q = query(collection(db, 'places'), where('userId', '==', user.uid))
+  const q = query(
+    collection(db, 'places'),
+    where('userId', '==', user.uid)
+  )
   onSnapshot(q, (querysnapshot) => {
     const places = []
     querysnapshot.docs.forEach((doc) => {
@@ -72,7 +75,8 @@ export async function deletePlace(...props) {
 export async function listenUserPlaces(...props) {
   const cb = props.pop()
   let q
-  if (!auth.currentUser) return console.error('No user logged in')
+  if (!auth.currentUser)
+    return console.error('No user logged in')
 
   if (auth.currentUser) {
     q = query(
