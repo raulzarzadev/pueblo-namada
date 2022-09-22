@@ -1,6 +1,4 @@
-import { Accommodation } from '@firebase/Accommodations/accommodation.model'
 import { getPlaceAccomodationsBettwenDates } from '@firebase/Accommodations/main'
-import { Cost } from '@firebase/Costs/cost.model'
 import { getPlaceCostBetteenDates } from '@firebase/Costs/main'
 import { where } from 'firebase/firestore'
 import { FirebaseCRUD } from '../FirebaseCRUD'
