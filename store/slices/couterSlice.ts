@@ -1,6 +1,7 @@
 import { createSlice, Dispatch } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { AppState } from "../store";
+import { AppState } from "..";
+
 
 export interface CouterState {
   value: number;
