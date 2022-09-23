@@ -18,9 +18,11 @@ const HostRoomRequestSection = () => {
   const handleOpen = () => {
     setOpenAccomodationForm(!openAccomodationForm)
   }
+  console.log(place)
   const guestInfo = { ...guestProfile, name, email, id }
   const { requests } = place
   const [placeRequests, setplaceRequests] = useState([])
+
   useEffect(() => {
     listenPlaceRoomRequests(place.id, setplaceRequests)
   }, [])

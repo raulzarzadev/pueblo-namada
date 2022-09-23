@@ -18,11 +18,7 @@ export const placeSlice = createSlice({
   initialState,
   reducers: {
     setPlace: (state, action: PayloadAction<Place>) => {
-      // if(!action.payload)
-      // if (!place)
-      //   return dispatch(
-      //     setPlace({ isEmpty: true, isLoading: false })
-      //   )
+
       let isEmpty
       let isLoading
       if (action.payload === null) {
@@ -39,11 +35,18 @@ export const placeSlice = createSlice({
         isLoading
       }
     },
+    updatePlace: (state, action: any) => {
+      console.log(action)
+      return {
+        ...state,
+        ...action.payload,
+      }
+    }
   },
 });
 
 // Actions creators are generated for each case reducer funtion
-export const { setPlace } = placeSlice.actions;
+export const { setPlace, updatePlace } = placeSlice.actions;
 export const selectPlaceState = (state: AppState) => state.place;
 
 export default placeSlice.reducer;

@@ -1,6 +1,10 @@
 import { wrapper } from '@/store'
-import { setPlace } from '@/store/slices/placeSlice'
+import {
+  setPlace,
+  updatePlace
+} from '@/store/slices/placeSlice'
 import { listenPlace } from '@firebase/Places/main'
+import { listenPlaceRoomRequests } from '@firebase/RoomRequests/main'
 import { UserProvider } from 'components/context/userContext'
 import Layout from 'components/Layout'
 import Head from 'next/head'
@@ -14,10 +18,15 @@ function MyApp({ Component, pageProps }) {
   const { query, route } = useRouter()
   const dispatch = useDispatch()
   useEffect(() => {
-    if (query.id && route.includes('/places/[id]'))
+    if (query.id && route.includes('/places/[id]')) {
       listenPlace(query.id, (place) => {
         dispatch(setPlace(place))
       })
+      listenPlaceRoomRequests(query.id, (roomRequests) => {
+        console.log(roomRequests)
+        dispatch(updatePlace({ roomRequests }))
+      })
+    }
   }, [query.id])
   return (
     <>

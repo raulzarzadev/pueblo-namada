@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
-import { listenPlaceAccommodations } from '@firebase/Accommodations/main'
 // import { listenPlacePayments } from '@firebase/accomodations";
-import { listenPlaceGuests } from '@firebase/guests'
 import FormAccommodation from 'comps/FormAccommodation'
 import FormCashBalance from 'comps/FormCashBalance'
 import FormCost from 'comps/FormCost'
@@ -20,6 +18,9 @@ import HostRoomRequestSection from './HostRoomRequestSection'
 import { useSelector } from 'react-redux'
 import { selectPlaceState } from '@/store/slices/placeSlice'
 
+import { listenPlaceAccommodations } from '@firebase/Accommodations/main'
+import { listenPlaceGuests } from '@firebase/Gests/main'
+
 export default function DashboardPlace({
   showTable = false,
   showCards = false,
@@ -30,7 +31,7 @@ export default function DashboardPlace({
   const { user } = useUser()
   const place = useSelector(selectPlaceState)
   const isOwner = place?.userId === user?.uid
-
+  console.log(place)
   const showGuest = () => {
     let res = false
     // console.log(place)
