@@ -17,9 +17,10 @@ import { useUser } from '../context/userContext'
 import FormPlaceConfig from '../FormPlaceConfig'
 import GuestRoomRequestSection from './GuestRoomRequestSection'
 import HostRoomRequestSection from './HostRoomRequestSection'
+import { useSelector } from 'react-redux'
+import { selectPlaceState } from '@/store/slices/placeSlice'
 
 export default function DashboardPlace({
-  place,
   showTable = false,
   showCards = false,
   showPaymentsTable = false,
@@ -27,6 +28,7 @@ export default function DashboardPlace({
   showPlaceRquests = true
 }) {
   const { user } = useUser()
+  const place = useSelector(selectPlaceState)
   const isOwner = place?.userId === user?.uid
 
   const showGuest = () => {
@@ -52,6 +54,7 @@ export default function DashboardPlace({
   const [guests, setGuests] = useState([])
   const [placePayments, setPlacePayments] = useState([])
   const [formatedGuest, setFormatedGuest] = useState([])
+
   useEffect(() => {
     listenPlaceAccommodations(place.id, setPlacePayments)
   }, [])

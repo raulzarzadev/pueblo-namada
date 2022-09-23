@@ -47,17 +47,19 @@ export default function ModalDelete({
   }
   return (
     <div>
-      <button
-        onClick={handleOpen}
-        className='text-error'
-        /*  iconName={'trash'}
-       size={buttonSize}
-       label={buttonLabel}
-       variant={buttonVariant}
-       className="btn-error" */
-      >
-        <DeleteIcon />
-      </button>
+      {buttonType === 'icon' ? (
+        <button onClick={handleOpen} className='text-error'>
+          <DeleteIcon />
+        </button>
+      ) : (
+        <button
+          onClick={handleOpen}
+          className='btn btn-sm text-error'
+        >
+          <span className='mr-1'>Delete</span>
+          <DeleteIcon />
+        </button>
+      )}
       <Modal
         title={modalTitle}
         open={open}

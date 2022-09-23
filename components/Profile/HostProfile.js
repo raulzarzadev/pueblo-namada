@@ -9,6 +9,7 @@ const HostProfile = () => {
   useEffect(() => {
     listenUserPlaces(setPlaces)
   }, [])
+
   return (
     <div>
       <h2 className='text-center'>Mis Lugares</h2>

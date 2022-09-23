@@ -58,7 +58,6 @@ const RequestRow = ({ request, i, isPlaceOwner }) => {
     accepted: 'ACCEPTED',
     rejected: 'REJECTED'
   }
-  console.log(status)
   const handleUpdateRequestStatus = (newStatus) => {
     updateRoomRequest(id, { status: newStatus })
       .then((res) => console.log(res))
@@ -73,7 +72,6 @@ const RequestRow = ({ request, i, isPlaceOwner }) => {
     placeId,
     placeInfo
   } = request
-  console.log(request)
 
   return (
     <tr

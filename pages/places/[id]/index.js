@@ -14,6 +14,7 @@ export default function Place() {
   useEffect(() => {
     listenPlace(id, setPlace)
   }, [])
+  console.log(id)
   if (place === undefined) return <div>Cargando ...</div>
   if (place === null) {
     return (

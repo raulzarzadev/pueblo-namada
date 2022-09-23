@@ -5,8 +5,11 @@ import RequestsTable from './RequestsTable'
 import { useUser } from '../context/userContext'
 import { listenPlaceRoomRequests } from '../../firebase/RoomRequests/main'
 import Section from '../Section'
+import { useSelector } from 'react-redux'
+import { selectPlaceState } from '@/store/slices/placeSlice'
 
-const HostRoomRequestSection = ({ place }) => {
+const HostRoomRequestSection = () => {
+  const place = useSelector(selectPlaceState)
   const {
     user: { guestProfile, name, email, id }
   } = useUser()
@@ -27,7 +30,6 @@ const HostRoomRequestSection = ({ place }) => {
   const unsolvedRequests = placeRequests.filter(
     ({ status }) => status === 'UNSOLVED'
   ).length
-  console.log({ place, id })
   return (
     <Section
       title={'Room requests'}
