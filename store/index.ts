@@ -2,12 +2,15 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
 import authSlice from "./slices/authSlice";
 import { counterSlice } from "./slices/couterSlice";
+import { placeSlice } from "./slices/placeSlice";
+import { persistReducer } from 'redux-persist'
 
 const makeStore = () =>
   configureStore({
     reducer: {
-      [authSlice.name]: authSlice.reducer,
+      // [authSlice.name]: authSlice.reducer,
       [counterSlice.name]: counterSlice.reducer,
+      [placeSlice.name]: placeSlice.reducer
     },
     devTools: true,
   });
