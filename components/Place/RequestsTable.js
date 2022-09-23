@@ -55,7 +55,7 @@ const RequestRow = ({ request, i }) => {
   const handleDeleteRequest = (id) => {
     // TODO delete room requests id
     deleteRoomRequest(id)
-    console.log({ id })
+    // console.log({ id })
   }
   const [deletedSuccessfully, setDeletedSuccessfully] =
     useState(false)
@@ -211,7 +211,6 @@ const RequestRow = ({ request, i }) => {
                        `}
                       key={key}
                     >
-                      {console.log(key)}
                       {STATUSES[key]}
                     </button>
                   )

@@ -6,20 +6,22 @@ import FormCost from 'comps/FormCost'
 import GuestCard from 'comps/Guests/Guest/GuestCard'
 import MainModal from 'comps/Modal/MainModal'
 import Section from 'comps/Section'
-import PlaceCosts from './PlaceCosts'
+import PlaceCosts from '../PlaceCosts'
 import FormGuest from 'comps/FormGuest'
-import PaymentsTable from 'comps/Payments/PaymentsTable'
-import RequestsTable from './RequestsTable'
-import GuestsTable from './GuestsTable'
-import { useUser } from '../context/userContext'
-import FormPlaceConfig from '../FormPlaceConfig'
-import GuestRoomRequestSection from './GuestRoomRequestSection'
-import HostRoomRequestSection from './HostRoomRequestSection'
+import FormPlaceConfig from 'comps/FormPlaceConfig'
+import HostRoomRequestSection from '../HostRoomRequestSection'
 import { useSelector } from 'react-redux'
 import { selectPlaceState } from '@/store/slices/placeSlice'
 
 import { listenPlaceAccommodations } from '@firebase/Accommodations/main'
 import { listenPlaceGuests } from '@firebase/Gests/main'
+import {
+  formatGuestFromRoomRequests,
+  formatGuestPayments,
+  guestFromAccomodationAndPayemts
+} from './utils'
+import { useUser } from 'comps/context/userContext'
+import GuestsTable from '../GuestsTable'
 
 export default function DashboardPlace({
   showTable = false,
@@ -63,41 +65,25 @@ export default function DashboardPlace({
   }, [])
 
   useEffect(() => {
-    const newGuestsList = [...guests].map((guest) => {
-      const guestPayments = placePayments?.filter(
-        (pay) => pay?.guest === guest?.id
-      )
-      const sortedPaymentsByDate = [...guestPayments]?.sort(
-        (a, b) => {
-          const toNumber = (date) => {
-            const newDate = new Date(date)
-            if (newDate instanceof Date) {
-              return newDate?.getTime()
-            } else {
-              console.error('invalid date')
-            }
-          }
-          if (
-            toNumber(a?.createdAt) > toNumber(b?.createdAt)
-          )
-            return 1
-          if (
-            toNumber(a?.createdAt) < toNumber(b?.createdAt)
-          )
-            return -1
-          return 0
-        }
-      )
-      return {
-        ...guest,
-        payments: sortedPaymentsByDate,
-        lastPayment: sortedPaymentsByDate?.[0],
-        lastPaymentDate:
-          sortedPaymentsByDate?.[0]?.createdAt,
-        paymentsLength: sortedPaymentsByDate.length
-      }
+    const guestsFromRoomRequests =
+      formatGuestFromRoomRequests({
+        roomRequests: place.roomRequests
+      })
+
+    const guestsFromPlaceAndPayments =
+      guestFromAccomodationAndPayemts({
+        guests,
+        payments: placePayments
+      })
+
+    const formatedGuestsPayments = formatGuestPayments({
+      guests: [
+        ...guestsFromPlaceAndPayments,
+        ...guestsFromRoomRequests
+      ]
     })
-    setFormatedGuest(newGuestsList)
+
+    setFormatedGuest(formatedGuestsPayments)
   }, [guests.length, placePayments.length])
 
   if (!showGuest()) return <div>Cannot see the guests</div>
@@ -179,9 +165,7 @@ export default function DashboardPlace({
             <PlaceCosts place={place} />
           </Section>
         )}
-        {showPlaceRquests && (
-          <HostRoomRequestSection place={place} />
-        )}
+        {showPlaceRquests && <HostRoomRequestSection />}
       </div>
     </div>
   )

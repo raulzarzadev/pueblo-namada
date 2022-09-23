@@ -59,7 +59,7 @@ const GuestsTable = ({ guests, place }) => {
 const GuestRow = ({ place, guest }) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
-  console.log(guest?.lastPaymentDate)
+  console.log(guest)
   return (
     <>
       <tr
