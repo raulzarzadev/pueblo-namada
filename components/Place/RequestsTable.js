@@ -1,6 +1,9 @@
+import { selectPlaceState } from '@/store/slices/placeSlice'
+import { useUser } from 'comps/context/userContext'
 import { format } from 'date-fns'
 import Link from 'next/link'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import {
   deleteRoomRequest,
   updateRoomRequest
@@ -9,7 +12,7 @@ import Modal from '../Modal'
 import ModalDelete from '../Modal/ModalDelete'
 import TextInfo from '../TextInfo'
 
-const RequestsTable = ({ requests = [], isPlaceOwner }) => {
+const RequestsTable = ({ requests = [] }) => {
   return (
     <div>
       <div className='overflow-x-auto'>
@@ -30,7 +33,6 @@ const RequestsTable = ({ requests = [], isPlaceOwner }) => {
                 key={request.id}
                 request={request}
                 i={i}
-                isPlaceOwner={isPlaceOwner}
               />
             ))}
           </tbody>
@@ -40,7 +42,11 @@ const RequestsTable = ({ requests = [], isPlaceOwner }) => {
   )
 }
 
-const RequestRow = ({ request, i, isPlaceOwner }) => {
+const RequestRow = ({ request, i }) => {
+  const {
+    user: { id: userId }
+  } = useUser()
+  const { placeUserId } = useSelector(selectPlaceState)
   const [openModal, setOpenModal] = useState(false)
   const handleOpenModal = () => {
     setOpenModal(!openModal)
@@ -72,6 +78,8 @@ const RequestRow = ({ request, i, isPlaceOwner }) => {
     placeId,
     placeInfo
   } = request
+
+  const isPlaceOwner = userId === placeUserId
 
   return (
     <tr

@@ -36,7 +36,6 @@ export const placeSlice = createSlice({
       }
     },
     updatePlace: (state, action: any) => {
-      console.log(action)
       return {
         ...state,
         ...action.payload,

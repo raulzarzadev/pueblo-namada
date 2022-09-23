@@ -23,7 +23,6 @@ function MyApp({ Component, pageProps }) {
         dispatch(setPlace(place))
       })
       listenPlaceRoomRequests(query.id, (roomRequests) => {
-        console.log(roomRequests)
         dispatch(updatePlace({ roomRequests }))
       })
     }

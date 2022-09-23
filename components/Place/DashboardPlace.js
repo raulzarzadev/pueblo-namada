@@ -31,7 +31,6 @@ export default function DashboardPlace({
   const { user } = useUser()
   const place = useSelector(selectPlaceState)
   const isOwner = place?.userId === user?.uid
-  console.log(place)
   const showGuest = () => {
     let res = false
     // console.log(place)

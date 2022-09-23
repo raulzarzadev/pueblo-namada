@@ -11,25 +11,13 @@ import { selectPlaceState } from '@/store/slices/placeSlice'
 const HostRoomRequestSection = () => {
   const place = useSelector(selectPlaceState)
   const {
-    user: { guestProfile, name, email, id }
+    user: { id }
   } = useUser()
-  const [openAccomodationForm, setOpenAccomodationForm] =
-    useState(false)
-  const handleOpen = () => {
-    setOpenAccomodationForm(!openAccomodationForm)
-  }
-  console.log(place)
-  const guestInfo = { ...guestProfile, name, email, id }
-  const { requests } = place
-  const [placeRequests, setplaceRequests] = useState([])
-
-  useEffect(() => {
-    listenPlaceRoomRequests(place.id, setplaceRequests)
-  }, [])
 
   // console.log(placeRequests)
-  const totalRequests = placeRequests.length
-  const unsolvedRequests = placeRequests.filter(
+  const { roomRequests } = place
+  const totalRequests = roomRequests?.length
+  const unsolvedRequests = roomRequests?.filter(
     ({ status }) => status === 'UNSOLVED'
   ).length
   return (
@@ -40,7 +28,7 @@ const HostRoomRequestSection = () => {
       <div>
         <h4>My accommodations in this place</h4>
         <RequestsTable
-          requests={placeRequests}
+          requests={roomRequests}
           isPlaceOwner={id === place.userId}
         />
       </div>
