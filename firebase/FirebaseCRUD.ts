@@ -15,6 +15,7 @@ import {
   getDoc,
   getDocs,
   onSnapshot,
+  Query,
   query,
   setDoc,
   Timestamp,
@@ -31,7 +32,7 @@ type Target =
   | 'date'
   | 'fieldDate'
 export class FirebaseCRUD {
-  constructor(private collectionName: string = '') {}
+  constructor(private collectionName: string = '') { }
 
   static format = (
     date: string | number | Date,
@@ -42,7 +43,7 @@ export class FirebaseCRUD {
       return 'NaD'
     }
     const objectDate = new Date(date)
-    function isValidDate(
+    function isValidDate (
       d: string | number | Date
     ): boolean {
       return d instanceof Date && !isNaN(d as any)
@@ -53,7 +54,7 @@ export class FirebaseCRUD {
         new Date(
           objectDate.setMinutes(
             objectDate.getMinutes() +
-              objectDate.getTimezoneOffset()
+            objectDate.getTimezoneOffset()
           )
         ),
         stringFormat,
@@ -65,14 +66,34 @@ export class FirebaseCRUD {
     }
   }
 
-  static dateToFirebase(date: string): Timestamp | null {
+  static validateFiters (filters: any[], collectionName: string) {
+    if (!filters)
+      return console.error('Should have filters implentade')
+    if (!Array.isArray(filters))
+      return console.error('filter is not an array', {
+        collectionName
+      })
+
+    //* Validate insede each filter and find if any a the values is invalid
+    filters.map(filter => {
+      //* Looks like firebase define a function unsolved if the value of 
+      if (typeof filter._a === 'function') {
+        return console.error('unvalid data', { segment: filter.fa.segments[0], collectionName })
+      }
+    })
+
+    return filters
+  }
+
+
+  static dateToFirebase (date: string): Timestamp | null {
     const dateFormated =
       FirebaseCRUD.transformAnyToDate(date)
     if (!dateFormated) return null
     return Timestamp.fromDate(dateFormated)
   }
 
-  static deepFormatFirebaseDates(
+  static deepFormatFirebaseDates (
     object: any,
     target: 'timestamp' | 'number' | 'date' | 'fieldDate'
   ) {
@@ -85,7 +106,7 @@ export class FirebaseCRUD {
     cb = (
       progress: number = 0,
       downloadURL: string | null = null
-    ): void => {}
+    ): void => { }
   ) => {
     const storageRef = (path = '') => ref(storage, path)
     const uuid = uidGenerator()
@@ -160,7 +181,7 @@ export class FirebaseCRUD {
     return { type: formatedType, ok, res }
   }
 
-  async setDoc(itemId: string, newItem: object) {
+  async setDoc (itemId: string, newItem: object) {
     const currentUser = getAuth().currentUser
 
     const item = {
@@ -174,7 +195,7 @@ export class FirebaseCRUD {
     return { ...item }
   }
 
-  async create(item: object) {
+  async create (item: object) {
     const currentUser = getAuth().currentUser
 
     const newItem = {
@@ -205,7 +226,7 @@ export class FirebaseCRUD {
       .catch((err) => console.error(err))
   }
 
-  async update(itemId: string, item: object) {
+  async update (itemId: string, item: object) {
     const newItem = {
       ...FirebaseCRUD.deepFormatFirebaseDates(
         { ...item, updatedAt: new Date() },
@@ -227,7 +248,7 @@ export class FirebaseCRUD {
       .catch((err) => console.error(err))
   }
 
-  async delete(itemId: string) {
+  async delete (itemId: string) {
     return await deleteDoc(
       doc(db, this.collectionName, itemId)
     )
@@ -241,7 +262,7 @@ export class FirebaseCRUD {
       .catch((err) => console.error(err))
   }
 
-  async get(itemId: string) {
+  async get (itemId: string) {
     /**
      * get a single document from the collection
      * @param itemId the id of the document to get
@@ -250,12 +271,14 @@ export class FirebaseCRUD {
     const docSnap = await getDoc(ref)
     return FirebaseCRUD.normalizeDoc(docSnap)
   }
-  async getMany(filters: any[]) {
+  async getMany (filters: any[]) {
+
     /**
      * * get all documents in a collection implmementing filters
      * @param filters: where(itemField,'==','value')
      */
-    const q = query(
+    FirebaseCRUD.validateFiters(filters, this.collectionName)
+    const q: Query = query(
       collection(db, this.collectionName),
       ...filters
     )
@@ -270,24 +293,19 @@ export class FirebaseCRUD {
     return res
   }
 
-  async listen(itemId: string, cb: CallableFunction) {
+  async listen (itemId: string, cb: CallableFunction) {
     const q = doc(db, this.collectionName, itemId)
     onSnapshot(q, (doc) => {
       cb(FirebaseCRUD.normalizeDoc(doc))
     })
   }
 
-  async listenDocs(filters: any, cb: CallableFunction) {
+  async listenDocs (filters: any, cb: CallableFunction) {
     /**
      * listen all documents in a collection implmementing filters
      * @param filters: where(itemField,'==','value')
      */
-    if (!Array.isArray(filters))
-      return console.error('filter is not an array', {
-        collectionName: this.collectionName
-      })
-    if (!filters)
-      return console.error('Should have filters implentade')
+    FirebaseCRUD.validateFiters(filters, this.collectionName)
     const q = query(
       collection(db, this.collectionName),
       ...filters
@@ -302,7 +320,12 @@ export class FirebaseCRUD {
     })
   }
 
-  async listenDocsByFilters(
+  async listenCurrentUserDocs (cb: CallableFunction) {
+    const userId = getAuth().currentUser?.uid
+    this.listenDocs([where('userId', '==', userId)], cb)
+  }
+
+  async listenDocsByFilters (
     filters: any,
     cb: CallableFunction
   ) {
@@ -311,9 +334,8 @@ export class FirebaseCRUD {
      * @param filters[]: where(itemField,'==','value')
      */
 
-    if (!filters)
-      return console.error('Should have filters implentade')
-    console.log(filters)
+    FirebaseCRUD.validateFiters(filters, this.collectionName)
+
     const q = query(
       collection(db, this.collectionName),
       ...filters
@@ -328,7 +350,7 @@ export class FirebaseCRUD {
     })
   }
 
-  async listenAll(cb: CallableFunction) {
+  async listenAll (cb: CallableFunction) {
     /**
      * listen all documents in a collection
      *

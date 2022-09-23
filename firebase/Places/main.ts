@@ -38,7 +38,6 @@ export const listenPlaces = (
   )
 
 export const listenUserPlaces = (
-  userId: string,
   cb: CallableFunction
 ) =>
-  placesCRUD.listenDocs([where('userId', '==', userId)], cb)
+  placesCRUD.listenCurrentUserDocs(cb)

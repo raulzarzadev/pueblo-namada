@@ -3,7 +3,6 @@ import { createWrapper } from "next-redux-wrapper";
 import authSlice from "./slices/authSlice";
 import { counterSlice } from "./slices/couterSlice";
 import { placeSlice } from "./slices/placeSlice";
-import { persistReducer } from 'redux-persist'
 
 const makeStore = () =>
   configureStore({
