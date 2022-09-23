@@ -1,20 +1,28 @@
+import { selectPlaceState } from '@/store/slices/placeSlice'
+import {
+  createPlace,
+  updatePlace
+} from '@firebase/Places/main'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import {
-  newPlace,
-  updatePlace
-} from '../../firebase/places'
+
 import { uploadFile } from '../../firebase/uploadImage'
 import File from '../inputs/file'
 import Phone from '../inputs/phone'
 import Text from '../inputs/text'
 import Textarea from '../inputs/textarea'
 
+import { useSelector } from 'react-redux'
+
 export default function FormPlace({
   place,
   editing = false
 }) {
+  const placeRedux = useSelector(selectPlaceState)
+
+  console.log(place)
+  console.log(placeRedux)
   const router = useRouter()
 
   const {
