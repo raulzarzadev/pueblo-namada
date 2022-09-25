@@ -59,7 +59,6 @@ const GuestsTable = ({ guests, place }) => {
 const GuestRow = ({ place, guest }) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
-  console.log(guest)
   return (
     <>
       <tr
@@ -78,12 +77,11 @@ const GuestRow = ({ place, guest }) => {
         </Cell>
         <Cell>{guest?.plates}</Cell>
         <Cell>{guest?.payments?.length}</Cell>
+
         <Cell>
           {guest?.lastPayment ? (
             <>
-              {/*  <div className="text-xs text-right">
-                {lastPay?.createdAt && formatDate(lastPay?.createdAt, 'dd MMM yy')}
-              </div> */}
+              <div>status: {guest.lastPayment.status}</div>
               <div>
                 {guest.lastPaymentDate &&
                   format(

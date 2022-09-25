@@ -16,13 +16,13 @@ export const formatGuestFromRoomRequests = ({
 
   const formatGuestRoomRequests =
     guestsFromRoomRequests.map((guest) => {
-      const roomRequests = roomRequests?.filter(
+      const requests = roomRequests?.filter(
         ({ userId }) => userId === guest.id
       )
       return {
         ...guest,
-        roomRequests,
-        payments: roomRequests
+        roomRequests: requests,
+        payments: requests
       }
     })
 
@@ -33,7 +33,6 @@ export const guestFromAccomodationAndPayemts = ({
   guests,
   payments
 }) => {
-  console.log({ guests, payments })
   return guests.map((guest) => {
     const guestPayments = payments.filter(
       (payment) => payment.guest === guest.id

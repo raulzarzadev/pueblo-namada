@@ -14,6 +14,8 @@ const HostRoomRequestSection = () => {
     user: { id }
   } = useUser()
 
+  console.log(place)
+
   // console.log(placeRequests)
   const { roomRequests } = place
   const totalRequests = roomRequests?.length

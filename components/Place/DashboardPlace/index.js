@@ -56,7 +56,6 @@ export default function DashboardPlace({
   const [guests, setGuests] = useState([])
   const [placePayments, setPlacePayments] = useState([])
   const [formatedGuest, setFormatedGuest] = useState([])
-
   useEffect(() => {
     listenPlaceAccommodations(place.id, setPlacePayments)
   }, [])
@@ -75,7 +74,6 @@ export default function DashboardPlace({
         guests,
         payments: placePayments
       })
-
     const formatedGuestsPayments = formatGuestPayments({
       guests: [
         ...guestsFromPlaceAndPayments,
@@ -160,11 +158,11 @@ export default function DashboardPlace({
           </Section>
         )} */}
 
-        {showOperatingCosts && (
+        {/* {showOperatingCosts && (
           <Section title='Costs'>
             <PlaceCosts place={place} />
           </Section>
-        )}
+        )} */}
         {showPlaceRquests && <HostRoomRequestSection />}
       </div>
     </div>

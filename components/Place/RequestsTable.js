@@ -46,7 +46,9 @@ const RequestRow = ({ request, i }) => {
   const {
     user: { id: userId }
   } = useUser()
-  const { placeUserId } = useSelector(selectPlaceState)
+  const { userId: placeUserId } = useSelector(
+    selectPlaceState
+  )
   const [openModal, setOpenModal] = useState(false)
   const handleOpenModal = () => {
     setOpenModal(!openModal)
