@@ -1,4 +1,3 @@
-// let lastScroll = 0
 // useEffect(() => {
 
 //   const handleScroll = () => {
@@ -22,3 +21,7 @@
 //   };
 //   // eslint-disable-next-line react-hooks/exhaustive-deps
 // }, []);
+export default function() {
+  const scroll = true
+  return { scroll }
+}

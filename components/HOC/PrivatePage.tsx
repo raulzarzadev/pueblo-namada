@@ -43,7 +43,7 @@ const PrivatePage = ({
   }
   const Component = AUTH_PAGES[
     permissionTo
-  ] as React.ElementType
+  ]
 
   return <Component elementOwner={elementOwner} />
 }

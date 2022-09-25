@@ -1,10 +1,21 @@
+interface Guest {
+  id: string,
+  payments: Payment[]
+}
+
+interface Payment {
+  id: string
+  guest: string,
+  createdAt: string | Date | number
+}
+
 export const formatGuestFromRoomRequests = ({
   roomRequests = []
 }) => {
   const guestsFromRoomRequests = roomRequests.reduce(
-    (prev, curr) => {
+    (prev: any, curr: any) => {
       const { guest } = curr
-      const findGuest = prev.find((g) => g?.id === guest.id)
+      const findGuest = prev.find(({ id }: { id: string }) => id === guest.id)
       if (findGuest) {
         return prev
       } else {
@@ -13,9 +24,8 @@ export const formatGuestFromRoomRequests = ({
     },
     []
   )
-
   const formatGuestRoomRequests =
-    guestsFromRoomRequests.map((guest) => {
+    guestsFromRoomRequests.map((guest: Guest) => {
       const requests = roomRequests?.filter(
         ({ userId }) => userId === guest.id
       )
@@ -32,7 +42,7 @@ export const formatGuestFromRoomRequests = ({
 export const guestFromAccomodationAndPayemts = ({
   guests,
   payments
-}) => {
+}: { guests: Guest[], payments: Payment[] }) => {
   return guests.map((guest) => {
     const guestPayments = payments.filter(
       (payment) => payment.guest === guest.id
@@ -41,16 +51,16 @@ export const guestFromAccomodationAndPayemts = ({
   })
 }
 
-export const formatGuestPayments = ({ guests = [] }) => {
+export const formatGuestPayments = ({ guests }: { guests: Guest[] }) => {
   return [...guests].map((guest) => {
     const sortedPaymentsByDate = guest?.payments?.sort(
       (a, b) => {
-        const toNumber = (date) => {
+        const toNumber = (date: any) => {
           const newDate = new Date(date)
           if (newDate instanceof Date) {
             return newDate?.getTime()
           } else {
-            console.error('invalid date')
+            return console.error('invalid date')
           }
         }
         if (

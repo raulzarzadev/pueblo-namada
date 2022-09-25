@@ -1,4 +1,3 @@
-// @ts-check
 import React from 'react'
 import { useRouter } from 'next/router'
 import { deleteGuest } from '../../../../firebase/guests'

@@ -1,4 +1,3 @@
-// @ts-check
 import Image from 'next/image'
 import MainModal from '../../../Modal/MainModal'
 import { GuestDetails } from '../GuestDetails'
