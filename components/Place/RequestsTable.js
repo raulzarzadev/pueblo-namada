@@ -12,7 +12,11 @@ import Modal from '../Modal'
 import ModalDelete from '../Modal/ModalDelete'
 import TextInfo from '../TextInfo'
 
-const RequestsTable = ({ requests = [] }) => {
+const RequestsTable = ({
+  requests = [],
+  showPlaceName,
+  showRequestUser
+}) => {
   return (
     <div>
       <div className='overflow-x-auto'>
@@ -22,6 +26,8 @@ const RequestsTable = ({ requests = [] }) => {
             <tr>
               <th></th>
               <th>Dates</th>
+              {showPlaceName && <th>Place</th>}
+              {showRequestUser && <th>Guest </th>}
               <th>Requested</th>
               <th>Status</th>
             </tr>
@@ -32,6 +38,8 @@ const RequestsTable = ({ requests = [] }) => {
               <RequestRow
                 key={request.id}
                 request={request}
+                showPlaceName={showPlaceName}
+                showRequestUser={showRequestUser}
                 i={i}
               />
             ))}
@@ -42,7 +50,12 @@ const RequestsTable = ({ requests = [] }) => {
   )
 }
 
-const RequestRow = ({ request, i }) => {
+const RequestRow = ({
+  request,
+  i,
+  showPlaceName,
+  showRequestUser
+}) => {
   const {
     user: { id: userId }
   } = useUser()
@@ -89,17 +102,28 @@ const RequestRow = ({ request, i }) => {
       onClick={() => handleOpenModal()}
     >
       <th>{i + 1}</th>
-      <td>
+      <td className='grid text-center'>
+        <span>{` From `}</span>
         <span>
           {dates?.startsAt &&
-            format(dates?.startsAt, 'dd MM yy')}
+            format(dates?.startsAt, 'dd/MM/yy')}
         </span>
         <span>{` to `}</span>
         <span>
           {dates?.endsAt &&
-            format(dates?.endsAt, ' dd MM yy ')}
+            format(dates?.endsAt, ' dd/MM/yy ')}
         </span>
       </td>
+      {showPlaceName && (
+        <td className='whitespace-pre-line'>
+          {placeInfo.name}
+        </td>
+      )}
+      {showRequestUser && (
+        <td className='whitespace-pre-line'>
+          {guest.name}
+        </td>
+      )}
       <td>
         {createdAt && format(createdAt, 'dd MMM yy hh:mm')}
       </td>

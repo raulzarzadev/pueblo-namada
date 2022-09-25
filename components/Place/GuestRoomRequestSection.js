@@ -5,6 +5,7 @@ import RequestsTable from './RequestsTable'
 import { useUser } from '../context/userContext'
 import { listenUserPlaceRoomRequests } from '../../firebase/RoomRequests/main'
 import TextInfo from '../TextInfo'
+import Section from 'comps/Section'
 
 const GuestRoomRequestSection = ({ place }) => {
   const {
@@ -23,23 +24,28 @@ const GuestRoomRequestSection = ({ place }) => {
   }, [])
 
   // console.log(userRequests)
-  console.log({ place, id })
+  //  console.log({ place, id })
 
   return (
     <div>
-      <button
-        className='btn btn-primary btn-sm'
-        onClick={() => handleOpen()}
+      <div className='w-full flex my-5 justify-center'>
+        <button
+          className='btn btn-primary btn-sm'
+          onClick={() => handleOpen()}
+        >
+          Check-in
+        </button>
+      </div>
+      <Section
+        title={'My requests in this place '}
+        subtitle={` ( ${userRequests?.length} ) `}
       >
-        stay here
-      </button>
-      <div>
-        <h4>My accommodations in this place</h4>
         <RequestsTable
           requests={userRequests}
           isPlaceOwner={id === place.userId}
+          showPlaceName
         />
-      </div>
+      </Section>
       <Modal
         title='Stay here'
         open={openAccomodationForm}

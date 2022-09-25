@@ -44,7 +44,7 @@ const FormSelfAccommodation = ({ place, guest }) => {
   useEffect(() => {
     setValue('dates.endsAt', accommodationEnds(startsAt))
     setTotals(getTotals())
-    setLabelSave(FORM_STATUS.requestAgain)
+    setLabelSave(FORM_STATUS.request)
   }, [startsAt, nights])
 
   const onSubmit = (data) => {
@@ -64,10 +64,6 @@ const FormSelfAccommodation = ({ place, guest }) => {
         usd: place?.usdPrice || null
       }
     }
-    // requesst accomodation
-    // requests sendende succesfuly , close and show in the main menu
-    console.log(accommodation)
-    // TODO change to room request collection
 
     createRoomRequest(accommodation)
       .then((res) => {
@@ -77,28 +73,6 @@ const FormSelfAccommodation = ({ place, guest }) => {
         console.error(err)
         setLabelSave(FORM_STATUS.request)
       })
-
-    // setLabelSave(FORM_STATUS[3])
-
-    // payment
-    //   ? updateAccommodation(payment.id, accomodation).then((res) => {
-    //     console.log('payment updated', { id: payment.id })
-    //     setLabelSave(FORM_STATUS[5])
-    //     setTimeout(() => {
-    //       setLabelSave(FORM_STATUS[4])
-    //       // router.back()
-    //       // reset()
-    //     }, 1000)
-    //   })
-    //   : createAccommodation(accomodation).then((res) => {
-    //     console.log('payment created', res)
-    //     setLabelSave(FORM_STATUS[1])
-    //     setTimeout(() => {
-    //       setLabelSave(FORM_STATUS[0])
-    //       // router.back()
-    //       reset()
-    //     }, 1000)
-    //   })
   }
 
   const accommodationEnds = (startAt) => {

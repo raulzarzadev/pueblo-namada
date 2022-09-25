@@ -32,6 +32,7 @@ const HostRoomRequestSection = () => {
         <RequestsTable
           requests={roomRequests}
           isPlaceOwner={id === place.userId}
+          showRequestUser
         />
       </div>
     </Section>

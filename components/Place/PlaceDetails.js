@@ -48,6 +48,9 @@ export default function PlaceDetails() {
       <h1 className='text-2xl font-bold text-center'>
         {place.name}
       </h1>
+      {!isOwner && (
+        <GuestRoomRequestSection place={place} />
+      )}
 
       {isOwner && (
         <div className='grid gap-4 sm:grid-flow-col px-2 my-2 max-w-lg mx-auto'>

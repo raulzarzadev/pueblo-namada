@@ -25,7 +25,7 @@ export default function Place() {
   return (
     <PrivatePage permissionTo='public'>
       <div className='max-w-md mx-auto'>
-        <PlaceDetails place={place} />
+        <PlaceDetails />
       </div>
     </PrivatePage>
   )
