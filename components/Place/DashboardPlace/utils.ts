@@ -72,7 +72,7 @@ export const formatGuestPayments = ({ guests = [] }) => {
       lastPayment: sortedPaymentsByDate?.[0],
       lastPaymentDate:
         sortedPaymentsByDate?.[0]?.createdAt,
-      paymentsLength: sortedPaymentsByDate.length
+      paymentsLength: sortedPaymentsByDate?.length
     }
   })
 }

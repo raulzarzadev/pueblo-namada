@@ -26,11 +26,10 @@ export default function dashboard() {
           subtitle={`${place?.name || ''}`}
           sticky
         >
-          <PlaceDetails place={place} />
+          <PlaceDetails />
         </Section>
 
         <DashboardPlace
-          place={place}
           showTable
           showPaymentsTable
           showOperatingCosts

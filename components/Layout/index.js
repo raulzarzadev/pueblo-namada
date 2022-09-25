@@ -14,7 +14,9 @@ export default function Layout({ children }) {
       <header className='text-4xl bg-blue-100  '>
         <TopNavBar user={user} />
       </header>
-      <main>{children}</main>
+      <main className='max-w-xl mx-auto my-2'>
+        {children}
+      </main>
       {showMobileNav ? (
         <MobileNav />
       ) : (

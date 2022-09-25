@@ -8,7 +8,6 @@ import { listenPlace } from '../../../firebase/Places/main'
 
 export default function Place() {
   const place = useSelector(selectPlaceState)
-  console.log(place)
   if (place.isLoading) return <div>Loading ...</div>
   if (place.isEmpty) {
     return (

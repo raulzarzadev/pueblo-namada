@@ -6,8 +6,11 @@ import Link from 'next/link'
 import MainModal from '../Modal/MainModal'
 import Section from '../Section'
 import GuestRoomRequestSection from './GuestRoomRequestSection'
+import { useSelector } from 'react-redux'
+import { selectPlaceState } from '@/store/slices/placeSlice'
 
-export default function PlaceDetails({ place = {} }) {
+export default function PlaceDetails() {
+  const place = useSelector(selectPlaceState)
   const { user } = useUser()
   const router = useRouter()
   const isOwner = place?.userId === user?.uid
