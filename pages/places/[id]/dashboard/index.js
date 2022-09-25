@@ -6,16 +6,11 @@ import Section from '../../../../components/Section'
 import PrivatePage from '../../../../components/HOC/PrivatePage'
 import DashboardPlace from '../../../../components/Place/DashboardPlace'
 import Head from 'next/head'
+import { useSelector } from 'react-redux'
+import { selectPlaceState } from '@/store/slices/placeSlice'
 
 export default function dashboard() {
-  const [place, setPlace] = useState(undefined)
-  const {
-    query: { id }
-  } = useRouter()
-
-  useEffect(() => {
-    listenPlace(id, setPlace)
-  }, [])
+  const place = useSelector(selectPlaceState)
 
   return (
     <>
@@ -26,29 +21,20 @@ export default function dashboard() {
         permissionTo='owner'
         elementOwner={place?.userId}
       >
-        <div className='max-w-lg mx-auto'>
-          <div className='my-4'>
-            <h2>Dashboard place</h2>
-          </div>
-          {place && (
-            <>
-              <Section
-                title={'Place details'}
-                subtitle={`${place?.name || ''}`}
-                sticky
-              >
-                <PlaceDetails place={place} />
-              </Section>
+        <Section
+          title={'Place details'}
+          subtitle={`${place?.name || ''}`}
+          sticky
+        >
+          <PlaceDetails place={place} />
+        </Section>
 
-              <DashboardPlace
-                place={place}
-                showTable
-                showPaymentsTable
-                showOperatingCosts
-              />
-            </>
-          )}
-        </div>
+        <DashboardPlace
+          place={place}
+          showTable
+          showPaymentsTable
+          showOperatingCosts
+        />
       </PrivatePage>
     </>
   )
