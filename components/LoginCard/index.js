@@ -12,7 +12,6 @@ export default function LoginCard({
   const loginSumbit = ({ email, password }) => {
     signIn({ email, password })
       .then((res) => {
-        console.log(res)
         router.push('/profile')
       })
       .catch((err) => console.error(err))

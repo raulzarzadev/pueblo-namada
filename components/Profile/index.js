@@ -47,9 +47,8 @@ const EditUser = () => {
   }
   const { user } = useUser()
   const handleEditUser = (user) => {
-    console.log(user)
     updateUser(user.id, { ...user }).then((res) =>
-      console.log(res)
+      console.log('user edited')
     )
   }
   return (
