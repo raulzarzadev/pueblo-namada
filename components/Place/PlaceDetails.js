@@ -48,7 +48,7 @@ export default function PlaceDetails() {
       <h1 className='text-2xl font-bold text-center'>
         {place.name}
       </h1>
-      {!isOwner && (
+      {!isOwner && isGuest && (
         <GuestRoomRequestSection place={place} />
       )}
 
