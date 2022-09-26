@@ -6,8 +6,7 @@ import {
   signOut
 } from 'firebase/auth'
 import { auth } from '.'
-import { mapUserFromFirebase } from './firebase-helpers'
-import { createUser, getUser, setUser } from './Users'
+import { getUser } from './Users'
 
 export async function signUp({ email, password }) {
   return await createUserWithEmailAndPassword(
