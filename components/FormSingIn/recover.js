@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form'
 import Text from '../inputs/text'
 
 export default function RecoverPassawordForm({
-  submitForm
+  submitForm,
+  loading
 }) {
   const {
     register,
@@ -33,7 +34,10 @@ export default function RecoverPassawordForm({
       </div>
 
       <div className='flex justify-end mt-4'>
-        <button className='btn btn-primary'>
+        <button
+          disabled={loading}
+          className='btn btn-primary'
+        >
           Recuperar
         </button>
       </div>

@@ -1,7 +1,11 @@
 import { useUser } from 'comps/context/userContext'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import { signIn, signUp } from '../../firebase/user'
+import { useEffect, useState } from 'react'
+import {
+  sendRecoverPasswordEmail,
+  signIn,
+  signUp
+} from '../../firebase/user'
 import FormSingIn from '../FormSingIn'
 
 import RecoverPassawordForm from '../FormSingIn/recover'
@@ -11,6 +15,7 @@ export default function LoginCard({
   formProps = {}
 }) {
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
   const loginSumbit = ({ email, password }) => {
     signIn({ email, password })
       .then((res) => {
@@ -20,9 +25,13 @@ export default function LoginCard({
   }
 
   const recoverSubmit = ({ email }) => {
-    sendRecoverPasswordEmail({ email }).then((res) => {
-      console.log(res)
-    })
+    setLoading(true)
+    const domain = 'localhost:3000'
+    sendRecoverPasswordEmail({ email, domain })
+      .then((res) => {
+        console.log(res)
+      })
+      .finally(() => setLoading(false))
   }
 
   const signupSubmit = ({ email, password }) => {
@@ -53,6 +62,7 @@ export default function LoginCard({
           submitForm={recoverSubmit}
           {...formProps}
           buttonLabel='Enviar email'
+          loading={loading}
         />
       )
     },

@@ -58,8 +58,27 @@ export function authStateChanged(...props) {
   })
 }
 
-export async function sendRecoverPasswordEmail({ email }) {
-  return await sendPasswordResetEmail(auth, email)
+export async function sendRecoverPasswordEmail({
+  email,
+  domain
+}) {
+  const actionCodeSettings = {
+    url: `https://${domain}/?email=${email}`,
+    iOS: {
+      bundleId: domain
+    },
+    android: {
+      packageName: domain,
+      installApp: true,
+      minimumVersion: '12'
+    },
+    handleCodeInApp: true
+  }
+  return await sendPasswordResetEmail(
+    auth,
+    email,
+    actionCodeSettings
+  )
     .then(() => {
       console.log('Email sent.')
       return true
