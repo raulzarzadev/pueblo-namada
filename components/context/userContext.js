@@ -16,9 +16,8 @@ export function UserProvider({ children }) {
   useEffect(() => {
     authStateChanged((user) => {
       if (user) {
-        listenUser(user.id, (user) =>
-          setUser({ ...user, uid: user.id })
-        )
+        setUser({ ...user })
+        router.replace('/profile')
       } else {
         console.error('not logged')
         setUser(null)

@@ -32,7 +32,9 @@ export default function TopNavBar({ user }) {
             >
               <div className='w-8 rounded-full relative bg-green-700 justify-center items-center '>
                 <p className='absolute top-0 bottom-0 left-0 right-0 flex justify-center items-center'>
-                  {user.email.substring(0, 2).toUpperCase()}
+                  {user?.email
+                    ?.substring(0, 2)
+                    .toUpperCase()}
                 </p>
                 {/*  <Image src={'https://api.lorem.space/image/face?hash=33791'} layout='fill' objectFit="cover" /> */}
               </div>
