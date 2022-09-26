@@ -71,5 +71,5 @@ export async function sendRecoverPasswordEmail({ email }) {
     })
 }
 export function logout() {
-  signOut(auth)
+  return signOut(auth)
 }

@@ -1,8 +1,10 @@
 import { INFO } from '@/CONSTANTS/PROJECT'
 import { logout } from '@/firebase/user'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 export default function TopNavBar({ user }) {
+  const router = useRouter()
   return (
     <div className='navbar bg-base-100 '>
       <div className='flex-1'>
@@ -17,7 +19,7 @@ export default function TopNavBar({ user }) {
           <div className='flex items-center'>
             <Link href='/login'>
               <a className='btn btn-primary btn-sm'>
-                Iniciar sesión
+                Login
               </a>
             </Link>
           </div>
@@ -42,7 +44,7 @@ export default function TopNavBar({ user }) {
             >
               <li>
                 <Link href='/profile'>
-                  <a className='justify-between'>Perfil</a>
+                  <a className='justify-between'>Profile</a>
                 </Link>
               </li>
 
@@ -53,10 +55,15 @@ export default function TopNavBar({ user }) {
               </li>
               <li>
                 <button
-                  onClick={() => logout()}
+                  onClick={() =>
+                    logout().then((e) => {
+                      console.log(e)
+                      router.replace('/')
+                    })
+                  }
                   className='justify-between'
                 >
-                  Salir
+                  Sign out
                 </button>
               </li>
               {/* <li>

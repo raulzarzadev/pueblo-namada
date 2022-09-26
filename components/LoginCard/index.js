@@ -1,4 +1,6 @@
+import { useUser } from 'comps/context/userContext'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import { signIn, signUp } from '../../firebase/user'
 import FormSingIn from '../FormSingIn'
 
@@ -28,6 +30,10 @@ export default function LoginCard({
       router.push('/login')
     })
   }
+  const { user } = useUser()
+  useEffect(() => {
+    user && router.replace('/profile')
+  }, [user])
 
   const formsOptions = {
     login: {
