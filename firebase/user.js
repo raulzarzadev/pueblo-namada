@@ -59,13 +59,14 @@ export async function sendRecoverPasswordEmail({
   email,
   domain
 }) {
+  const DOMAIN = 'pueblonomada.page.link'
   const actionCodeSettings = {
-    url: `https://${domain}/?email=${email}`,
+    url: `https://${DOMAIN}/?email=${email}`,
     iOS: {
-      bundleId: domain
+      bundleId: DOMAIN
     },
     android: {
-      packageName: domain,
+      packageName: DOMAIN,
       installApp: true,
       minimumVersion: '12'
     },
@@ -76,9 +77,9 @@ export async function sendRecoverPasswordEmail({
     email,
     actionCodeSettings
   )
-    .then(() => {
-      console.log('Email sent.')
-      return true
+    .then((res) => {
+      console.log('Email sent', { res })
+      return { res }
       // Password reset email sent!
       // ..
     })

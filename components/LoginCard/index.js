@@ -22,9 +22,13 @@ export default function LoginCard({
       .then((res) => {
         router.push('/profile')
         setErrors({})
+        console.log({ res })
       })
       .catch((err) => {
-        console.error('login error', { code: err.code })
+        console.error('login error', {
+          err,
+          code: err.code
+        })
         if (err.code === 'auth/wrong-password')
           return setErrors({ wrongPassword: true })
         if ((err.code = 'auth/too-many-requests'))
@@ -34,7 +38,7 @@ export default function LoginCard({
 
   const recoverSubmit = ({ email }) => {
     setLoading(true)
-    const domain = 'localhost:3000'
+    const domain = 'pueblonomada.com'
     sendRecoverPasswordEmail({ email, domain })
       .then((res) => {
         console.log(res)
