@@ -1,3 +1,4 @@
+import InputPassword from 'inputs/inputPassword'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import Text from '../inputs/text'
@@ -18,7 +19,7 @@ export default function FormSingIn({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Text label='email' {...register('email')} />
-      <Text
+      <InputPassword
         type='password'
         label='password'
         {...register('password')}
