@@ -35,7 +35,7 @@ const PrivatePage = ({
     }: {
       elementOwner: string | null
     }) =>
-      user?.uid === elementOwner ? (
+      user?.id === elementOwner ? (
         <>{children}</>
       ) : (
         <NoUserPage permissionTo={permissionTo} />
