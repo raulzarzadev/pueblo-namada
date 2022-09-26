@@ -13,7 +13,8 @@ module.exports = {
     domains: [
       'api.lorem.space',
       'firebasestorage.googleapis.com',
-      'placeimg.com'
+      'placeimg.com',
+      'lh3.googleusercontent.com'
     ],
     formats: ['image/avif', 'image/webp']
   }

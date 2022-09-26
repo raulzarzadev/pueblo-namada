@@ -233,7 +233,7 @@ export class FirebaseCRUD {
         'number'
       )
     }
-    console.log(newItem)
+    // console.log(newItem)
     return await updateDoc(
       doc(db, this.collectionName, itemId),
       newItem

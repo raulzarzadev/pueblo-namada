@@ -84,7 +84,7 @@ export default function DashboardPlace({
     setFormatedGuest(formatedGuestsPayments)
   }, [guests.length, placePayments.length])
 
-  if (!showGuest()) return <div>Cannot see the guests</div>
+  // if (!showGuest()) return <div>Cannot see the guests</div>
 
   return (
     <div className=''>

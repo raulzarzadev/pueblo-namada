@@ -35,11 +35,11 @@ function PlaceCard({ place, linkToDashboard, isOwner }) {
         </div>
       </div>
       {image && (
-        <figure className='relative w-full'>
+        <figure className='relative w-1/2'>
           <Image
             src={image}
             layout='fill'
-            objectFit='cover'
+            objectFit='contain'
           />
         </figure>
       )}

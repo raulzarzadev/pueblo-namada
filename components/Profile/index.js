@@ -8,20 +8,16 @@ import { updateUser } from '../../firebase/Users'
 import GuestProfile from './GuestProfile'
 const UserProfile = () => {
   const {
-    user: { name, displayName, email, profileType }
+    user: { name, displayName, email, profileType, image }
   } = useUser()
 
   return (
     <div className='max-w-lg mx-auto'>
       <div className=' '>
         <div className='relative '>
-          <CoverPhoto
-            src={'https://placeimg.com/192/192/city'}
-          />
+          <CoverPhoto src={image} />
           <div className='absolute -bottom-12 left-5'>
-            <Avatar
-              src={'https://placeimg.com/192/192/people'}
-            />
+            <Avatar src={image} />
           </div>
         </div>
         <div className='pl-28 h-28 flex justify-between'>
