@@ -100,7 +100,7 @@ export function authStateChanged(...props) {
     if (user) {
       listenUser(user.uid, (dbUser) => {
         if (dbUser) {
-          cb(dbUser)
+          cb({ uid: user.uid, ...dbUser })
         } else {
           createUser(user)
         }
