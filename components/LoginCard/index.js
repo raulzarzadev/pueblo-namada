@@ -16,12 +16,20 @@ export default function LoginCard({
 }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [errors, setErrors] = useState({})
   const loginSumbit = ({ email, password }) => {
     signIn({ email, password })
       .then((res) => {
         router.push('/profile')
+        setErrors({})
       })
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        console.error('login error', { code: err.code })
+        if (err.code === 'auth/wrong-password')
+          return setErrors({ wrongPassword: true })
+        if ((err.code = 'auth/too-many-requests'))
+          return setErrors({ toManyRequests: true })
+      })
   }
 
   const recoverSubmit = ({ email }) => {
@@ -31,13 +39,16 @@ export default function LoginCard({
       .then((res) => {
         console.log(res)
       })
+      .catch((err) => console.error(err))
       .finally(() => setLoading(false))
   }
 
   const signupSubmit = ({ email, password }) => {
-    signUp({ email, password }).then((res) => {
-      router.push('/login')
-    })
+    signUp({ email, password })
+      .then((res) => {
+        router.push('/login')
+      })
+      .catch((err) => console.error(err))
   }
   const { user } = useUser()
   useEffect(() => {
@@ -49,6 +60,7 @@ export default function LoginCard({
       formLabel: 'Iniciar sesión',
       Component: (
         <FormSingIn
+          errors={errors}
           submitForm={loginSumbit}
           {...formProps}
           buttonLabel='Ingresar'
@@ -59,6 +71,7 @@ export default function LoginCard({
       formLabel: 'Recuperar contraseña',
       Component: (
         <RecoverPassawordForm
+          errors={errors}
           submitForm={recoverSubmit}
           {...formProps}
           buttonLabel='Enviar email'
@@ -70,6 +83,7 @@ export default function LoginCard({
       formLabel: 'Registrate',
       Component: (
         <FormSingIn
+          errors={errors}
           submitForm={signupSubmit}
           {...formProps}
           buttonLabel='Registrate'

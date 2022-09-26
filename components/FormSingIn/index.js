@@ -5,17 +5,14 @@ import Text from '../inputs/text'
 
 export default function FormSingIn({
   submitForm = () => {},
-  buttonLabel = 'Ingresar'
+  buttonLabel = 'Ingresar',
+  errors
 }) {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors }
-  } = useForm()
+  const { register, handleSubmit } = useForm()
   const onSubmit = ({ password, email }) => {
     submitForm({ email, password })
   }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Text label='email' {...register('email')} />
@@ -23,6 +20,7 @@ export default function FormSingIn({
         type='password'
         label='password'
         {...register('password')}
+        errors={errors}
       />
 
       <div className='mt-2 text-center'>

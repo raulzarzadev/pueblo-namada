@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 
 const InputPassword = React.forwardRef(
-  ({ label, helperText, ...rest }, ref) => {
+  ({ label, helperText, errors, ...rest }, ref) => {
     const [inputType, setInputType] = useState('password')
+    const { wrongPassword, toManyRequests } = errors
+
     return (
       <div className='form-control mx-auto w-full'>
         <label className='label'>
@@ -18,7 +20,17 @@ const InputPassword = React.forwardRef(
           type={inputType}
           id='password'
         ></input>
-        <div className='flex w-full justify-end'>
+        <div className='flex w-full justify-between'>
+          <label className='label-text text-error'>
+            {wrongPassword && (
+              <span>Incorrect credentials</span>
+            )}
+            {toManyRequests && (
+              <span>
+                To many requests. Try again in a few minutes
+              </span>
+            )}
+          </label>
           <label className='label-text-alt cursor-pointer '>
             <input
               className='hidden'

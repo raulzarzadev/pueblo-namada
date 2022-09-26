@@ -27,9 +27,7 @@ export async function signIn({ email, password }) {
     auth,
     email,
     password
-  )
-    .then((userCredential) => userCredential)
-    .catch((err) => console.error(err))
+  ).then((userCredential) => userCredential)
 }
 
 export function authStateChanged(...props) {
