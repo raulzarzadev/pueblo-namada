@@ -48,11 +48,16 @@ export default function ModalDelete({
   return (
     <div>
       {buttonType === 'icon' ? (
-        <button onClick={handleOpen} className='text-error'>
+        <button
+          disabled={disabled}
+          onClick={handleOpen}
+          className='text-error'
+        >
           <DeleteIcon />
         </button>
       ) : (
         <button
+          disabled={disabled}
           onClick={handleOpen}
           className='btn btn-sm text-error'
         >
