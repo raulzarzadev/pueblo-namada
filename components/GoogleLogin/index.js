@@ -2,7 +2,7 @@ import { googleLogin } from '@firebase/user'
 
 const GoogleLogin = () => {
   return (
-    <div className='flex h-screen w-full flex-col justify-center items-center'>
+    <div className='flex mb-14  flex-col justify-center items-center'>
       <div className='card bg-base-100 shadow-lg'>
         <div className='card-body'>
           <div className='my-2'>
@@ -14,7 +14,7 @@ const GoogleLogin = () => {
           </div>
           <button
             className='btn btn-primary '
-            onClick={() => googleLogin()}
+            onClick={ () => googleLogin() }
           >
             log in
           </button>
