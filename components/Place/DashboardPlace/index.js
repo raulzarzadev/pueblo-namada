@@ -23,7 +23,7 @@ import {
 import { useUser } from 'comps/context/userContext'
 import GuestsTable from '../GuestsTable'
 
-export default function DashboardPlace({
+export default function DashboardPlace ({
   showTable = false,
   showCards = false,
   showPaymentsTable = false,
@@ -88,69 +88,29 @@ export default function DashboardPlace({
 
   return (
     <div className=''>
-      <FormPlaceConfig place={place} />
-      <div>
-        <h3 className='text-xl font-bold text-left my-4'>
-          Options
-        </h3>
-        <div className='grid gap-2 sm:flex justify-evenly'>
-          <MainModal
-            title={'New Payment'}
-            OpenComponentType='primary'
-            buttonLabel='New Payment'
-          >
-            <FormAccommodation
-              place={place}
-              guests={formatedGuest}
-            />
-          </MainModal>
-          <MainModal
-            title={'New Guest'}
-            OpenComponentType='primary'
-            buttonLabel='New Guest'
-          >
-            {/* <FormPlace place={place} /> */}
-            <FormGuest />
-          </MainModal>
-          <MainModal
-            title='New cost'
-            buttonLabel='New cost'
-            OpenComponentType='primary'
-          >
-            <div>
-              <FormCost place={place} />
-            </div>
-          </MainModal>
-          <MainModal
-            title={'Cash Balance'}
-            OpenComponentType='primary'
-            buttonLabel='Cash Balance'
-          >
-            <FormCashBalance place={place} />
-          </MainModal>
-        </div>
-      </div>
+      <FormPlaceConfig place={ place } />
+      {/* <Options place={place} formatedGuest={formatedGuest} /> */ }
 
       <div className='grid gap-4 py-4 mt-4'>
-        {showCards &&
+        { showCards &&
           formatedGuest?.map((guest, i) => (
             <GuestCard
-              key={`${guest.id}-${i}`}
-              guest={guest}
-              isOwner={isOwner}
-              place={place}
+              key={ `${guest.id}-${i}` }
+              guest={ guest }
+              isOwner={ isOwner }
+              place={ place }
             />
-          ))}
+          )) }
 
-        {showTable && (
+        { showTable && (
           <Section title='Guests'>
             <GuestsTable
-              guests={formatedGuest}
-              payments={placePayments}
-              place={place}
+              guests={ formatedGuest }
+              payments={ placePayments }
+              place={ place }
             />
           </Section>
-        )}
+        ) }
 
         {/* {showPaymentsTable && (
           <Section title='Payments'>
@@ -163,8 +123,49 @@ export default function DashboardPlace({
             <PlaceCosts place={place} />
           </Section>
         )} */}
-        {showPlaceRquests && <HostRoomRequestSection />}
+        { showPlaceRquests && <HostRoomRequestSection /> }
       </div>
     </div>
   )
 }
+const Options = ({ place, formatedGuest }) => <div>
+  <h3 className='text-xl font-bold text-left my-4'>
+    Options
+  </h3>
+  <div className='grid gap-2 sm:flex justify-evenly'>
+    <MainModal
+      title={ 'New Payment' }
+      OpenComponentType='primary'
+      buttonLabel='New Payment'
+    >
+      <FormAccommodation
+        place={ place }
+        guests={ formatedGuest }
+      />
+    </MainModal>
+    <MainModal
+      title={ 'New Guest' }
+      OpenComponentType='primary'
+      buttonLabel='New Guest'
+    >
+      {/* <FormPlace place={place} /> */ }
+      <FormGuest />
+    </MainModal>
+    <MainModal
+      title='New cost'
+      buttonLabel='New cost'
+      OpenComponentType='primary'
+    >
+      <div>
+        <FormCost place={ place } />
+      </div>
+    </MainModal>
+    <MainModal
+      title={ 'Cash Balance' }
+      OpenComponentType='primary'
+      buttonLabel='Cash Balance'
+    >
+      <FormCashBalance place={ place } />
+    </MainModal>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function Section({
+export default function Section ({
   title,
   subtitle = null,
   children,
@@ -14,24 +14,24 @@ export default function Section({
   }, [open])
   return (
     <section
-      className={`
-          bg-base-100   text-base-content shadow-lg  rounded-md py-0.5
+      className={ `
+          bg-base-100   text-basep-content shadow-lg  rounded-md py-0.5 
         `}
     >
       <h3
-        className={` p-1
-        text-left flex   font-bold  items-center justify-between cursor-pointer 
+        className={ ` p-1
+        text-left flex   font-bold  items-center justify-between cursor-pointer z-[1]
         ${sticky && ' sticky top-0 bg-base-100 '}
         `}
-        onClick={() => setShow(!show)}
+        onClick={ () => setShow(!show) }
       >
         <div className=''>
-          {title}{' '}
+          { title }{ ' ' }
           <span className='font-medium  text-xs mx-2 '>
-            {subtitle}
+            { subtitle }
           </span>
         </div>
-        {show ? (
+        { show ? (
           <svg
             width='24px'
             height='24px'
@@ -48,8 +48,8 @@ export default function Section({
           </svg>
         ) : (
           <svg
-            width={24}
-            height={24}
+            width={ 24 }
+            height={ 24 }
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
           >
@@ -60,10 +60,10 @@ export default function Section({
               fill='currentColor'
             />
           </svg>
-        )}
+        ) }
       </h3>
-      <div className={`${indent && 'pl-4 '}  `}>
-        {show && children}
+      <div className={ `${indent && 'pl-4 '}  ` }>
+        { show && children }
       </div>
     </section>
   )
