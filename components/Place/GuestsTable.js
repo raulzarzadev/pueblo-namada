@@ -18,7 +18,7 @@ const GuestsTable = ({ guests }) => {
               Name
             </button>
           </th>
-          <th>
+          <th className=' text-center hidden sm:grid'>
             <button onClick={ () => handleSortBy('plates') }>
               Plates
             </button>
@@ -73,7 +73,7 @@ const GuestRow = ({ guest }) => {
             <GuestDetails guest={ guest } />
           </Modal>
         </Cell>
-        <Cell>{ guest?.plates }</Cell>
+        <Cell className=' text-center hidden sm:grid'>{ guest?.plates }</Cell>
         <Cell>{ guest?.payments?.length }</Cell>
 
         <Cell>

@@ -21,28 +21,28 @@ const RequestsTable = ({
     <div>
       <div className='overflow-x-auto'>
         <table className='table table-compact w-full'>
-          {/* <!-- head --> */}
+          {/* <!-- head --> */ }
           <thead>
             <tr>
-              <th></th>
-              <th>Dates</th>
-              {showPlaceName && <th>Place</th>}
-              {showRequestUser && <th>Guest </th>}
+              <th className=' text-center hidden sm:grid'></th>
+              <th className='hidden sm:block'>Dates</th>
+              { showPlaceName && <th>Place</th> }
+              { showRequestUser && <th>Guest </th> }
               <th>Requested</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            {/* <!-- row 1 --> */}
-            {requests.map((request, i) => (
+            {/* <!-- row 1 --> */ }
+            { requests.map((request, i) => (
               <RequestRow
-                key={request.id}
-                request={request}
-                showPlaceName={showPlaceName}
-                showRequestUser={showRequestUser}
-                i={i}
+                key={ request.id }
+                request={ request }
+                showPlaceName={ showPlaceName }
+                showRequestUser={ showRequestUser }
+                i={ i }
               />
-            ))}
+            )) }
           </tbody>
         </table>
       </div>
@@ -99,40 +99,40 @@ const RequestRow = ({
   return (
     <tr
       className='hover cursor-pointer'
-      onClick={() => handleOpenModal()}
+      onClick={ () => handleOpenModal() }
     >
-      <th>{i + 1}</th>
-      <td className='grid text-center'>
-        <span>{` From `}</span>
+      <th className=' text-center hidden sm:grid'>{ i + 1 }</th>
+      <td className=' text-center hidden sm:grid'>
+        <span>{ ` From ` }</span>
         <span>
-          {dates?.startsAt &&
-            format(dates?.startsAt, 'dd/MM/yy')}
+          { dates?.startsAt &&
+            format(dates?.startsAt, 'dd/MM/yy') }
         </span>
-        <span>{` to `}</span>
+        <span>{ ` to ` }</span>
         <span>
-          {dates?.endsAt &&
-            format(dates?.endsAt, ' dd/MM/yy ')}
+          { dates?.endsAt &&
+            format(dates?.endsAt, ' dd/MM/yy ') }
         </span>
       </td>
-      {showPlaceName && (
+      { showPlaceName && (
         <td className='whitespace-pre-line'>
-          {placeInfo.name}
+          { placeInfo.name }
         </td>
-      )}
-      {showRequestUser && (
+      ) }
+      { showRequestUser && (
         <td className='whitespace-pre-line'>
-          {guest.name}
+          { guest.name }
         </td>
-      )}
+      ) }
       <td>
-        {createdAt && format(createdAt, 'dd MMM yy hh:mm')}
+        { createdAt && format(createdAt, 'dd MMM yy hh:mm') }
       </td>
       <td>
-        {status || 'unknow'}
+        { status || 'unknow' }
         <Modal
           title='Request accommodation'
-          open={openModal}
-          handleOpen={handleOpenModal}
+          open={ openModal }
+          handleOpen={ handleOpenModal }
         >
           <div className=''>
             <div>
@@ -142,27 +142,27 @@ const RequestRow = ({
               <div>
                 <p>
                   <span>Name:</span>
-                  {guest?.name}
+                  { guest?.name }
                 </p>
                 <p>
                   <span>Email:</span>
-                  {guest?.email}
+                  { guest?.email }
                 </p>
                 <p>
                   <span>Phone:</span>
-                  {guest?.phone}
+                  { guest?.phone }
                 </p>
                 <p>
                   <span>Plates:</span>
-                  {guest?.plates}
+                  { guest?.plates }
                 </p>
                 <p>
                   <span>Image:</span>
-                  {guest?.image}
+                  { guest?.image }
                 </p>
                 <p>
                   <span>Image ID:</span>
-                  {guest?.imageID}
+                  { guest?.imageID }
                 </p>
               </div>
               <h4 className='font-bold text-lg'>
@@ -170,10 +170,10 @@ const RequestRow = ({
               </h4>
               <div className='flex w-full justify-around'>
                 <p>
-                  Place name: <span>{placeInfo?.name}</span>
+                  Place name: <span>{ placeInfo?.name }</span>
                 </p>
                 <Link
-                  href={`/places/${placeId}`}
+                  href={ `/places/${placeId}` }
                   className=''
                 >
                   <button className='btn btn-sm btn-outline'>
@@ -189,29 +189,29 @@ const RequestRow = ({
                 <div className='flex w-full justify-around'>
                   <span>
                     Form:
-                    {dates.startsAt &&
-                      format(dates.startsAt, 'dd/MM/yy')}
+                    { dates.startsAt &&
+                      format(dates.startsAt, 'dd/MM/yy') }
                   </span>
 
                   <span>
                     To:
-                    {dates.endsAt &&
-                      format(dates.endsAt, 'dd/MM/yy')}
+                    { dates.endsAt &&
+                      format(dates.endsAt, 'dd/MM/yy') }
                   </span>
                 </div>
                 <div>
                   <span>
                     Nights:
-                    {request.nights}
+                    { request.nights }
                   </span>
                 </div>
                 <p>Total:</p>
                 <p className='grid'>
                   <span>
-                    Total: ${request.mxnTotal} mxn
+                    Total: ${ request.mxnTotal } mxn
                   </span>
                   <span>
-                    Total: ${request.usdTotal} usd{' '}
+                    Total: ${ request.usdTotal } usd{ ' ' }
                   </span>
                 </p>
               </div>
@@ -219,46 +219,45 @@ const RequestRow = ({
                 Request Status
               </h4>
               <div className='flex w-full justify-around mb-4'>
-                {Object.keys(STATUSES).map((key) => {
+                { Object.keys(STATUSES).map((key) => {
                   return (
                     <button
-                      disabled={!isPlaceOwner}
-                      onClick={() =>
+                      disabled={ !isPlaceOwner }
+                      onClick={ () =>
                         handleUpdateRequestStatus(
                           STATUSES[key]
                         )
                       }
-                      className={`
+                      className={ `
                         btn btn-sm 
-                       ${
-                         STATUSES[key] === status &&
-                         ' btn-success disabled:bg-success disabled:text-black disabled:bg-opacity-40 '
-                       }
+                       ${STATUSES[key] === status &&
+                        ' btn-success disabled:bg-success disabled:text-black disabled:bg-opacity-40 '
+                        }
                        `}
-                      key={key}
+                      key={ key }
                     >
-                      {STATUSES[key]}
+                      { STATUSES[key] }
                     </button>
                   )
-                })}
+                }) }
               </div>
               <TextInfo
-                text={`Just the admin of the place can edit the status of your requests. If you have any question contact him`}
+                text={ `Just the admin of the place can edit the status of your requests. If you have any question contact him` }
               />
             </div>
             <div className='flex justify-around w-full mt-6'>
               <ModalDelete
-                disabled={status === 'ACCEPTED'}
+                disabled={ status === 'ACCEPTED' }
                 modalTitle='Delete request'
                 itemLabel='Requests accomodation'
                 deleteText={
                   'Are you sure that you want delete this resquest'
                 }
-                handleDelete={handleDeleteRequest}
-                deleteSuccessful={() =>
+                handleDelete={ handleDeleteRequest }
+                deleteSuccessful={ () =>
                   setDeletedSuccessfully(true)
                 }
-                itemId={id}
+                itemId={ id }
                 buttonType='btn'
               />
             </div>

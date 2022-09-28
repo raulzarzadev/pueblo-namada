@@ -11,10 +11,10 @@ const GuestProfile = () => {
   return (
     <div>
       <h2 className='text-center'>My rooms requests</h2>
-      {userRequests?.map((req) => (
-        <div key={req.id}></div>
-      ))}
-      <RequestsTable requests={userRequests} />
+      { userRequests?.map((req) => (
+        <div key={ req.id }></div>
+      )) }
+      <RequestsTable requests={ userRequests } showPlaceName />
     </div>
   )
 }

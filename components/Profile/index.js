@@ -15,23 +15,23 @@ const UserProfile = () => {
     <div className='max-w-lg mx-auto'>
       <div className=' '>
         <div className='relative '>
-          <CoverPhoto src={image} />
+          <CoverPhoto src={ image } />
           <div className='absolute -bottom-12 left-5'>
-            <Avatar src={image} />
+            <Avatar src={ image } />
           </div>
         </div>
-        <div className='pl-28 h-28 flex justify-between'>
+        <div className='pl-28 h-28  justify-between grid sm:flex'>
           <div>
             <h2 className='font-bold text-lg'>
-              {name || displayName || email}
+              { name || displayName || email }
             </h2>
-            <p>{email}</p>
+            <p>{ email }</p>
           </div>
           <EditUser />
         </div>
       </div>
-      {profileType?.isHost && <HostProfile />}
-      {profileType?.isGuest && <GuestProfile />}
+      { profileType?.isHost && <HostProfile /> }
+      { profileType?.isGuest && <GuestProfile /> }
     </div>
   )
 }
@@ -52,17 +52,17 @@ const EditUser = () => {
       <div className='pt-2'>
         <button
           className='btn btn-primary btn-sm'
-          onClick={() => hanldeOpenUserForm()}
+          onClick={ () => hanldeOpenUserForm() }
         >
           Edit profile
         </button>
       </div>
       <Modal
-        open={openUserForm}
-        handleOpen={hanldeOpenUserForm}
+        open={ openUserForm }
+        handleOpen={ hanldeOpenUserForm }
         title='Edit user info'
       >
-        <FormUser user={user} submitForm={handleEditUser} />
+        <FormUser user={ user } submitForm={ handleEditUser } />
       </Modal>
     </div>
   )
@@ -75,7 +75,7 @@ export const CoverPhoto = ({ src }) => (
         className='md:rounded-b-lg'
         layout='fill'
         objectFit='cover'
-        src={src}
+        src={ src }
         alt='user avatar'
       />
     </div>
@@ -88,7 +88,7 @@ export const Avatar = ({ src }) => (
         className=''
         layout='fill'
         objectFit='contain'
-        src={src}
+        src={ src }
         alt='user avatar'
       />
     </div>
