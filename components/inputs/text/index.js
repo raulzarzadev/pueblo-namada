@@ -4,23 +4,24 @@ const Text = React.forwardRef(
   ({ label, helperText, ...rest }, ref) => {
     return (
       <div className='form-control mx-auto w-full'>
-        <label className='label'>
-          {label && (
-            <span className='label-text'>{label}</span>
-          )}
+        <label className='label' htmlFor={ label } >
+          { label && (
+            <span className='label-text'>{ label }</span>
+          ) }
         </label>
         <input
+          id={ label }
           className='input input-bordered '
-          {...rest}
-          ref={ref}
+          { ...rest }
+          ref={ ref }
         />
-        {helperText && (
-          <label className='label'>
+        { helperText && (
+          <label className='label' htmlFor={ label }>
             <span className='label-text-alt'>
-              {helperText}
+              { helperText }
             </span>
           </label>
-        )}
+        ) }
       </div>
     )
   }

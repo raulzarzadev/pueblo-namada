@@ -6,7 +6,8 @@ export default function Section ({
   children,
   open = false,
   indent = false,
-  sticky = false
+  sticky = false,
+  bgColor = 'bg-base-100'
 }) {
   const [show, setShow] = useState(open || false)
   useState(() => {
@@ -15,18 +16,31 @@ export default function Section ({
   return (
     <section
       className={ `
-          bg-base-100   text-basep-content shadow-lg  rounded-md py-0.5 
+         ${bgColor}   
+         text-basep-content 
+         shadow-lg 
+        rounded-md 
+         py-0.5 
         `}
     >
-      <h3
-        className={ ` p-1
-        text-left flex   font-bold  items-center justify-between cursor-pointer z-[1]
-        ${sticky && ' sticky top-0 bg-base-100 '}
-        `}
+      <div
         onClick={ () => setShow(!show) }
+        className={ ` 
+        ${sticky && ' sticky top-0 bg-base-100 '}
+        p-1
+        text-left 
+        flex   
+        font-bold 
+        items-center 
+        justify-between 
+        cursor-pointer 
+        z-[1]
+        `}
       >
-        <div className=''>
-          { title }{ ' ' }
+        <div className='flex '>
+          <h3 className='m-0'>
+            { title }
+          </h3>
           <span className='font-medium  text-xs mx-2 '>
             { subtitle }
           </span>
@@ -61,8 +75,8 @@ export default function Section ({
             />
           </svg>
         ) }
-      </h3>
-      <div className={ `${indent && 'pl-4 '}  ` }>
+      </div>
+      <div className={ `${indent && 'pl-4 '}   bg-inherit` }>
         { show && children }
       </div>
     </section>

@@ -67,7 +67,7 @@ export default function FormGuest({ guest }) {
 
     uploadFile(
       file,
-      `gests/${fieldName}s/`,
+      `guests/${fieldName}s/`,
       (progress, downloadURL) => {
         if (downloadURL) {
           setValue(fieldName, downloadURL)
