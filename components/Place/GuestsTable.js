@@ -10,7 +10,7 @@ const GuestsTable = ({ guests }) => {
     useSortByField(guests)
 
   return (
-    <table className='mx-auto w-full table-compact table'>
+    <table className='mx-auto w-full table-compact table hover'>
       <thead>
         <tr>
           <th>
@@ -19,7 +19,8 @@ const GuestsTable = ({ guests }) => {
             </button>
           </th>
           <th className=' text-center hidden sm:grid'>
-            <button onClick={ () => handleSortBy('plates') }>
+            <button
+              onClick={ () => handleSortBy('plates') }>
               Plates
             </button>
           </th>
@@ -60,7 +61,7 @@ const GuestRow = ({ guest }) => {
   return (
     <>
       <tr
-        className='cursor-pointer hover:bg-base-200'
+        className='cursor-pointer hover:bg-base-200 hover'
         onClick={ () => handleOpen() }
       >
         <Cell className=' truncate max-w-[75px]   '>
@@ -73,8 +74,12 @@ const GuestRow = ({ guest }) => {
             <GuestDetails guest={ guest } />
           </Modal>
         </Cell>
-        <Cell className=' text-center hidden sm:grid'>{ guest?.plates }</Cell>
-        <Cell>{ guest?.payments?.length }</Cell>
+        <Cell
+          className=' text-center hidden sm:table-cell '>{ guest?.plates }
+        </Cell>
+        <Cell>
+          { guest?.payments?.length }
+        </Cell>
 
         <Cell>
           { guest?.lastPayment ? (
@@ -110,7 +115,15 @@ const GuestRow = ({ guest }) => {
 const Cell = ({ children, className = '' }) => {
   return (
     <td
-      className={ `${className} px-2 py-1 text-center items-center relative` }
+      className={ `
+      ${className}
+       px-2
+       py-1 
+      text-center
+      items-center 
+      relative
+      
+      ` }
     >
       { children }
     </td>
