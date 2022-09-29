@@ -34,7 +34,8 @@ export default function FormUser ({
       />
       { watch('profileType.isGuest') &&
         <Section title={ 'Your guest information' } bgColor='bg-base-300'>
-          <FormUserInfoGuest guest={ user.guestProfile } />
+          <FormUserInfoGuest
+            guest={ { ...user.guestProfile, name: user.name, email: user.email } } />
         </Section>
       }
       {/* { watch('profileType.isGuest') && (
