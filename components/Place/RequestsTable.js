@@ -1,5 +1,6 @@
 import { selectPlaceState } from '@/store/slices/placeSlice'
 import { useUser } from 'comps/context/userContext'
+import PreviewImage from 'comps/PreviewImage'
 import { format } from 'date-fns'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -17,6 +18,12 @@ const RequestsTable = ({
   showPlaceName,
   showRequestUser
 }) => {
+  const sortRequestsByCreatedAt = (a, b) => {
+    if (a?.createdAt > b?.createdAt) return -1
+    if (a?.createdAt < b?.createdAt) return 1
+    return 0
+  }
+  const requestsSortedByDate = [...requests]?.sort(sortRequestsByCreatedAt)
   return (
     <div>
       <div className='overflow-x-auto'>
@@ -34,7 +41,7 @@ const RequestsTable = ({
           </thead>
           <tbody>
             {/* <!-- row 1 --> */ }
-            { requests.map((request, i) => (
+            { requestsSortedByDate.map((request, i) => (
               <RequestRow
                 key={ request.id }
                 request={ request }
@@ -155,14 +162,16 @@ const RequestRow = ({
                   <span>Plates:</span>
                   { guest?.plates }
                 </p>
-                <p>
-                  <span>Image:</span>
-                  { guest?.image }
-                </p>
-                <p>
-                  <span>Image ID:</span>
-                  { guest?.imageID }
-                </p>
+                <div className='flex w-full justify-around'>
+                  <div>
+                    <span>Image:</span>
+                    { guest?.publicImage && <PreviewImage image={ guest.publicImage } previewSize='xl' /> }
+                  </div>
+                  <div>
+                    <span>Image ID:</span>
+                    { guest?.imageID && <PreviewImage image={ guest.imageID } previewSize='xl' /> }
+                  </div>
+                </div>
               </div>
               <h4 className='font-bold text-lg'>
                 Place information

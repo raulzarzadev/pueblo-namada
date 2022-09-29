@@ -16,16 +16,17 @@ const HostRoomRequestSection = () => {
     ({ status }) => status === 'UNSOLVED'
   ).length
 
+
   return (
     <Section
-      title={'Room requests'}
-      subtitle={`Total: ${totalRequests} Unsolved: ${unsolvedRequests}`}
+      title={ 'Room requests' }
+      subtitle={ `Total: ${totalRequests} Unsolved: ${unsolvedRequests}` }
     >
       <div>
         <h4>My accommodations in this place</h4>
         <RequestsTable
-          requests={roomRequests}
-          isPlaceOwner={id === place.userId}
+          requests={ roomRequests }
+          isPlaceOwner={ id === place.userId }
           showRequestUser
         />
       </div>
