@@ -6,6 +6,7 @@ import { useUser } from '../context/userContext'
 import { listenUserPlaceRoomRequests } from '../../firebase/RoomRequests/main'
 import TextInfo from '../TextInfo'
 import Section from 'comps/Section'
+import PreviewImage from 'comps/PreviewImage'
 
 const GuestRoomRequestSection = ({ place }) => {
   const {
@@ -31,39 +32,39 @@ const GuestRoomRequestSection = ({ place }) => {
       <div className='w-full flex my-5 justify-center'>
         <button
           className='btn btn-primary btn-sm'
-          onClick={() => handleOpen()}
+          onClick={ () => handleOpen() }
         >
           Check-in
         </button>
       </div>
       <Section
-        title={'My requests in this place '}
-        subtitle={` ( ${userRequests?.length} ) `}
+        title={ 'My requests in this place ' }
+        subtitle={ ` ( ${userRequests?.length} ) ` }
       >
         <RequestsTable
-          requests={userRequests}
-          isPlaceOwner={id === place.userId}
+          requests={ userRequests }
+          isPlaceOwner={ id === place.userId }
           showPlaceName
         />
       </Section>
       <Modal
         title='Stay here'
-        open={openAccomodationForm}
-        handleOpen={handleOpen}
+        open={ openAccomodationForm }
+        handleOpen={ handleOpen }
       >
         <div className=''>
-          <DefaultGuestInfo guest={guestInfo} />
+          <DefaultGuestInfo guest={ guestInfo } />
           <h4 className='font-bold text-lg'>
             Choose dates
           </h4>
 
           <TextInfo
-            text={` Choose the start date, and then the numbers of days. `}
+            text={ ` Choose the start date, and then the numbers of days. ` }
           />
 
           <FormSelfAccommodation
-            place={place}
-            guest={guestInfo}
+            place={ place }
+            guest={ guestInfo }
           />
         </div>
       </Modal>
@@ -77,16 +78,22 @@ const DefaultGuestInfo = ({ guest }) => {
       <h4 className='font-bold text-lg'>Guest info</h4>
       <span>
         <TextInfo
-          text={`  This informations will be sent to the host. The host will decide if this
-        information is enough`}
+          text={ `  This informations will be sent to the host.
+           The host will decide if the information is enough`}
         />
       </span>
-      <div>Name:{guest.name}</div>
-      <div>Email:{guest.email}</div>
-      <div>Phone:{guest.phone}</div>
-      <div>Plates:{guest.plates}</div>
-      <div>Image:{guest.image}</div>
-      <div>ID Image:{guest.imageID}</div>
+      <div>Name:{ guest.name }</div>
+      <div>Email:{ guest.email }</div>
+      <div>Phone:{ guest.phone }</div>
+      <div>Plates:{ guest.plates }</div>
+      <div className='flex w-full justify-around'>
+        <div>Public Image:{ guest.publicImage &&
+          <PreviewImage previewSize='xl' image={ guest.publicImage } /> }
+        </div>
+        <div>ID Image:{ guest.imageID &&
+          <PreviewImage previewSize='xl' image={ guest.imageID } /> }
+        </div>
+      </div>
     </div>
   )
 }

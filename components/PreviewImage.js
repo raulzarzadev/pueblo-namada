@@ -2,33 +2,48 @@ import Image from 'next/image'
 import { useState } from 'react'
 import Modal from './Modal'
 
-const PreviewImage = ({ label = null, image = null }) => {
+
+const PreviewImage = ({ label = null, image = null, previewSize = 'md' }) => {
   const [openModal, setOpenModal] = useState(false)
   const handleOpenModal = () => setOpenModal(!openModal)
-
+  const size = {
+    sm: 'w-8',
+    md: 'w-12',
+    lg: 'w-24',
+    xl: 'w-32',
+  }
   return (
     <div className='flex flex-col'>
-      {label && <span className=''>{label}</span>}
-      {image ? (
+      { label && <span className=''>{ label }</span> }
+      { image ? (
         <>
           <div
-            className='relative h-12 aspect-video mx-auto opacity-60 hover:opacity-100 shadow-lg m-1'
-            onClick={handleOpenModal}
+            className={ `
+            ${size[previewSize]}
+            relative 
+             aspect-square
+             mx-auto
+             opacity-60 
+            hover:opacity-100
+             shadow-lg 
+             cursor-pointer
+            m-1`}
+            onClick={ handleOpenModal }
           >
             <Image
-              src={image}
+              src={ image }
               layout='fill'
-              objectFit='contain'
+              objectFit='cover'
             />
           </div>
           <Modal
             title='Image'
-            open={openModal}
-            handleOpen={handleOpenModal}
+            open={ openModal }
+            handleOpen={ handleOpenModal }
           >
-            <div className='relative w-full aspect-video mx-auto'>
+            <div className='relative w-full aspect-square mx-auto '>
               <Image
-                src={image}
+                src={ image }
                 layout='fill'
                 objectFit='contain'
               />
@@ -37,7 +52,7 @@ const PreviewImage = ({ label = null, image = null }) => {
         </>
       ) : (
         <span className='italic'>No image</span>
-      )}
+      ) }
     </div>
   )
 }
