@@ -1,6 +1,7 @@
 import FORM_STATUS from '@/CONSTANTS/FORM_STATUS'
 import FormUserInfoGuest from 'comps/FormUserInfoGuest'
 import Section from 'comps/Section'
+import TextInfo from 'comps/TextInfo'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -39,16 +40,23 @@ export default function FormUser ({
     <form onSubmit={ handleSubmit(onSubmit) }>
       <Text label='email' { ...register('email') } />
       <Text label='name' { ...register('name') } />
-      <Toogle
-        label='Are you a host'
-        { ...register('profileType.isHost') }
-      />
-      <Toogle
-        label='Are you a guest'
-        { ...register('profileType.isGuest') }
-      />
+      <div className='my-2 p-2 rounded-lg bg-base-300'>
+        <TextInfo text='You can create new places and recive guests' />
+        <Toogle
+          label='Are you a host'
+          { ...register('profileType.isHost') }
+        />
+      </div>
+      <div className='my-2 p-2 rounded-lg bg-base-300'>
+        <TextInfo text='You can applay for rooms in diferents places' />
+        <Toogle
+          label='Are you a guest'
+          { ...register('profileType.isGuest') }
+        />
+      </div>
       { watch('profileType.isGuest') &&
         <Section title={ 'Your guest information' } bgColor='bg-base-300'>
+          <TextInfo text='This information will be seen by the administrator of the place where you request a room.' />
           <FormUserInfoGuest
             onChangeFormStatus={ handleSetFormStatus }
             register={ register }
