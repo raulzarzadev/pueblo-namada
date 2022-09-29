@@ -1,30 +1,31 @@
 import { INFO } from '@/CONSTANTS/PROJECT'
-import { logout } from '@/firebase/user'
+import { googleLogin, logout } from '@/firebase/user'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-export default function TopNavBar({ user }) {
+export default function TopNavBar ({ user }) {
   const router = useRouter()
   return (
     <div className='navbar bg-base-100 '>
       <div className='flex-1'>
         <Link href='/'>
           <a className='btn btn-ghost normal-case btn-sm'>
-            {INFO.short_name}
+            { INFO.short_name }
           </a>
         </Link>
       </div>
       <div className='flex-none'>
-        {!user && (
+        { !user && (
           <div className='flex items-center'>
-            <Link href='/login'>
-              <a className='btn btn-primary btn-sm'>
-                Login
-              </a>
-            </Link>
+
+            <a
+              onClick={ () => googleLogin() } className='btn btn-primary btn-sm'>
+              Login with google
+            </a>
+
           </div>
-        )}
-        {user && (
+        ) }
+        { user && (
           <div className='dropdown dropdown-end'>
             <label
               tabIndex='0'
@@ -32,11 +33,11 @@ export default function TopNavBar({ user }) {
             >
               <div className='w-8 rounded-full relative bg-green-700 justify-center items-center '>
                 <p className='absolute top-0 bottom-0 left-0 right-0 flex justify-center items-center'>
-                  {user?.email
+                  { user?.email
                     ?.substring(0, 2)
-                    .toUpperCase()}
+                    .toUpperCase() }
                 </p>
-                {/*  <Image src={'https://api.lorem.space/image/face?hash=33791'} layout='fill' objectFit="cover" /> */}
+                {/*  <Image src={'https://api.lorem.space/image/face?hash=33791'} layout='fill' objectFit="cover" /> */ }
               </div>
             </label>
 
@@ -57,7 +58,7 @@ export default function TopNavBar({ user }) {
               </li>
               <li>
                 <button
-                  onClick={() =>
+                  onClick={ () =>
                     logout().then((e) => {
                       console.log(e)
                       router.replace('/')
@@ -78,7 +79,7 @@ export default function TopNavBar({ user }) {
           <li><a>Logout</a></li> */}
             </ul>
           </div>
-        )}
+        ) }
       </div>
     </div>
   )

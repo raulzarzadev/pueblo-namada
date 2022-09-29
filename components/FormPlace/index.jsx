@@ -64,12 +64,16 @@ export default function FormPlace({
         })
   }
 
+  const [uploadImageProgress, setUploadImageProgress] =
+    useState(0)
+
   const handleUploadFile = async ({ fieldName, file }) => {
     setLabelSave(FORM_STATUS[2])
     uploadFile(
       file,
       `places/${fieldName}s/`,
       (progress, downloadURL) => {
+        setUploadImageProgress(progress)
         if (downloadURL) {
           setValue(fieldName, downloadURL)
           setLabelSave(FORM_STATUS[0])
@@ -119,6 +123,8 @@ export default function FormPlace({
             label={'precio por USD'}
           />
           <File
+            showProgress
+            progress={uploadImageProgress}
             onChange={({ target: { files } }) =>
               handleUploadFile({
                 fieldName: 'image',

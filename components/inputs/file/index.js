@@ -1,3 +1,4 @@
+import PreviewImage from 'comps/PreviewImage'
 import Image from 'next/image'
 import React from 'react'
 
@@ -8,16 +9,9 @@ const File = React.forwardRef(
         { showProgress && <progress className="progress w-full" value={ progress } max="100"></progress>
         }
         { preview && (
-          <figure className='relative h-36'>
-            <Image
-              src={ preview }
-              objectFit='contain'
-              layout='fill'
-              blurDataURL='/images/overlander.jpg'
-              placeholder='blur'
-            />
-          </figure>
+          <PreviewImage image={ preview } previewSize='xl' />
         ) }
+
         <label
           htmlFor='formFileMultiple'
           className='form-label inline-block  text-left'

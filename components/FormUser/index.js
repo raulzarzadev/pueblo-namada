@@ -25,7 +25,8 @@ export default function FormUser ({
       guestProfile: {
         ...user.guestProfile,
         name: user.name
-      }
+      },
+
     }
   })
   const onSubmit = ({ ...form }) => {
@@ -40,6 +41,14 @@ export default function FormUser ({
     <form onSubmit={ handleSubmit(onSubmit) }>
       <Text label='email' { ...register('email') } />
       <Text label='name' { ...register('name') } />
+
+      <div className='my-2 p-2 rounded-lg bg-base-300'>
+        <TextInfo text='You can hide all info texts, but is not recommendable until you are familiarized with the user experience.' />
+        <Toogle
+          label='Hidde info texts'
+          { ...register('hiddeInfoText') }
+        />
+      </div>
       <div className='my-2 p-2 rounded-lg bg-base-300'>
         <TextInfo text='You can create new places and recive guests' />
         <Toogle
