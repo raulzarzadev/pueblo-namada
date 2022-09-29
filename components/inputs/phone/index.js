@@ -10,35 +10,36 @@ const Phone = React.forwardRef(
   ) => (
     <div className='form-control '>
       <span className='label-text capitalize-first text-left'>
-        {label}
+        { label }
       </span>
       <PhoneInput
-        forwardRef={ref}
-        localization={es}
-        onChange={(value, _data, _event) => onChange(value)}
+        forwardRef={ ref }
+        localization={ es }
+        onChange={ (value, _data, _event) => onChange(value) }
         defaultMask='.. .... .. ..'
         alwaysDefaultMask
-        {...rest}
         // onlyCountries={['mx']}
-        country={'mx'}
-        value={value}
-        inputProps={{
+        preferredCountries={ ['mx', 'us'] }
+        country={ 'mx' }
+        value={ value }
+        inputProps={ {
           name: 'phone',
           className: 'input input-bordered w-full pl-[40px]'
           // style: { paddingLeft: '40px' }
-        }}
+        } }
         dropdownClass='bg-base-300'
-      />{' '}
-      {helperText && (
+        { ...rest }
+      />
+      { helperText && (
         <span className='label-text text-info'>
-          {helperText}
+          { helperText }
         </span>
-      )}
-      {error && (
+      ) }
+      { error && (
         <span className='label-text text-error'>
-          {error}
+          { error }
         </span>
-      )}
+      ) }
     </div>
   )
 )

@@ -95,7 +95,6 @@ const RequestRow = ({
   } = request
 
   const isPlaceOwner = userId === placeUserId
-  console.log(request)
   return (
     <tr
       className='hover cursor-pointer'
