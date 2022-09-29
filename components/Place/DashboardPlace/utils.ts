@@ -66,11 +66,11 @@ export const formatGuestPayments = ({ guests }: { guests: Guest[] }) => {
         if (
           toNumber(a?.createdAt) > toNumber(b?.createdAt)
         )
-          return 1
+          return -1
         if (
           toNumber(a?.createdAt) < toNumber(b?.createdAt)
         )
-          return -1
+          return 1
         return 0
       }
     )
