@@ -37,7 +37,7 @@ export default function Section ({
         z-[1]
         `}
       >
-        <div className='flex '>
+        <div className='flex items-baseline '>
           <h3 className='m-0'>
             { title }
           </h3>

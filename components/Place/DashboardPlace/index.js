@@ -28,7 +28,7 @@ export default function DashboardPlace ({
   showCards = false,
   showPaymentsTable = false,
   showOperatingCosts = false,
-  showPlaceRquests = true
+  showPlaceRequests = true
 }) {
   const { user } = useUser()
   const place = useSelector(selectPlaceState)
@@ -88,6 +88,7 @@ export default function DashboardPlace ({
 
   return (
     <div className=''>
+      { showPlaceRequests && <HostRoomRequestSection /> }
       <FormPlaceConfig place={ place } />
       {/* <Options place={place} formatedGuest={formatedGuest} /> */ }
 
@@ -123,7 +124,7 @@ export default function DashboardPlace ({
             <PlaceCosts place={place} />
           </Section>
         )} */}
-        { showPlaceRquests && <HostRoomRequestSection /> }
+
       </div>
     </div>
   )

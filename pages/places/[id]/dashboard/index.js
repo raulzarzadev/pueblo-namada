@@ -9,7 +9,7 @@ import Head from 'next/head'
 import { useSelector } from 'react-redux'
 import { selectPlaceState } from '@/store/slices/placeSlice'
 
-export default function dashboard() {
+export default function dashboard () {
   const place = useSelector(selectPlaceState)
 
   return (
@@ -19,15 +19,8 @@ export default function dashboard() {
       </Head>
       <PrivatePage
         permissionTo='owner'
-        elementOwner={place?.userId}
+        elementOwner={ place?.userId }
       >
-        <Section
-          title={'Place details'}
-          subtitle={`${place?.name || ''}`}
-          sticky
-        >
-          <PlaceDetails />
-        </Section>
 
         <DashboardPlace
           showTable
@@ -35,6 +28,13 @@ export default function dashboard() {
           showOperatingCosts
         />
       </PrivatePage>
+      <Section
+        title={ 'Place details' }
+        subtitle={ `${place?.name || ''}` }
+        sticky
+      >
+        <PlaceDetails />
+      </Section>
     </>
   )
 }
