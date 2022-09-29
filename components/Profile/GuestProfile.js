@@ -1,3 +1,4 @@
+import Section from 'comps/Section'
 import { useEffect, useState } from 'react'
 import { listenUserRequests } from '../../firebase/RoomRequests/main'
 import RequestsTable from '../Place/RequestsTable'
@@ -10,11 +11,9 @@ const GuestProfile = () => {
   }, [])
   return (
     <div>
-      <h2 className='text-center'>My rooms requests</h2>
-      { userRequests?.map((req) => (
-        <div key={ req.id }></div>
-      )) }
-      <RequestsTable requests={ userRequests } showPlaceName />
+      <Section title={ 'My rooms requests' } subtitle={ `(${userRequests?.length})` }>
+        <RequestsTable requests={ userRequests } showPlaceName />
+      </Section>
     </div>
   )
 }
