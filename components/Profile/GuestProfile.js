@@ -1,7 +1,7 @@
+import RequestsTable from 'comps/Place/RequestsTable'
 import Section from 'comps/Section'
 import { useEffect, useState } from 'react'
 import { listenUserRequests } from '../../firebase/RoomRequests/main'
-import RequestsTable from '../Place/RequestsTable'
 const GuestProfile = () => {
   const [userRequests, setUserRequests] =
     useState(undefined)
