@@ -60,19 +60,20 @@ const GuestRow = ({ guest }) => {
   const handleOpen = () => setOpen(!open)
   return (
     <>
+      <Modal
+        title={ ` ${guest?.name || 'Guest'} information ` }
+        open={ open }
+        handleOpen={ handleOpen }
+      >
+        <GuestDetails guest={ guest } />
+      </Modal>
       <tr
-        className='cursor-pointer  '
+        className='cursor-pointer hover '
         onClick={ () => handleOpen() }
       >
         <Cell className=' truncate max-w-[75px]   '>
           <span className=''>{ guest?.name }</span>
-          <Modal
-            title={ ` ${guest?.name || 'Guest'} information ` }
-            open={ open }
-            handleOpen={ handleOpen }
-          >
-            <GuestDetails guest={ guest } />
-          </Modal>
+
         </Cell>
         <Cell
           className=' text-center hidden sm:table-cell '>{ guest?.plates }
