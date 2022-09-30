@@ -1,11 +1,12 @@
 import { format } from 'date-fns'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ModalRequestDetails from './ModalRequestDetails'
 
 const RequestsTable = ({
   requests = [],
   showPlaceName,
-  showRequestUser
+  showRequestUser,
+  hiddeStatusFilter = false
 }) => {
   const sortRequestsByCreatedAt = (a, b) => {
     if (a?.createdAt > b?.createdAt) return -1
@@ -13,19 +14,22 @@ const RequestsTable = ({
     return 0
   }
   const requestsSortedByDate = [...requests]?.sort(sortRequestsByCreatedAt)
-
   // get all diferents satus in the requests lists
   const allStaus = [...requests].map(({ status }) => status)
   const statusOptions = [...new Set(allStaus)]
 
+  const [displayRequests, setDisplayRequests] = useState([])
+  useEffect(() => {
+    setDisplayRequests([...requestsSortedByDate])
+
+  }, [requests])
+
+  console.log({ displayRequests, requestsSortedByDate })
   const handleChangeStatusSelect = ({ target: { value: filter } }) => {
     if (filter === 'ALL') return setDisplayRequests([...requestsSortedByDate])
     const filteredStatusReques = [...requestsSortedByDate].filter(({ status }) => filter === status)
     setDisplayRequests(filteredStatusReques)
   }
-  const [displayRequests, setDisplayRequests] = useState([...requestsSortedByDate])
-
-
   return (
     <div className='overflow-x-auto'>
       <table className='table table-compact w-full'>
@@ -39,13 +43,15 @@ const RequestsTable = ({
             <th>Requested</th>
             <th className='flex flex-col'>
               Status
-              <select onChange={ handleChangeStatusSelect } name='selectoption' className='select select-xs'>
-                <option value={ 'ALL' }>ALL</option>
-                { statusOptions.map(status =>
-                  <option value={ status }>{ status }</option>
-                ) }
+              { !hiddeStatusFilter &&
+                <select onChange={ handleChangeStatusSelect } name='selectoption' className='select select-xs'>
+                  <option value={ 'ALL' }>ALL</option>
+                  { statusOptions.map(status =>
+                    <option value={ status }>{ status }</option>
+                  ) }
 
-              </select>
+                </select>
+              }
             </th>
           </tr>
         </thead>
@@ -116,7 +122,7 @@ const RequestRow = ({
           </td>
         ) }
         <td>
-          { createdAt && format(createdAt, 'dd MMM yy hh:mm') }
+          { createdAt && format(createdAt, 'dd MMM yy HH:mm') }
         </td>
         <td className=' !rounded-none'>
           { status || 'unknow' }
