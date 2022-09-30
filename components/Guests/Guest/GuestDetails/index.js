@@ -26,7 +26,7 @@ export const GuestDetails = ({ guest }) => {
 
 
   return (
-    <div className='max-w-sm mx-auto'>
+    <div className='max-w-xl mx-auto'>
       <p>
         <span className='font-bold'>Name:</span>{ ' ' }
         { guest?.name }
