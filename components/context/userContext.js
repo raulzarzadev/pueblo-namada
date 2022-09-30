@@ -9,7 +9,7 @@ import { authStateChanged } from '../../firebase/user'
 import { listenUser } from '@firebase/Users'
 const UserContext = createContext()
 
-export function UserProvider({ children }) {
+export function UserProvider ({ children }) {
   const [user, setUser] = useState(undefined)
   const router = useRouter()
   const { redirectTo } = router?.query
@@ -17,7 +17,7 @@ export function UserProvider({ children }) {
     authStateChanged((user) => {
       if (user) {
         setUser({ ...user })
-        router.replace('/profile')
+        // router.replace('/profile')
       } else {
         console.error('not logged')
         setUser(null)
@@ -27,8 +27,8 @@ export function UserProvider({ children }) {
 
   if (user === undefined) return <div>loading ...</div>
   return (
-    <UserContext.Provider value={{ user }}>
-      {children}
+    <UserContext.Provider value={ { user } }>
+      { children }
     </UserContext.Provider>
   )
 }

@@ -15,11 +15,8 @@ const RequestsTable = ({
   const requestsSortedByDate = [...requests]?.sort(sortRequestsByCreatedAt)
 
   // get all diferents satus in the requests lists
-  const statusOptions = [...requests].map(({ status }) => status).reduce((prev, curr) => {
-    if (prev.includes(curr)) { return prev } else {
-      return [...prev, curr]
-    }
-  }, [])
+  const allStaus = [...requests].map(({ status }) => status)
+  const statusOptions = [...new Set(allStaus)]
 
   const handleChangeStatusSelect = ({ target: { value: filter } }) => {
     if (filter === 'ALL') return setDisplayRequests([...requestsSortedByDate])

@@ -1,19 +1,13 @@
 import { useEffect, useState } from 'react'
-// import { listenPlacePayments } from '@firebase/accomodations";
-import FormAccommodation from 'comps/FormAccommodation'
-import FormCashBalance from 'comps/FormCashBalance'
-import FormCost from 'comps/FormCost'
-import GuestCard from 'comps/Guests/Guest/GuestCard'
-import MainModal from 'comps/Modal/MainModal'
+
 import Section from 'comps/Section'
-import PlaceCosts from '../PlaceCosts'
-import FormGuest from 'comps/FormGuest'
-import FormPlaceConfig from 'comps/FormPlaceConfig'
+
 import HostRoomRequestSection from '../HostRoomRequestSection'
 import { useSelector } from 'react-redux'
 import { selectPlaceState } from '@/store/slices/placeSlice'
 
 import { listenPlaceAccommodations } from '@firebase/Accommodations/main'
+
 import { listenPlaceGuests } from '@firebase/Gests/main'
 import {
   formatGuestFromRoomRequests,
@@ -22,40 +16,27 @@ import {
 } from './utils'
 import { useUser } from 'comps/context/userContext'
 import GuestsTable from '../GuestsTable'
+import PlaceDetails from '../PlaceDetails'
+import GuestsCards from './GuestsCards'
+import ManagePlace from './ManagePlace'
 
 export default function DashboardPlace ({
   showTable = false,
   showCards = false,
   showPaymentsTable = false,
   showOperatingCosts = false,
-  showPlaceRequests = true
+  showPlaceRequests = true,
+  showPlaceDetails = false,
+  showManagePlace = true
 }) {
   const { user } = useUser()
   const place = useSelector(selectPlaceState)
   const isOwner = place?.userId === user?.uid
-  const showGuest = () => {
-    let res = false
-    // console.log(place)
-    // visible si es propietario
-    if (
-      !!isOwner &&
-      place?.config?.guestsVisiblesFor?.admin
-    )
-      res = true
 
-    // visible si esta registrado
-    if (!!user && place?.config?.guestsVisiblesFor?.all)
-      res = true
-
-    // TODO visible si es huesped
-
-    // if (place.config.guestsVisiblesFor.guest) res = true
-
-    return res
-  }
   const [guests, setGuests] = useState([])
   const [placePayments, setPlacePayments] = useState([])
   const [formatedGuest, setFormatedGuest] = useState([])
+
   useEffect(() => {
     listenPlaceAccommodations(place.id, setPlacePayments)
   }, [])
@@ -88,22 +69,20 @@ export default function DashboardPlace ({
 
   return (
     <div className=''>
-      { showPlaceRequests && <HostRoomRequestSection /> }
-      <FormPlaceConfig place={ place } />
+      {/* <FormPlaceConfig place={ place } /> */ }
       {/* <Options place={place} formatedGuest={formatedGuest} /> */ }
 
-      <div className='grid gap-4 py-4 mt-4'>
-        { showCards &&
-          formatedGuest?.map((guest, i) => (
-            <GuestCard
-              key={ `${guest.id}-${i}` }
-              guest={ guest }
-              isOwner={ isOwner }
-              place={ place }
-            />
-          )) }
+      <div className='grid gap-4'>
 
-        { showTable && (
+        { showPlaceRequests &&
+          <HostRoomRequestSection />
+        }
+
+        { showCards &&
+          <GuestsCards guests={ formatedGuest } />
+        }
+
+        { showTable &&
           <Section title='Guests'>
             <GuestsTable
               guests={ formatedGuest }
@@ -111,7 +90,22 @@ export default function DashboardPlace ({
               place={ place }
             />
           </Section>
-        ) }
+        }
+
+        { showManagePlace && <Section title={ 'Manage place' }>
+          <ManagePlace />
+        </Section> }
+
+        { showPlaceDetails &&
+          <Section
+            title={ 'Place details' }
+            subtitle={ `${place?.name || ''}` }
+            sticky
+          >
+            <PlaceDetails />
+          </Section> }
+
+
 
         {/* {showPaymentsTable && (
           <Section title='Payments'>
@@ -129,44 +123,3 @@ export default function DashboardPlace ({
     </div>
   )
 }
-const Options = ({ place, formatedGuest }) => <div>
-  <h3 className='text-xl font-bold text-left my-4'>
-    Options
-  </h3>
-  <div className='grid gap-2 sm:flex justify-evenly'>
-    <MainModal
-      title={ 'New Payment' }
-      OpenComponentType='primary'
-      buttonLabel='New Payment'
-    >
-      <FormAccommodation
-        place={ place }
-        guests={ formatedGuest }
-      />
-    </MainModal>
-    <MainModal
-      title={ 'New Guest' }
-      OpenComponentType='primary'
-      buttonLabel='New Guest'
-    >
-      {/* <FormPlace place={place} /> */ }
-      <FormGuest />
-    </MainModal>
-    <MainModal
-      title='New cost'
-      buttonLabel='New cost'
-      OpenComponentType='primary'
-    >
-      <div>
-        <FormCost place={ place } />
-      </div>
-    </MainModal>
-    <MainModal
-      title={ 'Cash Balance' }
-      OpenComponentType='primary'
-      buttonLabel='Cash Balance'
-    >
-      <FormCashBalance place={ place } />
-    </MainModal>
-  </div>
-</div>

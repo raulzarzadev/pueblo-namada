@@ -1,13 +1,8 @@
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import PlaceDetails from '../../../../components/Place/PlaceDetails'
-import { listenPlace } from '../../../../firebase/Places/main'
-import Section from '../../../../components/Section'
-import PrivatePage from '../../../../components/HOC/PrivatePage'
-import DashboardPlace from '../../../../components/Place/DashboardPlace'
 import Head from 'next/head'
 import { useSelector } from 'react-redux'
 import { selectPlaceState } from '@/store/slices/placeSlice'
+import DashboardPlace from 'comps/Place/DashboardPlace'
+import PrivatePage from 'comps/HOC/PrivatePage'
 
 export default function dashboard () {
   const place = useSelector(selectPlaceState)
@@ -26,15 +21,10 @@ export default function dashboard () {
           showTable
           showPaymentsTable
           showOperatingCosts
+          showPlaceDetails
         />
       </PrivatePage>
-      <Section
-        title={ 'Place details' }
-        subtitle={ `${place?.name || ''}` }
-        sticky
-      >
-        <PlaceDetails />
-      </Section>
+
     </>
   )
 }
