@@ -61,7 +61,7 @@ const GuestRow = ({ guest }) => {
   return (
     <>
       <tr
-        className='cursor-pointer hover:bg-base-200 hover'
+        className='cursor-pointer  '
         onClick={ () => handleOpen() }
       >
         <Cell className=' truncate max-w-[75px]   '>
