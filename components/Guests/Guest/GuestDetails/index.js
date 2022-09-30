@@ -13,12 +13,11 @@ export const GuestDetails = ({ guest }) => {
     plates,
     phone,
     email,
-
     publicImage,
     imageID
   } = guest
-  console.log(guest)
-  const DOMAIN = 'https://peace-parking.vercel.app'
+
+  const DOMAIN = 'https://pueblonomada.com'
   const PLACE_URL = `${DOMAIN}/places/${id}`
 
   const CONTENT_INFO = `Te damos la bienvenida a ${name}. Puedes ver mas detalles del lugar en ${PLACE_URL}`

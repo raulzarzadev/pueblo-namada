@@ -121,7 +121,7 @@ const RequestRow = ({
         <td>
           { createdAt && format(createdAt, 'dd MMM yy hh:mm') }
         </td>
-        <td>
+        <td className=' !rounded-none'>
           { status || 'unknow' }
 
         </td>

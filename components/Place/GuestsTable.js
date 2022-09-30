@@ -60,6 +60,7 @@ const GuestRow = ({ guest }) => {
   const handleOpen = () => setOpen(!open)
   return (
     <>
+      { /** FIX This modal outside if a tr avoid that any nested rows in tables get a rounded prop :/ */ }
       <Modal
         title={ ` ${guest?.name || 'Guest'} information ` }
         open={ open }
