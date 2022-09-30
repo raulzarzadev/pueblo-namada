@@ -39,44 +39,42 @@ const RequestsTable = ({
 
 
   return (
-    <div>
-      <div className='overflow-x-auto'>
-        <table className='table table-compact w-full'>
-          {/* <!-- head --> */ }
-          <thead>
-            <tr>
-              <th className=' text-center hidden sm:table-cell'></th>
-              <th className='hidden sm:table-cell'>Dates</th>
-              { showPlaceName && <th>Place</th> }
-              { showRequestUser && <th>Guest </th> }
-              <th>Requested</th>
-              <th className='flex flex-col'>
-                Status
-                <select onChange={ handleChangeStatusSelect } name='selectoption' className='select select-xs'>
-                  <option value={ 'ALL' }>ALL</option>
-                  { statusOptions.map(status =>
-                    <option value={ status }>{ status }</option>
-                  ) }
+    <div className='overflow-x-auto'>
+      <table className='table table-compact w-full'>
+        {/* <!-- head --> */ }
+        <thead>
+          <tr>
+            <th className=' text-center hidden sm:table-cell'></th>
+            <th className='hidden sm:table-cell'>Dates</th>
+            { showPlaceName && <th>Place</th> }
+            { showRequestUser && <th>Guest </th> }
+            <th>Requested</th>
+            <th className='flex flex-col'>
+              Status
+              <select onChange={ handleChangeStatusSelect } name='selectoption' className='select select-xs'>
+                <option value={ 'ALL' }>ALL</option>
+                { statusOptions.map(status =>
+                  <option value={ status }>{ status }</option>
+                ) }
 
-                </select>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* <!-- row 1 --> */ }
-            { displayRequests.map((request, i) => (
-              <RequestRow
-                key={ request.id }
-                request={ request }
-                showPlaceName={ showPlaceName }
-                showRequestUser={ showRequestUser }
-                i={ i }
-              />
-            )) }
-          </tbody>
-        </table>
-      </div>
-    </div >
+              </select>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* <!-- row 1 --> */ }
+          { displayRequests.map((request, i) => (
+            <RequestRow
+              key={ request.id }
+              request={ request }
+              showPlaceName={ showPlaceName }
+              showRequestUser={ showRequestUser }
+              i={ i }
+            />
+          )) }
+        </tbody>
+      </table>
+    </div>
   )
 }
 

@@ -20,7 +20,7 @@ export default function Section ({
          text-basep-content 
          shadow-lg 
         rounded-md 
-         py-0.5 
+         
         `}
     >
       <div
@@ -35,6 +35,7 @@ export default function Section ({
         justify-between 
         cursor-pointer 
         z-[1]
+
         `}
       >
         <div className='flex items-baseline '>
@@ -76,7 +77,7 @@ export default function Section ({
           </svg>
         ) }
       </div>
-      <div className={ `${indent && 'pl-4 '}   bg-inherit` }>
+      <div className={ `${indent && 'pl-4 '}   bg-inherit rounded-b-md pb-2` }>
         { show && children }
       </div>
     </section>
