@@ -21,12 +21,13 @@ export const listenCashBalance = (
   CashBalanceId: string,
   cb: CallableFunction
 ) => CashBalancesCRUD.listen(CashBalanceId, cb)
+
 export const listenPlaceCashBalances = (
   placeId: string,
   cb: CallableFunction
 ) =>
   CashBalancesCRUD.listenDocs(
-    [where('placeId', '==', placeId)],
+    [where('place.id', '==', placeId)],
     cb
   )
 

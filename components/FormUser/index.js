@@ -87,7 +87,7 @@ export default function FormUser ({
           />
         </div>
       ) } */}
-      <button className='btn btn-primary m-2 mx-auto' >
+      <button disabled={ [FORM_STATUS.saving, FORM_STATUS.saved].includes(formStatus) } className='btn btn-primary m-2 mx-auto' >
         { formStatus }
       </button>
     </form>

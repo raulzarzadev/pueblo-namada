@@ -1,8 +1,10 @@
 import { wrapper } from '@/store'
+import { setCashBalances } from '@/store/slices/cashBalancesSlice'
 import {
   setPlace,
   updatePlace
 } from '@/store/slices/placeSlice'
+import { listenPlaceCashBalances } from '@firebase/CashBalanceV2/main'
 import { listenPlace } from '@firebase/Places/main'
 import { listenPlaceRoomRequests } from '@firebase/RoomRequests/main'
 import { UserProvider } from 'components/context/userContext'
@@ -14,7 +16,7 @@ import { useDispatch } from 'react-redux'
 import { INFO } from '../CONSTANTS/PROJECT'
 import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
+function MyApp ({ Component, pageProps }) {
   const { query, route } = useRouter()
   const dispatch = useDispatch()
   useEffect(() => {
@@ -27,10 +29,12 @@ function MyApp({ Component, pageProps }) {
       })
     }
   }, [query.id])
+
+
   return (
     <>
       <Head>
-        <title>{INFO?.name}</title>
+        <title>{ INFO?.name }</title>
         <meta
           name='description'
           content='Keep control of your guests with this simple and powerfull web app. '
@@ -39,7 +43,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <UserProvider>
         <Layout>
-          <Component {...pageProps} />
+          <Component { ...pageProps } />
         </Layout>
       </UserProvider>
     </>

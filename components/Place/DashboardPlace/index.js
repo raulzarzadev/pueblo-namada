@@ -71,7 +71,9 @@ export default function DashboardPlace ({
     <div className=''>
       {/* <FormPlaceConfig place={ place } /> */ }
       {/* <Options place={place} formatedGuest={formatedGuest} /> */ }
-
+      <div>
+        <h1 className='text-xl'>{ place?.name }</h1>
+      </div>
       <div className='grid gap-4'>
 
         { showPlaceRequests &&
