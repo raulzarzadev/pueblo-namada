@@ -1,9 +1,7 @@
-import { selectPlaceState } from '@/store/slices/placeSlice'
 import {
   createPlace,
   updatePlace
 } from '@firebase/Places/main'
-import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -12,19 +10,12 @@ import File from '../inputs/file'
 import Phone from '../inputs/phone'
 import Text from '../inputs/text'
 import Textarea from '../inputs/textarea'
-
-import { useSelector } from 'react-redux'
+import FilesInput from 'inputs/filesInput'
 
 export default function FormPlace({
   place,
   editing = false
 }) {
-  const placeRedux = useSelector(selectPlaceState)
-
-  console.log(place)
-  console.log(placeRedux)
-  const router = useRouter()
-
   const {
     register,
     handleSubmit,
@@ -82,6 +73,13 @@ export default function FormPlace({
     )
   }
 
+  const onUploadImages = (newImages) => {
+    const images = watch('images')
+    setValue('images', [...images, ...newImages])
+  }
+
+  console.log(watch())
+
   return (
     <div className='p-1 max-w-sm mx-auto'>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -133,6 +131,11 @@ export default function FormPlace({
             }
             label={'Imagen'}
             preview={watch('image')}
+          />
+          <FilesInput
+            label='Add more images '
+            defaultImages={watch('images')}
+            imagesUploaded={onUploadImages}
           />
           <Textarea
             {...register('resume')}

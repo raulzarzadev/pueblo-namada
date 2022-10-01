@@ -11,6 +11,7 @@ const PreviewImage = ({ label = null, image = null, previewSize = 'md' }) => {
     md: 'w-12',
     lg: 'w-24',
     xl: 'w-32',
+    full: 'w-full'
   }
   return (
     <div className='flex flex-col'>
