@@ -16,7 +16,8 @@ const FilesInput = React.forwardRef(({
   label = 'Files input',
   imagesUploaded,
   onDeleteImage,
-  defaultImages
+  defaultImages,
+  onLoading = () => { },
 }: InputFiles,
   ref
 ) => {
@@ -24,7 +25,7 @@ const FilesInput = React.forwardRef(({
   const [upladingImages, setUploadingImages] = useState([])
 
   const handleChange = async ({ target: { files = [] } }: any) => {
-
+    onLoading(true)
     setUploadingImages([...files].map(() => {
       return { uploading: true }
     }))
@@ -37,12 +38,16 @@ const FilesInput = React.forwardRef(({
     setUploadingImages([])
     imagesUploaded(newImages)
     setImages([...images, ...newImages])
+    onLoading(false)
   }
+
   const handleOpenDelete = async (url) => {
-    console.log('delete url', url)
+    //console.log('delete url', url)
+    onLoading(true)
     const res = await deleteImage({ url })
     onDeleteImage(url)
-    console.log(res)
+    onLoading(false)
+    //console.log(res)
   }
   //console.log(images)
   //console.log(images)
@@ -56,7 +61,7 @@ const FilesInput = React.forwardRef(({
           <input ref={ref} accept=".jpg,.png,.jpeg" onChange={handleChange} className="hidden" type={'file'} multiple />
         </div>
       </label>
-      <div className="w-full max-w-sm overflow-auto">
+      <div className="w-full max-w-md mx-auto overflow-auto">
         <div className="grid grid-flow-col overflow-x-visible gap-4 p-2">
           {[...images, ...upladingImages]?.map(({ url, uploading }) =>
             <div key={url} className='w-36'>

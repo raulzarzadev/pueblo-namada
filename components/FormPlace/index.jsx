@@ -12,6 +12,7 @@ import Phone from '../inputs/phone'
 import Text from '../inputs/text'
 import Textarea from '../inputs/textarea'
 import InputFiles from 'inputs/InputFiles'
+import FORM_STATUS from '@/CONSTANTS/FORM_STATUS'
 
 export default function FormPlace({
   place,
@@ -25,22 +26,22 @@ export default function FormPlace({
     formState: { errors }
   } = useForm({ defaultValues: { ...place } })
 
-  const FORM_STATUS = {
-    0: 'Guardar',
-    1: 'Guardado',
-    2: 'Guardando',
-    3: 'Cancelado'
-  }
+  // const FORM_STATUS = {
+  //   0: 'Guardar',
+  //   1: 'Guardado',
+  //   2: 'Guardando',
+  //   3: 'Cancelado'
+  // }
 
-  const defaultLabel = FORM_STATUS[0]
+  const defaultLabel = FORM_STATUS.save
   const [labelSave, setLabelSave] = useState(defaultLabel)
 
   const onSubmit = (data) => {
-    setLabelSave(FORM_STATUS[2])
+    setLabelSave(FORM_STATUS.saving)
     editing
       ? updatePlace(place.id, data).then((res) => {
           console.log(res)
-          setLabelSave(FORM_STATUS[1])
+          setLabelSave(FORM_STATUS.saved)
           setTimeout(() => {
             setLabelSave(defaultLabel)
             // router.back()
@@ -48,7 +49,7 @@ export default function FormPlace({
         })
       : createPlace(data).then((res) => {
           console.log('created place', res)
-          setLabelSave(FORM_STATUS[1])
+          setLabelSave(FORM_STATUS.saved)
           setTimeout(() => {
             setLabelSave(defaultLabel)
             // router.back()
@@ -60,7 +61,7 @@ export default function FormPlace({
     useState(0)
 
   const handleUploadFile = async ({ fieldName, file }) => {
-    setLabelSave(FORM_STATUS[2])
+    setLabelSave(FORM_STATUS.saving)
     uploadFile(
       file,
       `places/${fieldName}s/`,
@@ -68,7 +69,7 @@ export default function FormPlace({
         setUploadImageProgress(progress)
         if (downloadURL) {
           setValue(fieldName, downloadURL)
-          setLabelSave(FORM_STATUS[0])
+          setLabelSave(FORM_STATUS.save)
         }
       }
     )
@@ -88,20 +89,24 @@ export default function FormPlace({
       .catch((err) => console.log(err))
   }
 
-  const onLoadingImages = (isLoading) => {}
+  const onLoadingImages = (isLoading) => {
+    isLoading
+      ? setLabelSave(FORM_STATUS.saving)
+      : setLabelSave(FORM_STATUS.save)
+  }
 
   console.log(watch())
 
   return (
-    <div className='p-1 max-w-sm mx-auto'>
+    <div className=' max-w-md mx-auto'>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='sticky top-0 left-0 right-0 flex w-full justify-end bg-base-300 z-10 p-1'>
+        <div className='sticky top-0 left-0 right-0 flex w-full justify-end bg-base-300 z-10 p-2 '>
           <button
-            className='btn btn-primary'
+            className='btn btn-primary disabled:btn-disabled'
             disabled={[
-              'Guardado',
-              'Editado',
-              'Guardando'
+              // FORM_STATUS.save,
+              FORM_STATUS.saving,
+              FORM_STATUS.saved
             ].includes(labelSave)}
           >
             {labelSave}
