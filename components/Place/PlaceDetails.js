@@ -8,6 +8,7 @@ import Section from '../Section'
 import GuestRoomRequestSection from './GuestRoomRequestSection'
 import { useSelector } from 'react-redux'
 import { selectPlaceState } from '@/store/slices/placeSlice'
+import PreviewImage from 'comps/PreviewImage'
 
 export default function PlaceDetails () {
   const place = useSelector(selectPlaceState)
@@ -99,6 +100,16 @@ export default function PlaceDetails () {
         <p className='my-2 p-1 whitespace-pre-line'>
           { place.resume }
         </p>
+        <h3 className='font-bold'>
+          Some others images
+        </h3>
+        <div className='flex flex-wrap justify-center '>
+          { place?.images?.map(({ url }) =>
+            <div key={ url }>
+              <PreviewImage image={ url } previewSize='xl' />
+            </div>
+          ) }
+        </div>
         { place?.amenities && (
           <Section title='Amenidades' sticky open>
             <p className='mb-2  whitespace-pre-line'>
