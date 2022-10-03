@@ -18,6 +18,7 @@ const FilesInput = React.forwardRef(({
   onDeleteImage,
   defaultImages,
   onLoading = () => { },
+  disabled
 }: InputFiles,
   ref
 ) => {
@@ -53,18 +54,18 @@ const FilesInput = React.forwardRef(({
   //console.log(images)
   return (
     <div>
-      <label>
-        <div className="h-12 w-full hover:border-dotted  hover:border-white flex justify-center items-center rounded-lg relative cursor-pointer border-dashed border-2">
+      <label >
+        <div className={`h-12 w-full hover:border-dotted  hover:border-white flex justify-center items-center rounded-lg relative cursor-pointer border-dashed border-2  ${disabled && 'opacity-30 cursor-wait '}`}>
           <div className="absolute ">
             {label}
           </div>
-          <input ref={ref} accept=".jpg,.png,.jpeg" onChange={handleChange} className="hidden" type={'file'} multiple />
+          <input disabled={disabled} ref={ref} accept=".jpg,.png,.jpeg" onChange={handleChange} className="hidden" type={'file'} multiple />
         </div>
       </label>
       <div className="w-full max-w-md mx-auto overflow-auto">
-        <div className="grid grid-flow-col overflow-x-visible gap-4 p-2">
-          {[...images, ...upladingImages]?.map(({ url, uploading }) =>
-            <div key={url} className='w-36'>
+        <div className="grid grid-cols-4 gap-1 p-1">
+          {[...images, ...upladingImages]?.map(({ url, uploading }, i) =>
+            <div key={`${url}-${i}`} className=''>
               <PreviewImage
                 image={url}
                 uploading={uploading}

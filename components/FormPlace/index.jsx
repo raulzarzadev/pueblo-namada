@@ -39,22 +39,24 @@ export default function FormPlace({
   const onSubmit = (data) => {
     setLabelSave(FORM_STATUS.saving)
     editing
-      ? updatePlace(place.id, data).then((res) => {
-          console.log(res)
-          setLabelSave(FORM_STATUS.saved)
-          setTimeout(() => {
-            setLabelSave(defaultLabel)
-            // router.back()
-          }, 1000)
-        })
-      : createPlace(data).then((res) => {
-          console.log('created place', res)
-          setLabelSave(FORM_STATUS.saved)
-          setTimeout(() => {
-            setLabelSave(defaultLabel)
-            // router.back()
-          }, 1000)
-        })
+      ? updatePlace(place.id, data)
+          .then((res) => {
+            console.log(res)
+          })
+          .finally(() => {
+            setTimeout(() => {
+              setLabelSave(FORM_STATUS.save)
+            }, 1000)
+          })
+      : createPlace(data)
+          .then((res) => {
+            console.log(res)
+          })
+          .finally(() => {
+            setTimeout(() => {
+              setLabelSave(FORM_STATUS.save)
+            }, 1000)
+          })
   }
 
   const [uploadImageProgress, setUploadImageProgress] =
@@ -97,17 +99,19 @@ export default function FormPlace({
 
   console.log(watch())
 
+  const disabledInput = [
+    // FORM_STATUS.save,
+    FORM_STATUS.saving,
+    FORM_STATUS.saved
+  ].includes(labelSave)
+
   return (
     <div className=' max-w-md mx-auto'>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='sticky top-0 left-0 right-0 flex w-full justify-end bg-base-300 z-10 p-2 '>
           <button
             className='btn btn-primary disabled:btn-disabled'
-            disabled={[
-              // FORM_STATUS.save,
-              FORM_STATUS.saving,
-              FORM_STATUS.saved
-            ].includes(labelSave)}
+            disabled={disabledInput}
           >
             {labelSave}
           </button>
@@ -155,6 +159,7 @@ export default function FormPlace({
             imagesUploaded={onUploadImages}
             onDeleteImage={handleDeleteImage}
             onLoading={onLoadingImages}
+            disabled={disabledInput}
           />
           <Textarea
             {...register('resume')}

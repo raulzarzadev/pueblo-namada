@@ -50,7 +50,7 @@ const PreviewImage = ({
             hover:opacity-100
              shadow-lg 
              cursor-pointer
-            m-1`}
+            `}
             onClick={ handleOpenModal }
           >
             <Image
