@@ -1,9 +1,20 @@
 import Image from 'next/image'
 import { useState } from 'react'
+import DeleteIcon from './icons/DeleteIcon'
+import EditIcon from './icons/EditIcon'
+import Loading from './Loadign'
 import Modal from './Modal'
 
 
-const PreviewImage = ({ label = null, image = null, previewSize = 'md' }) => {
+const PreviewImage = ({
+  label = null,
+  image = null,
+  previewSize = 'md',
+  uploading,
+  handleDelete,
+  showOrigin
+}) => {
+
   const [openModal, setOpenModal] = useState(false)
   const handleOpenModal = () => setOpenModal(!openModal)
   const size = {
@@ -13,10 +24,21 @@ const PreviewImage = ({ label = null, image = null, previewSize = 'md' }) => {
     xl: 'w-32',
     full: 'w-full'
   }
+
+  const [openDelete, setOpenDelete] = useState()
+  const handleOpenDelete = () => {
+    setOpenDelete(!openDelete)
+  }
+
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col justify-center items-center'>
       { label && <span className=''>{ label }</span> }
-      { image ? (
+      { uploading && <progress className='progress progress-primary'>
+      </progress> }
+      { !image && !uploading &&
+        <span className='italic'>No image</span>
+      }
+      { image && (
         <>
           <div
             className={ `
@@ -36,6 +58,31 @@ const PreviewImage = ({ label = null, image = null, previewSize = 'md' }) => {
               layout='fill'
               objectFit='cover'
             />
+            { handleDelete &&
+              <div className='absolute right-0 '>
+                <button className=' hover:text-error text-white ' onClick={ (e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  handleOpenDelete()
+                } }>
+                  <DeleteIcon />
+                </button>
+                <Modal open={ openDelete } handleOpen={ handleOpenDelete } title='Delete image' >
+                  <div className='flex w-full justify-around'>
+                    <button className='btn btn-outline' onClick={ () => setOpenDelete(false) }>
+                      Cancel
+                    </button>
+                    <button className='btn btn-error' onClick={ ((e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      handleDelete()
+                    }) }>
+                      Delete image
+                    </button>
+                  </div>
+                </Modal>
+              </div>
+            }
           </div>
           <Modal
             title='Image'
@@ -49,11 +96,11 @@ const PreviewImage = ({ label = null, image = null, previewSize = 'md' }) => {
                 objectFit='contain'
               />
             </div>
+            { showOrigin && <a href={ image } target={ '_blank' }>{ image }</a> }
           </Modal>
         </>
-      ) : (
-        <span className='italic'>No image</span>
       ) }
+
     </div>
   )
 }

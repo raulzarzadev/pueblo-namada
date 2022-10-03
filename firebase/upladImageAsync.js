@@ -2,7 +2,8 @@ import {
   ref,
   uploadBytesResumable,
   getDownloadURL,
-  uploadBytes
+  uploadBytes,
+  deleteObject
 } from 'firebase/storage'
 import { storage } from '.'
 import { v4 as uidGenerator } from 'uuid'
@@ -28,4 +29,15 @@ export const uploadImageAsync = async (
     }
   })
   return uploadTask
+}
+
+export const deleteImage = async ({ url }) => {
+  const desertRef = ref(storage, url);
+  return deleteObject(desertRef).then(() => {
+    // File deleted successfully
+    return { ok: true, url }
+  }).catch((error) => {
+    console.error(error)
+    // Uh-oh, an error occurred!
+  });
 }

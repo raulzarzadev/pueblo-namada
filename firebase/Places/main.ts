@@ -41,3 +41,7 @@ export const listenUserPlaces = (
   cb: CallableFunction
 ) =>
   placesCRUD.listenCurrentUserDocs(cb)
+
+export const deletePlaceImage = (placeId, image) => {
+  return placesCRUD.update(placeId, { images: arrayRemove(image) })
+}

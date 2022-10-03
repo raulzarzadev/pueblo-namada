@@ -1,5 +1,6 @@
 import {
   createPlace,
+  deletePlaceImage,
   updatePlace
 } from '@firebase/Places/main'
 import { useState } from 'react'
@@ -78,6 +79,17 @@ export default function FormPlace({
     setValue('images', [...images, ...newImages])
   }
 
+  const handleDeleteImage = (url) => {
+    const images = watch('images')
+    const image = images.find((image) => image.url === url)
+    console.log(image)
+    deletePlaceImage(place.id, image)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+  }
+
+  const onLoadingImages = (isLoading) => {}
+
   console.log(watch())
 
   return (
@@ -129,13 +141,15 @@ export default function FormPlace({
                 file: files[0]
               })
             }
-            label={'Imagen'}
+            label={'Main image'}
             preview={watch('image')}
           />
           <InputFiles
             label='Add more images '
             defaultImages={watch('images')}
             imagesUploaded={onUploadImages}
+            onDeleteImage={handleDeleteImage}
+            onLoading={onLoadingImages}
           />
           <Textarea
             {...register('resume')}
