@@ -10,7 +10,7 @@ import File from '../inputs/file'
 import Phone from '../inputs/phone'
 import Text from '../inputs/text'
 import Textarea from '../inputs/textarea'
-import FilesInput from 'inputs/filesInput'
+import InputFiles from 'inputs/InputFiles'
 
 export default function FormPlace({
   place,
@@ -132,7 +132,7 @@ export default function FormPlace({
             label={'Imagen'}
             preview={watch('image')}
           />
-          <FilesInput
+          <InputFiles
             label='Add more images '
             defaultImages={watch('images')}
             imagesUploaded={onUploadImages}

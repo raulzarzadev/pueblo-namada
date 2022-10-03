@@ -15,9 +15,9 @@ export const uploadImageAsync = async (
 ) => {
   const uuid = uidGenerator()
   const imageRef = storageRef(`${fieldName}/${uuid}`)
-  console.log('uplading')
+  // console.log('uplading')
   const uploadTask = await uploadBytes(imageRef, file).then(async res => {
-    console.log('upladed')
+    // console.log('upladed')
     const url = await getDownloadURL(res.ref)
     const { bucket, contentType, fullPath, size, type } = res.metadata
     return {
