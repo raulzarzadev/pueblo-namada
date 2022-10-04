@@ -42,7 +42,7 @@ const FilesInput = React.forwardRef(({
     }))
 
     const newImages: any = await Promise.all(ulpadingFiles)
-    console.log(newImages)
+    // console.log(newImages)
     setUploadingImages([])
     imagesUploaded(newImages)
     setImages([...images, ...newImages])

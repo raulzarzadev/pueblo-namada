@@ -97,8 +97,6 @@ export default function FormPlace({
       : setLabelSave(FORM_STATUS.save)
   }
 
-  console.log(watch())
-
   const disabledInput = [
     // FORM_STATUS.save,
     FORM_STATUS.saving,
