@@ -42,6 +42,6 @@ export const listenUserPlaces = (
 ) =>
   placesCRUD.listenCurrentUserDocs(cb)
 
-export const deletePlaceImage = (placeId, image) => {
+export const deletePlaceImage = (placeId: string, image: any) => {
   return placesCRUD.update(placeId, { images: arrayRemove(image) })
 }

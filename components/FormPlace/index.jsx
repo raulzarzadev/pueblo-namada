@@ -78,7 +78,7 @@ export default function FormPlace({
   }
 
   const onUploadImages = (newImages) => {
-    const images = watch('images')
+    const images = watch('images') || []
     setValue('images', [...images, ...newImages])
   }
 

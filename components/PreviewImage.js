@@ -8,11 +8,11 @@ import Modal from './Modal'
 
 const PreviewImage = ({
   label = null,
-  image = null,
+  image = '',
   previewSize = 'md',
   uploading,
   handleDelete,
-  showOrigin
+  showOrigin = false
 }) => {
 
   const [openModal, setOpenModal] = useState(false)
